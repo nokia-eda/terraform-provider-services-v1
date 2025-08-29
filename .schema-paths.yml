@@ -1,0 +1,407 @@
+app_group:
+  - read:
+      path: /apps/services.eda.nokia.com
+      method: GET
+
+patch:
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
+      method: PATCH
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
+      method: PATCH
+
+resource_history:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}/_revs
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_revs
+      method: GET
+
+resource_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1
+      method: GET
+
+resource_topology:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}/_topology
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_topology
+      method: GET
+
+status:
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
+      method: DELETE
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
+      method: DELETE
+
+ui_result:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/_ui/{pathname}
+      method: GET
+
+workflow_get_inputs_resp_elem:
+  - read:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}/_input
+      method: GET
+
+workflow_input_data:
+  - update:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}/_input
+      method: PUT
+
+com.nokia.eda.services.v1.bridge_domain:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.bridge_domain_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/bridgedomains
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains
+      method: DELETE
+
+com.nokia.eda.services.v1.bridge_domain_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.bridge_interface:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.bridge_interface_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/bridgeinterfaces
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces
+      method: DELETE
+
+com.nokia.eda.services.v1.bridge_interface_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.dhcp_relay:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.dhcp_relay_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/dhcprelays
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays
+      method: DELETE
+
+com.nokia.eda.services.v1.dhcp_relay_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.edge_ping:
+  - create:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings
+      method: POST
+  - read:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}
+      method: GET
+
+com.nokia.eda.services.v1.edge_ping_list:
+  - read:
+      path: /workflows/v1/services.eda.nokia.com/v1/edgepings
+      method: GET
+  - read:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings
+      method: GET
+
+com.nokia.eda.services.v1.irb_interface:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.irb_interface_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/irbinterfaces
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces
+      method: DELETE
+
+com.nokia.eda.services.v1.irb_interface_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.routed_interface:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.routed_interface_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces
+      method: DELETE
+  - read:
+      path: /apps/services.eda.nokia.com/v1/routedinterfaces
+      method: GET
+
+com.nokia.eda.services.v1.routed_interface_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.router:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.router_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers
+      method: DELETE
+  - read:
+      path: /apps/services.eda.nokia.com/v1/routers
+      method: GET
+
+com.nokia.eda.services.v1.router_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.vlan:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.vlan_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans
+      method: DELETE
+  - read:
+      path: /apps/services.eda.nokia.com/v1/vlans
+      method: GET
+
+com.nokia.eda.services.v1.vlan_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/_deleted
+      method: GET
+
+com.nokia.eda.services.v1.virtual_network:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks
+      method: POST
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
+      method: GET
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
+      method: PUT
+
+com.nokia.eda.services.v1.virtual_network_list:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks
+      method: GET
+  - delete:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks
+      method: DELETE
+  - read:
+      path: /apps/services.eda.nokia.com/v1/virtualnetworks
+      method: GET
+
+com.nokia.eda.services.v1.virtual_network_deleted_resources:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/_deleted
+      method: GET
+
+totalPaths: 58
+totalSchemas: 76
+usedSchemas: 35
+unusedSchemas: 41
+unusedSchemaList:
+  - AppGroupVersion
+  - ErrorIndex
+  - ErrorItem
+  - ErrorResponse
+  - K8SPatchOp
+  - OverlayState
+  - Resource
+  - ResourceHistoryEntry
+  - StatusDetails
+  - TopoAttrMetadata
+  - TopoElemMetadata
+  - TopoLinkEndpoint
+  - TopoNodeGrouping
+  - TopoOverlayEndpoint
+  - TopoOverlayEndpointState
+  - TopoOverlayLink
+  - TopoOverlayLinkState
+  - TopoOverlayNode
+  - TopoOverlayNodeState
+  - TopoSchema
+  - Topology
+  - WorkflowId
+  - WorkflowIdentifier
+  - WorkflowInputDataElem
+  - com.nokia.eda.services.v1.BridgeDomain_DeletedResourceEntry
+  - com.nokia.eda.services.v1.BridgeDomain_metadata
+  - com.nokia.eda.services.v1.BridgeInterface_DeletedResourceEntry
+  - com.nokia.eda.services.v1.BridgeInterface_metadata
+  - com.nokia.eda.services.v1.DHCPRelay_DeletedResourceEntry
+  - com.nokia.eda.services.v1.DHCPRelay_metadata
+  - com.nokia.eda.services.v1.EdgePing_metadata
+  - com.nokia.eda.services.v1.IRBInterface_DeletedResourceEntry
+  - com.nokia.eda.services.v1.IRBInterface_metadata
+  - com.nokia.eda.services.v1.RoutedInterface_DeletedResourceEntry
+  - com.nokia.eda.services.v1.RoutedInterface_metadata
+  - com.nokia.eda.services.v1.Router_DeletedResourceEntry
+  - com.nokia.eda.services.v1.Router_metadata
+  - com.nokia.eda.services.v1.VLAN_DeletedResourceEntry
+  - com.nokia.eda.services.v1.VLAN_metadata
+  - com.nokia.eda.services.v1.VirtualNetwork_DeletedResourceEntry
+  - com.nokia.eda.services.v1.VirtualNetwork_metadata
