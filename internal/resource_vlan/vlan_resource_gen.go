@@ -147,7 +147,7 @@ func VlanResourceSchema(ctx context.Context) schema.Schema {
 						Description:         "Interfaces to use for attachment to this VLAN based on the label selector.  Selects Interfaces based on their associated labels.",
 						MarkdownDescription: "Interfaces to use for attachment to this VLAN based on the label selector.  Selects Interfaces based on their associated labels.",
 					},
-					"l2mtu": schema.Int64Attribute{
+					"l2_mtu": schema.Int64Attribute{
 						Optional:            true,
 						Description:         "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.",
 						MarkdownDescription: "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.",
@@ -175,7 +175,7 @@ func VlanResourceSchema(ctx context.Context) schema.Schema {
 					},
 					"uplink": schema.SingleNestedAttribute{
 						Attributes: map[string]schema.Attribute{
-							"egress_1": schema.SingleNestedAttribute{
+							"egress": schema.SingleNestedAttribute{
 								Attributes: map[string]schema.Attribute{
 									"filters": schema.ListAttribute{
 										ElementType:         types.StringType,
@@ -199,7 +199,7 @@ func VlanResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "Manages actions on traffic at Egress of the Local enpoint of the Uplink.",
 								MarkdownDescription: "Manages actions on traffic at Egress of the Local enpoint of the Uplink.",
 							},
-							"ingress_1": schema.SingleNestedAttribute{
+							"ingress": schema.SingleNestedAttribute{
 								Attributes: map[string]schema.Attribute{
 									"filters": schema.ListAttribute{
 										ElementType:         types.StringType,
@@ -229,14 +229,14 @@ func VlanResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.",
 								MarkdownDescription: "Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.",
 							},
-							"uplink_vlanid": schema.StringAttribute{
+							"uplink_vlan_id": schema.StringAttribute{
 								Optional:            true,
 								Computed:            true,
 								Description:         "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.",
 								MarkdownDescription: "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.",
 								Default:             stringdefault.StaticString("pool"),
 							},
-							"uplink_vlanpool": schema.StringAttribute{
+							"uplink_vlan_pool": schema.StringAttribute{
 								Optional:            true,
 								Description:         "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.",
 								MarkdownDescription: "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.",
@@ -1071,22 +1071,22 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 			fmt.Sprintf(`interface_selector expected to be basetypes.ListValue, was: %T`, interfaceSelectorAttribute))
 	}
 
-	l2mtuAttribute, ok := attributes["l2mtu"]
+	l2MtuAttribute, ok := attributes["l2_mtu"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`l2mtu is missing from object`)
+			`l2_mtu is missing from object`)
 
 		return nil, diags
 	}
 
-	l2mtuVal, ok := l2mtuAttribute.(basetypes.Int64Value)
+	l2MtuVal, ok := l2MtuAttribute.(basetypes.Int64Value)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`l2mtu expected to be basetypes.Int64Value, was: %T`, l2mtuAttribute))
+			fmt.Sprintf(`l2_mtu expected to be basetypes.Int64Value, was: %T`, l2MtuAttribute))
 	}
 
 	macDuplicationDetectionActionAttribute, ok := attributes["mac_duplication_detection_action"]
@@ -1189,7 +1189,7 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 		Egress:                        egressVal,
 		Ingress:                       ingressVal,
 		InterfaceSelector:             interfaceSelectorVal,
-		L2mtu:                         l2mtuVal,
+		L2Mtu:                         l2MtuVal,
 		MacDuplicationDetectionAction: macDuplicationDetectionActionVal,
 		SplitHorizonGroup:             splitHorizonGroupVal,
 		Uplink:                        uplinkVal,
@@ -1352,22 +1352,22 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 			fmt.Sprintf(`interface_selector expected to be basetypes.ListValue, was: %T`, interfaceSelectorAttribute))
 	}
 
-	l2mtuAttribute, ok := attributes["l2mtu"]
+	l2MtuAttribute, ok := attributes["l2_mtu"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`l2mtu is missing from object`)
+			`l2_mtu is missing from object`)
 
 		return NewSpecValueUnknown(), diags
 	}
 
-	l2mtuVal, ok := l2mtuAttribute.(basetypes.Int64Value)
+	l2MtuVal, ok := l2MtuAttribute.(basetypes.Int64Value)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`l2mtu expected to be basetypes.Int64Value, was: %T`, l2mtuAttribute))
+			fmt.Sprintf(`l2_mtu expected to be basetypes.Int64Value, was: %T`, l2MtuAttribute))
 	}
 
 	macDuplicationDetectionActionAttribute, ok := attributes["mac_duplication_detection_action"]
@@ -1470,7 +1470,7 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 		Egress:                        egressVal,
 		Ingress:                       ingressVal,
 		InterfaceSelector:             interfaceSelectorVal,
-		L2mtu:                         l2mtuVal,
+		L2Mtu:                         l2MtuVal,
 		MacDuplicationDetectionAction: macDuplicationDetectionActionVal,
 		SplitHorizonGroup:             splitHorizonGroupVal,
 		Uplink:                        uplinkVal,
@@ -1553,7 +1553,7 @@ type SpecValue struct {
 	Egress                        basetypes.ObjectValue `tfsdk:"egress"`
 	Ingress                       basetypes.ObjectValue `tfsdk:"ingress"`
 	InterfaceSelector             basetypes.ListValue   `tfsdk:"interface_selector"`
-	L2mtu                         basetypes.Int64Value  `tfsdk:"l2mtu"`
+	L2Mtu                         basetypes.Int64Value  `tfsdk:"l2_mtu"`
 	MacDuplicationDetectionAction basetypes.StringValue `tfsdk:"mac_duplication_detection_action"`
 	SplitHorizonGroup             basetypes.StringValue `tfsdk:"split_horizon_group"`
 	Uplink                        basetypes.ObjectValue `tfsdk:"uplink"`
@@ -1579,7 +1579,7 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	attrTypes["interface_selector"] = basetypes.ListType{
 		ElemType: types.StringType,
 	}.TerraformType(ctx)
-	attrTypes["l2mtu"] = basetypes.Int64Type{}.TerraformType(ctx)
+	attrTypes["l2_mtu"] = basetypes.Int64Type{}.TerraformType(ctx)
 	attrTypes["mac_duplication_detection_action"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["split_horizon_group"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["uplink"] = basetypes.ObjectType{
@@ -1634,13 +1634,13 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 
 		vals["interface_selector"] = val
 
-		val, err = v.L2mtu.ToTerraformValue(ctx)
+		val, err = v.L2Mtu.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["l2mtu"] = val
+		vals["l2_mtu"] = val
 
 		val, err = v.MacDuplicationDetectionAction.ToTerraformValue(ctx)
 
@@ -1799,7 +1799,7 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 			"interface_selector": basetypes.ListType{
 				ElemType: types.StringType,
 			},
-			"l2mtu":                            basetypes.Int64Type{},
+			"l2_mtu":                           basetypes.Int64Type{},
 			"mac_duplication_detection_action": basetypes.StringType{},
 			"split_horizon_group":              basetypes.StringType{},
 			"uplink": basetypes.ObjectType{
@@ -1822,7 +1822,7 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		"interface_selector": basetypes.ListType{
 			ElemType: types.StringType,
 		},
-		"l2mtu":                            basetypes.Int64Type{},
+		"l2_mtu":                           basetypes.Int64Type{},
 		"mac_duplication_detection_action": basetypes.StringType{},
 		"split_horizon_group":              basetypes.StringType{},
 		"uplink": basetypes.ObjectType{
@@ -1848,7 +1848,7 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 			"egress":                           egress,
 			"ingress":                          ingress,
 			"interface_selector":               interfaceSelectorVal,
-			"l2mtu":                            v.L2mtu,
+			"l2_mtu":                           v.L2Mtu,
 			"mac_duplication_detection_action": v.MacDuplicationDetectionAction,
 			"split_horizon_group":              v.SplitHorizonGroup,
 			"uplink":                           uplink,
@@ -1894,7 +1894,7 @@ func (v SpecValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.L2mtu.Equal(other.L2mtu) {
+	if !v.L2Mtu.Equal(other.L2Mtu) {
 		return false
 	}
 
@@ -1942,7 +1942,7 @@ func (v SpecValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"interface_selector": basetypes.ListType{
 			ElemType: types.StringType,
 		},
-		"l2mtu":                            basetypes.Int64Type{},
+		"l2_mtu":                           basetypes.Int64Type{},
 		"mac_duplication_detection_action": basetypes.StringType{},
 		"split_horizon_group":              basetypes.StringType{},
 		"uplink": basetypes.ObjectType{
@@ -2852,7 +2852,7 @@ func (t UplinkType) ValueFromObject(ctx context.Context, in basetypes.ObjectValu
 
 	attributes := in.Attributes()
 
-	egress1Attribute, ok := attributes["egress_1"]
+	egress1Attribute, ok := attributes["egress"]
 
 	if !ok {
 		diags.AddError(
@@ -2870,7 +2870,7 @@ func (t UplinkType) ValueFromObject(ctx context.Context, in basetypes.ObjectValu
 			fmt.Sprintf(`egress_1 expected to be basetypes.ObjectValue, was: %T`, egress1Attribute))
 	}
 
-	ingress1Attribute, ok := attributes["ingress_1"]
+	ingress1Attribute, ok := attributes["ingress"]
 
 	if !ok {
 		diags.AddError(
@@ -2906,40 +2906,40 @@ func (t UplinkType) ValueFromObject(ctx context.Context, in basetypes.ObjectValu
 			fmt.Sprintf(`uplink_selector expected to be basetypes.ListValue, was: %T`, uplinkSelectorAttribute))
 	}
 
-	uplinkVlanidAttribute, ok := attributes["uplink_vlanid"]
+	uplinkVlanIdAttribute, ok := attributes["uplink_vlan_id"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`uplink_vlanid is missing from object`)
+			`uplink_vlan_id is missing from object`)
 
 		return nil, diags
 	}
 
-	uplinkVlanidVal, ok := uplinkVlanidAttribute.(basetypes.StringValue)
+	uplinkVlanIdVal, ok := uplinkVlanIdAttribute.(basetypes.StringValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`uplink_vlanid expected to be basetypes.StringValue, was: %T`, uplinkVlanidAttribute))
+			fmt.Sprintf(`uplink_vlan_id expected to be basetypes.StringValue, was: %T`, uplinkVlanIdAttribute))
 	}
 
-	uplinkVlanpoolAttribute, ok := attributes["uplink_vlanpool"]
+	uplinkVlanPoolAttribute, ok := attributes["uplink_vlan_pool"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`uplink_vlanpool is missing from object`)
+			`uplink_vlan_pool is missing from object`)
 
 		return nil, diags
 	}
 
-	uplinkVlanpoolVal, ok := uplinkVlanpoolAttribute.(basetypes.StringValue)
+	uplinkVlanPoolVal, ok := uplinkVlanPoolAttribute.(basetypes.StringValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`uplink_vlanpool expected to be basetypes.StringValue, was: %T`, uplinkVlanpoolAttribute))
+			fmt.Sprintf(`uplink_vlan_pool expected to be basetypes.StringValue, was: %T`, uplinkVlanPoolAttribute))
 	}
 
 	if diags.HasError() {
@@ -2950,8 +2950,8 @@ func (t UplinkType) ValueFromObject(ctx context.Context, in basetypes.ObjectValu
 		Egress1:        egress1Val,
 		Ingress1:       ingress1Val,
 		UplinkSelector: uplinkSelectorVal,
-		UplinkVlanid:   uplinkVlanidVal,
-		UplinkVlanpool: uplinkVlanpoolVal,
+		UplinkVlanId:   uplinkVlanIdVal,
+		UplinkVlanPool: uplinkVlanPoolVal,
 		state:          attr.ValueStateKnown,
 	}, diags
 }
@@ -3019,7 +3019,7 @@ func NewUplinkValue(attributeTypes map[string]attr.Type, attributes map[string]a
 		return NewUplinkValueUnknown(), diags
 	}
 
-	egress1Attribute, ok := attributes["egress_1"]
+	egress1Attribute, ok := attributes["egress"]
 
 	if !ok {
 		diags.AddError(
@@ -3037,7 +3037,7 @@ func NewUplinkValue(attributeTypes map[string]attr.Type, attributes map[string]a
 			fmt.Sprintf(`egress_1 expected to be basetypes.ObjectValue, was: %T`, egress1Attribute))
 	}
 
-	ingress1Attribute, ok := attributes["ingress_1"]
+	ingress1Attribute, ok := attributes["ingress"]
 
 	if !ok {
 		diags.AddError(
@@ -3073,40 +3073,40 @@ func NewUplinkValue(attributeTypes map[string]attr.Type, attributes map[string]a
 			fmt.Sprintf(`uplink_selector expected to be basetypes.ListValue, was: %T`, uplinkSelectorAttribute))
 	}
 
-	uplinkVlanidAttribute, ok := attributes["uplink_vlanid"]
+	uplinkVlanIdAttribute, ok := attributes["uplink_vlan_id"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`uplink_vlanid is missing from object`)
+			`uplink_vlan_id is missing from object`)
 
 		return NewUplinkValueUnknown(), diags
 	}
 
-	uplinkVlanidVal, ok := uplinkVlanidAttribute.(basetypes.StringValue)
+	uplinkVlanIdVal, ok := uplinkVlanIdAttribute.(basetypes.StringValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`uplink_vlanid expected to be basetypes.StringValue, was: %T`, uplinkVlanidAttribute))
+			fmt.Sprintf(`uplink_vlan_id expected to be basetypes.StringValue, was: %T`, uplinkVlanIdAttribute))
 	}
 
-	uplinkVlanpoolAttribute, ok := attributes["uplink_vlanpool"]
+	uplinkVlanPoolAttribute, ok := attributes["uplink_vlan_pool"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`uplink_vlanpool is missing from object`)
+			`uplink_vlan_pool is missing from object`)
 
 		return NewUplinkValueUnknown(), diags
 	}
 
-	uplinkVlanpoolVal, ok := uplinkVlanpoolAttribute.(basetypes.StringValue)
+	uplinkVlanPoolVal, ok := uplinkVlanPoolAttribute.(basetypes.StringValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`uplink_vlanpool expected to be basetypes.StringValue, was: %T`, uplinkVlanpoolAttribute))
+			fmt.Sprintf(`uplink_vlan_pool expected to be basetypes.StringValue, was: %T`, uplinkVlanPoolAttribute))
 	}
 
 	if diags.HasError() {
@@ -3117,8 +3117,8 @@ func NewUplinkValue(attributeTypes map[string]attr.Type, attributes map[string]a
 		Egress1:        egress1Val,
 		Ingress1:       ingress1Val,
 		UplinkSelector: uplinkSelectorVal,
-		UplinkVlanid:   uplinkVlanidVal,
-		UplinkVlanpool: uplinkVlanpoolVal,
+		UplinkVlanId:   uplinkVlanIdVal,
+		UplinkVlanPool: uplinkVlanPoolVal,
 		state:          attr.ValueStateKnown,
 	}, diags
 }
@@ -3191,11 +3191,11 @@ func (t UplinkType) ValueType(ctx context.Context) attr.Value {
 var _ basetypes.ObjectValuable = UplinkValue{}
 
 type UplinkValue struct {
-	Egress1        basetypes.ObjectValue `tfsdk:"egress_1"`
-	Ingress1       basetypes.ObjectValue `tfsdk:"ingress_1"`
+	Egress1        basetypes.ObjectValue `tfsdk:"egress"`
+	Ingress1       basetypes.ObjectValue `tfsdk:"ingress"`
 	UplinkSelector basetypes.ListValue   `tfsdk:"uplink_selector"`
-	UplinkVlanid   basetypes.StringValue `tfsdk:"uplink_vlanid"`
-	UplinkVlanpool basetypes.StringValue `tfsdk:"uplink_vlanpool"`
+	UplinkVlanId   basetypes.StringValue `tfsdk:"uplink_vlan_id"`
+	UplinkVlanPool basetypes.StringValue `tfsdk:"uplink_vlan_pool"`
 	state          attr.ValueState
 }
 
@@ -3205,17 +3205,17 @@ func (v UplinkValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error
 	var val tftypes.Value
 	var err error
 
-	attrTypes["egress_1"] = basetypes.ObjectType{
+	attrTypes["egress"] = basetypes.ObjectType{
 		AttrTypes: Egress1Value{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
-	attrTypes["ingress_1"] = basetypes.ObjectType{
+	attrTypes["ingress"] = basetypes.ObjectType{
 		AttrTypes: Ingress1Value{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
 	attrTypes["uplink_selector"] = basetypes.ListType{
 		ElemType: types.StringType,
 	}.TerraformType(ctx)
-	attrTypes["uplink_vlanid"] = basetypes.StringType{}.TerraformType(ctx)
-	attrTypes["uplink_vlanpool"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["uplink_vlan_id"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["uplink_vlan_pool"] = basetypes.StringType{}.TerraformType(ctx)
 
 	objectType := tftypes.Object{AttributeTypes: attrTypes}
 
@@ -3229,7 +3229,7 @@ func (v UplinkValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["egress_1"] = val
+		vals["egress"] = val
 
 		val, err = v.Ingress1.ToTerraformValue(ctx)
 
@@ -3237,7 +3237,7 @@ func (v UplinkValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["ingress_1"] = val
+		vals["ingress"] = val
 
 		val, err = v.UplinkSelector.ToTerraformValue(ctx)
 
@@ -3247,21 +3247,21 @@ func (v UplinkValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error
 
 		vals["uplink_selector"] = val
 
-		val, err = v.UplinkVlanid.ToTerraformValue(ctx)
+		val, err = v.UplinkVlanId.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["uplink_vlanid"] = val
+		vals["uplink_vlan_id"] = val
 
-		val, err = v.UplinkVlanpool.ToTerraformValue(ctx)
+		val, err = v.UplinkVlanPool.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["uplink_vlanpool"] = val
+		vals["uplink_vlan_pool"] = val
 
 		if err := tftypes.ValidateValue(objectType, vals); err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
@@ -3348,32 +3348,32 @@ func (v UplinkValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, 
 
 	if diags.HasError() {
 		return types.ObjectUnknown(map[string]attr.Type{
-			"egress_1": basetypes.ObjectType{
+			"egress": basetypes.ObjectType{
 				AttrTypes: Egress1Value{}.AttributeTypes(ctx),
 			},
-			"ingress_1": basetypes.ObjectType{
+			"ingress": basetypes.ObjectType{
 				AttrTypes: Ingress1Value{}.AttributeTypes(ctx),
 			},
 			"uplink_selector": basetypes.ListType{
 				ElemType: types.StringType,
 			},
-			"uplink_vlanid":   basetypes.StringType{},
-			"uplink_vlanpool": basetypes.StringType{},
+			"uplink_vlan_id":   basetypes.StringType{},
+			"uplink_vlan_pool": basetypes.StringType{},
 		}), diags
 	}
 
 	attributeTypes := map[string]attr.Type{
-		"egress_1": basetypes.ObjectType{
+		"egress": basetypes.ObjectType{
 			AttrTypes: Egress1Value{}.AttributeTypes(ctx),
 		},
-		"ingress_1": basetypes.ObjectType{
+		"ingress": basetypes.ObjectType{
 			AttrTypes: Ingress1Value{}.AttributeTypes(ctx),
 		},
 		"uplink_selector": basetypes.ListType{
 			ElemType: types.StringType,
 		},
-		"uplink_vlanid":   basetypes.StringType{},
-		"uplink_vlanpool": basetypes.StringType{},
+		"uplink_vlan_id":   basetypes.StringType{},
+		"uplink_vlan_pool": basetypes.StringType{},
 	}
 
 	if v.IsNull() {
@@ -3387,11 +3387,11 @@ func (v UplinkValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, 
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"egress_1":        egress1,
-			"ingress_1":       ingress1,
-			"uplink_selector": uplinkSelectorVal,
-			"uplink_vlanid":   v.UplinkVlanid,
-			"uplink_vlanpool": v.UplinkVlanpool,
+			"egress":           egress1,
+			"ingress":          ingress1,
+			"uplink_selector":  uplinkSelectorVal,
+			"uplink_vlan_id":   v.UplinkVlanId,
+			"uplink_vlan_pool": v.UplinkVlanPool,
 		})
 
 	return objVal, diags
@@ -3424,11 +3424,11 @@ func (v UplinkValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.UplinkVlanid.Equal(other.UplinkVlanid) {
+	if !v.UplinkVlanId.Equal(other.UplinkVlanId) {
 		return false
 	}
 
-	if !v.UplinkVlanpool.Equal(other.UplinkVlanpool) {
+	if !v.UplinkVlanPool.Equal(other.UplinkVlanPool) {
 		return false
 	}
 
@@ -3445,17 +3445,17 @@ func (v UplinkValue) Type(ctx context.Context) attr.Type {
 
 func (v UplinkValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
-		"egress_1": basetypes.ObjectType{
+		"egress": basetypes.ObjectType{
 			AttrTypes: Egress1Value{}.AttributeTypes(ctx),
 		},
-		"ingress_1": basetypes.ObjectType{
+		"ingress": basetypes.ObjectType{
 			AttrTypes: Ingress1Value{}.AttributeTypes(ctx),
 		},
 		"uplink_selector": basetypes.ListType{
 			ElemType: types.StringType,
 		},
-		"uplink_vlanid":   basetypes.StringType{},
-		"uplink_vlanpool": basetypes.StringType{},
+		"uplink_vlan_id":   basetypes.StringType{},
+		"uplink_vlan_pool": basetypes.StringType{},
 	}
 }
 

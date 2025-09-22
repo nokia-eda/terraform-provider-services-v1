@@ -42,7 +42,7 @@ Optional:
 - `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--spec--egress))
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--spec--ingress))
 - `interface_selector` (List of String) Interfaces to use for attachment to this VLAN based on the label selector.  Selects Interfaces based on their associated labels.
-- `l2mtu` (Number) L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.
+- `l2_mtu` (Number) L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.
 - `mac_duplication_detection_action` (String) If Mac Duplication Detection is enabled on the associated Bridge Domain, this property will override the MDD action set in the BridgeDomain.
 - `split_horizon_group` (String) Name of the Split Horizon Group to be used for this VLAN.  All subinterfaces within this VLAN will be members of this Split Horizon Group.
 - `uplink` (Attributes) The Uplink between your access breakout switch and your leaf switch. (see [below for nested schema](#nestedatt--spec--uplink))
@@ -72,14 +72,14 @@ Optional:
 
 Optional:
 
-- `egress_1` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--egress_1))
-- `ingress_1` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--ingress_1))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
-- `uplink_vlanid` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
-- `uplink_vlanpool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
+- `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
+- `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 
-<a id="nestedatt--spec--uplink--egress_1"></a>
-### Nested Schema for `spec.uplink.egress_1`
+<a id="nestedatt--spec--uplink--egress"></a>
+### Nested Schema for `spec.uplink.egress`
 
 Optional:
 
@@ -87,8 +87,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--spec--uplink--ingress_1"></a>
-### Nested Schema for `spec.uplink.ingress_1`
+<a id="nestedatt--spec--uplink--ingress"></a>
+### Nested Schema for `spec.uplink.ingress`
 
 Optional:
 

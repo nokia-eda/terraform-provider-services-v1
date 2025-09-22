@@ -62,12 +62,12 @@ Optional:
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--spec--ingress))
 - `ip_addresses` (Attributes List) (see [below for nested schema](#nestedatt--spec--ip_addresses))
 - `ip_mtu` (Number) IP MTU for the IRBInterface [default=1500].
-- `ipv4parameters` (Attributes) (see [below for nested schema](#nestedatt--spec--ipv4parameters))
-- `ipv6router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--spec--ipv6router_advertisement))
+- `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--spec--ipv4_parameters))
+- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--spec--ipv6_router_advertisement))
 - `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `unnumbered` (String) Enables the use of unnumbered interfaces on the IRBInterface.  If IPv6 is specified, no IP address are configured on the sub-interface and only the link local address will be used.  If any IP addresses are specified for either IPv4 or IPv6 that will take precedence and IPs will be assigned to the interfaces.(Deprecated, Use IPv6RouterAdvertisement)
-- `virtual_ipdiscovery` (Attributes List) Configuration for Virtual IP discovery on the interface. (see [below for nested schema](#nestedatt--spec--virtual_ipdiscovery))
+- `virtual_ip_discovery` (Attributes List) Configuration for Virtual IP discovery on the interface. (see [below for nested schema](#nestedatt--spec--virtual_ip_discovery))
 
 <a id="nestedatt--spec--bfd"></a>
 ### Nested Schema for `spec.bfd`
@@ -126,12 +126,12 @@ Optional:
 
 Optional:
 
-- `ipv4address` (Attributes) IPv4 address in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--spec--ip_addresses--ipv4address))
-- `ipv6address` (Attributes) IPv6 address in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--spec--ip_addresses--ipv6address))
+- `ipv4_address` (Attributes) IPv4 address in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--spec--ip_addresses--ipv4_address))
+- `ipv6_address` (Attributes) IPv6 address in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--spec--ip_addresses--ipv6_address))
 - `node` (String) Reference to a TopoNode resource, if not specified the IP address will be assigned to all nodes on which the IRB is deployed.  If specified the IP address will be assigned to the specified node.
 
-<a id="nestedatt--spec--ip_addresses--ipv4address"></a>
-### Nested Schema for `spec.ip_addresses.ipv4address`
+<a id="nestedatt--spec--ip_addresses--ipv4_address"></a>
+### Nested Schema for `spec.ip_addresses.ipv4_address`
 
 Required:
 
@@ -142,8 +142,8 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--spec--ip_addresses--ipv6address"></a>
-### Nested Schema for `spec.ip_addresses.ipv6address`
+<a id="nestedatt--spec--ip_addresses--ipv6_address"></a>
+### Nested Schema for `spec.ip_addresses.ipv6_address`
 
 Required:
 
@@ -155,16 +155,16 @@ Optional:
 
 
 
-<a id="nestedatt--spec--ipv4parameters"></a>
-### Nested Schema for `spec.ipv4parameters`
+<a id="nestedatt--spec--ipv4_parameters"></a>
+### Nested Schema for `spec.ipv4_parameters`
 
 Optional:
 
 - `directed_broadcast` (Boolean) Allow receiving and forwarding of directed broadcast packets. Enabled when set to true.
 
 
-<a id="nestedatt--spec--ipv6router_advertisement"></a>
-### Nested Schema for `spec.ipv6router_advertisement`
+<a id="nestedatt--spec--ipv6_router_advertisement"></a>
+### Nested Schema for `spec.ipv6_router_advertisement`
 
 Optional:
 
@@ -175,13 +175,13 @@ Optional:
 - `max_advertisement_interval` (Number) Maximum time between router advertisements (in seconds).
 - `min_advertisement_interval` (Number) Minimum time between router advertisements (in seconds).
 - `other_configuration_flag` (Boolean) Enable DHCPv6 for other configuration (O-bit).
-- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--spec--ipv6router_advertisement--prefixes))
+- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--spec--ipv6_router_advertisement--prefixes))
 - `reachable_time` (Number) Time in milliseconds for Neighbor Unreachability Detection.
 - `retransmit_time` (Number) Time in milliseconds between retransmitted NS messages.
 - `router_lifetime` (Number) Router lifetime in seconds for default gateway.
 
-<a id="nestedatt--spec--ipv6router_advertisement--prefixes"></a>
-### Nested Schema for `spec.ipv6router_advertisement.prefixes`
+<a id="nestedatt--spec--ipv6_router_advertisement--prefixes"></a>
+### Nested Schema for `spec.ipv6_router_advertisement.prefixes`
 
 Required:
 
@@ -205,8 +205,8 @@ Optional:
 - `proxy_nd` (Boolean) Select whether Proxy ND should be enabled.
 
 
-<a id="nestedatt--spec--virtual_ipdiscovery"></a>
-### Nested Schema for `spec.virtual_ipdiscovery`
+<a id="nestedatt--spec--virtual_ip_discovery"></a>
+### Nested Schema for `spec.virtual_ip_discovery`
 
 Required:
 
@@ -243,14 +243,14 @@ Required:
 Optional:
 
 - `enabled` (Boolean) Administrative status of the SubInterface.
-- `ipv4addresses` (Attributes List) List of IPv4 addresses (see [below for nested schema](#nestedatt--status--interfaces--ipv4addresses))
-- `ipv6addresses` (Attributes List) List of IPv6 addresses (see [below for nested schema](#nestedatt--status--interfaces--ipv6addresses))
+- `ipv4_addresses` (Attributes List) List of IPv4 addresses (see [below for nested schema](#nestedatt--status--interfaces--ipv4_addresses))
+- `ipv6_addresses` (Attributes List) List of IPv6 addresses (see [below for nested schema](#nestedatt--status--interfaces--ipv6_addresses))
 - `last_change` (String) Timestamp of when this SubInterface last changed state.
 - `operating_system` (String) Operating System of the Node.
 - `operational_state` (String) Current operational state of the SubInterface.
 
-<a id="nestedatt--status--interfaces--ipv4addresses"></a>
-### Nested Schema for `status.interfaces.ipv4addresses`
+<a id="nestedatt--status--interfaces--ipv4_addresses"></a>
+### Nested Schema for `status.interfaces.ipv4_addresses`
 
 Required:
 
@@ -261,8 +261,8 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--status--interfaces--ipv6addresses"></a>
-### Nested Schema for `status.interfaces.ipv6addresses`
+<a id="nestedatt--status--interfaces--ipv6_addresses"></a>
+### Nested Schema for `status.interfaces.ipv6_addresses`
 
 Required:
 

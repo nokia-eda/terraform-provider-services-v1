@@ -23,7 +23,7 @@ description: |-
 
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
-- `labelselector` (String) a label selector string to filter the results based on CR labels
+- `label_selector` (String) a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -57,10 +57,10 @@ Optional:
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--ingress))
 - `interface` (String) Reference to an Interface to use for attachment.
 - `ip_mtu` (Number) IP MTU for the RoutedInterface.
-- `ipv4addresses` (Attributes List) List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--ipv4addresses))
-- `ipv4parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv4parameters))
-- `ipv6addresses` (Attributes List) List of IPv6 addresses in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--ipv6addresses))
-- `ipv6router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv6router_advertisement))
+- `ipv4_addresses` (Attributes List) List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--ipv4_addresses))
+- `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv4_parameters))
+- `ipv6_addresses` (Attributes List) List of IPv6 addresses in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--ipv6_addresses))
+- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv6_router_advertisement))
 - `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `router` (String) Reference to a Router.
@@ -99,8 +99,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
-<a id="nestedatt--items--spec--ipv4addresses"></a>
-### Nested Schema for `items.spec.ipv4addresses`
+<a id="nestedatt--items--spec--ipv4_addresses"></a>
+### Nested Schema for `items.spec.ipv4_addresses`
 
 Optional:
 
@@ -108,16 +108,16 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--items--spec--ipv4parameters"></a>
-### Nested Schema for `items.spec.ipv4parameters`
+<a id="nestedatt--items--spec--ipv4_parameters"></a>
+### Nested Schema for `items.spec.ipv4_parameters`
 
 Optional:
 
 - `directed_broadcast` (Boolean) Allow receiving and forwarding of directed broadcast packets. Enabled when set to true.
 
 
-<a id="nestedatt--items--spec--ipv6addresses"></a>
-### Nested Schema for `items.spec.ipv6addresses`
+<a id="nestedatt--items--spec--ipv6_addresses"></a>
+### Nested Schema for `items.spec.ipv6_addresses`
 
 Optional:
 
@@ -125,8 +125,8 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--items--spec--ipv6router_advertisement"></a>
-### Nested Schema for `items.spec.ipv6router_advertisement`
+<a id="nestedatt--items--spec--ipv6_router_advertisement"></a>
+### Nested Schema for `items.spec.ipv6_router_advertisement`
 
 Optional:
 
@@ -137,13 +137,13 @@ Optional:
 - `max_advertisement_interval` (Number) Maximum time between router advertisements (in seconds).
 - `min_advertisement_interval` (Number) Minimum time between router advertisements (in seconds).
 - `other_configuration_flag` (Boolean) Enable DHCPv6 for other configuration (O-bit).
-- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--items--spec--ipv6router_advertisement--prefixes))
+- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--items--spec--ipv6_router_advertisement--prefixes))
 - `reachable_time` (Number) Time in milliseconds for Neighbor Unreachability Detection.
 - `retransmit_time` (Number) Time in milliseconds between retransmitted NS messages.
 - `router_lifetime` (Number) Router lifetime in seconds for default gateway.
 
-<a id="nestedatt--items--spec--ipv6router_advertisement--prefixes"></a>
-### Nested Schema for `items.spec.ipv6router_advertisement.prefixes`
+<a id="nestedatt--items--spec--ipv6_router_advertisement--prefixes"></a>
+### Nested Schema for `items.spec.ipv6_router_advertisement.prefixes`
 
 Optional:
 

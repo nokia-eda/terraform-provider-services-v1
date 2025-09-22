@@ -176,7 +176,7 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 						Description:         "IP MTU for the RoutedInterface.",
 						MarkdownDescription: "IP MTU for the RoutedInterface.",
 					},
-					"ipv4addresses": schema.ListNestedAttribute{
+					"ipv4_addresses": schema.ListNestedAttribute{
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"ip_prefix": schema.StringAttribute{
@@ -190,9 +190,9 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 									MarkdownDescription: "Indicates which address to use as primary for broadcast",
 								},
 							},
-							CustomType: Ipv4addressesType{
+							CustomType: Ipv4AddressesType{
 								ObjectType: types.ObjectType{
-									AttrTypes: Ipv4addressesValue{}.AttributeTypes(ctx),
+									AttrTypes: Ipv4AddressesValue{}.AttributeTypes(ctx),
 								},
 							},
 						},
@@ -200,7 +200,7 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 						Description:         "List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24.",
 						MarkdownDescription: "List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24.",
 					},
-					"ipv4parameters": schema.SingleNestedAttribute{
+					"ipv4_parameters": schema.SingleNestedAttribute{
 						Attributes: map[string]schema.Attribute{
 							"directed_broadcast": schema.BoolAttribute{
 								Optional:            true,
@@ -208,14 +208,14 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 								MarkdownDescription: "Allow receiving and forwarding of directed broadcast packets. Enabled when set to true.",
 							},
 						},
-						CustomType: Ipv4parametersType{
+						CustomType: Ipv4ParametersType{
 							ObjectType: types.ObjectType{
-								AttrTypes: Ipv4parametersValue{}.AttributeTypes(ctx),
+								AttrTypes: Ipv4ParametersValue{}.AttributeTypes(ctx),
 							},
 						},
 						Optional: true,
 					},
-					"ipv6addresses": schema.ListNestedAttribute{
+					"ipv6_addresses": schema.ListNestedAttribute{
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"ip_prefix": schema.StringAttribute{
@@ -229,9 +229,9 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 									MarkdownDescription: "Indicates which address to use as primary for broadcast",
 								},
 							},
-							CustomType: Ipv6addressesType{
+							CustomType: Ipv6AddressesType{
 								ObjectType: types.ObjectType{
-									AttrTypes: Ipv6addressesValue{}.AttributeTypes(ctx),
+									AttrTypes: Ipv6AddressesValue{}.AttributeTypes(ctx),
 								},
 							},
 						},
@@ -239,7 +239,7 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 						Description:         "List of IPv6 addresses in IP/mask form, e.g., fc00::1/120.",
 						MarkdownDescription: "List of IPv6 addresses in IP/mask form, e.g., fc00::1/120.",
 					},
-					"ipv6router_advertisement": schema.SingleNestedAttribute{
+					"ipv6_router_advertisement": schema.SingleNestedAttribute{
 						Attributes: map[string]schema.Attribute{
 							"current_hop_limit": schema.Int64Attribute{
 								Optional:            true,
@@ -331,9 +331,9 @@ func RoutedInterfaceDataSourceSchema(ctx context.Context) schema.Schema {
 								MarkdownDescription: "Router lifetime in seconds for default gateway.",
 							},
 						},
-						CustomType: Ipv6routerAdvertisementType{
+						CustomType: Ipv6RouterAdvertisementType{
 							ObjectType: types.ObjectType{
-								AttrTypes: Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
+								AttrTypes: Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 							},
 						},
 						Optional: true,
@@ -1208,76 +1208,76 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 			fmt.Sprintf(`ip_mtu expected to be basetypes.Int64Value, was: %T`, ipMtuAttribute))
 	}
 
-	ipv4addressesAttribute, ok := attributes["ipv4addresses"]
+	ipv4AddressesAttribute, ok := attributes["ipv4_addresses"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv4addresses is missing from object`)
+			`ipv4_addresses is missing from object`)
 
 		return nil, diags
 	}
 
-	ipv4addressesVal, ok := ipv4addressesAttribute.(basetypes.ListValue)
+	ipv4AddressesVal, ok := ipv4AddressesAttribute.(basetypes.ListValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv4addresses expected to be basetypes.ListValue, was: %T`, ipv4addressesAttribute))
+			fmt.Sprintf(`ipv4_addresses expected to be basetypes.ListValue, was: %T`, ipv4AddressesAttribute))
 	}
 
-	ipv4parametersAttribute, ok := attributes["ipv4parameters"]
+	ipv4ParametersAttribute, ok := attributes["ipv4_parameters"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv4parameters is missing from object`)
+			`ipv4_parameters is missing from object`)
 
 		return nil, diags
 	}
 
-	ipv4parametersVal, ok := ipv4parametersAttribute.(basetypes.ObjectValue)
+	ipv4ParametersVal, ok := ipv4ParametersAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv4parameters expected to be basetypes.ObjectValue, was: %T`, ipv4parametersAttribute))
+			fmt.Sprintf(`ipv4_parameters expected to be basetypes.ObjectValue, was: %T`, ipv4ParametersAttribute))
 	}
 
-	ipv6addressesAttribute, ok := attributes["ipv6addresses"]
+	ipv6AddressesAttribute, ok := attributes["ipv6_addresses"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv6addresses is missing from object`)
+			`ipv6_addresses is missing from object`)
 
 		return nil, diags
 	}
 
-	ipv6addressesVal, ok := ipv6addressesAttribute.(basetypes.ListValue)
+	ipv6AddressesVal, ok := ipv6AddressesAttribute.(basetypes.ListValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv6addresses expected to be basetypes.ListValue, was: %T`, ipv6addressesAttribute))
+			fmt.Sprintf(`ipv6_addresses expected to be basetypes.ListValue, was: %T`, ipv6AddressesAttribute))
 	}
 
-	ipv6routerAdvertisementAttribute, ok := attributes["ipv6router_advertisement"]
+	ipv6RouterAdvertisementAttribute, ok := attributes["ipv6_router_advertisement"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv6router_advertisement is missing from object`)
+			`ipv6_router_advertisement is missing from object`)
 
 		return nil, diags
 	}
 
-	ipv6routerAdvertisementVal, ok := ipv6routerAdvertisementAttribute.(basetypes.ObjectValue)
+	ipv6RouterAdvertisementVal, ok := ipv6RouterAdvertisementAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv6router_advertisement expected to be basetypes.ObjectValue, was: %T`, ipv6routerAdvertisementAttribute))
+			fmt.Sprintf(`ipv6_router_advertisement expected to be basetypes.ObjectValue, was: %T`, ipv6RouterAdvertisementAttribute))
 	}
 
 	l3proxyArpndAttribute, ok := attributes["l3proxy_arpnd"]
@@ -1400,10 +1400,10 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 		Ingress:                 ingressVal,
 		Interface:               interfaceVal,
 		IpMtu:                   ipMtuVal,
-		Ipv4addresses:           ipv4addressesVal,
-		Ipv4parameters:          ipv4parametersVal,
-		Ipv6addresses:           ipv6addressesVal,
-		Ipv6routerAdvertisement: ipv6routerAdvertisementVal,
+		Ipv4Addresses:           ipv4AddressesVal,
+		Ipv4Parameters:          ipv4ParametersVal,
+		Ipv6Addresses:           ipv6AddressesVal,
+		Ipv6RouterAdvertisement: ipv6RouterAdvertisementVal,
 		L3proxyArpnd:            l3proxyArpndVal,
 		LearnUnsolicited:        learnUnsolicitedVal,
 		Router:                  routerVal,
@@ -1603,76 +1603,76 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 			fmt.Sprintf(`ip_mtu expected to be basetypes.Int64Value, was: %T`, ipMtuAttribute))
 	}
 
-	ipv4addressesAttribute, ok := attributes["ipv4addresses"]
+	ipv4AddressesAttribute, ok := attributes["ipv4_addresses"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv4addresses is missing from object`)
+			`ipv4_addresses is missing from object`)
 
 		return NewSpecValueUnknown(), diags
 	}
 
-	ipv4addressesVal, ok := ipv4addressesAttribute.(basetypes.ListValue)
+	ipv4AddressesVal, ok := ipv4AddressesAttribute.(basetypes.ListValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv4addresses expected to be basetypes.ListValue, was: %T`, ipv4addressesAttribute))
+			fmt.Sprintf(`ipv4_addresses expected to be basetypes.ListValue, was: %T`, ipv4AddressesAttribute))
 	}
 
-	ipv4parametersAttribute, ok := attributes["ipv4parameters"]
+	ipv4ParametersAttribute, ok := attributes["ipv4_parameters"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv4parameters is missing from object`)
+			`ipv4_parameters is missing from object`)
 
 		return NewSpecValueUnknown(), diags
 	}
 
-	ipv4parametersVal, ok := ipv4parametersAttribute.(basetypes.ObjectValue)
+	ipv4ParametersVal, ok := ipv4ParametersAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv4parameters expected to be basetypes.ObjectValue, was: %T`, ipv4parametersAttribute))
+			fmt.Sprintf(`ipv4_parameters expected to be basetypes.ObjectValue, was: %T`, ipv4ParametersAttribute))
 	}
 
-	ipv6addressesAttribute, ok := attributes["ipv6addresses"]
+	ipv6AddressesAttribute, ok := attributes["ipv6_addresses"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv6addresses is missing from object`)
+			`ipv6_addresses is missing from object`)
 
 		return NewSpecValueUnknown(), diags
 	}
 
-	ipv6addressesVal, ok := ipv6addressesAttribute.(basetypes.ListValue)
+	ipv6AddressesVal, ok := ipv6AddressesAttribute.(basetypes.ListValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv6addresses expected to be basetypes.ListValue, was: %T`, ipv6addressesAttribute))
+			fmt.Sprintf(`ipv6_addresses expected to be basetypes.ListValue, was: %T`, ipv6AddressesAttribute))
 	}
 
-	ipv6routerAdvertisementAttribute, ok := attributes["ipv6router_advertisement"]
+	ipv6RouterAdvertisementAttribute, ok := attributes["ipv6_router_advertisement"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv6router_advertisement is missing from object`)
+			`ipv6_router_advertisement is missing from object`)
 
 		return NewSpecValueUnknown(), diags
 	}
 
-	ipv6routerAdvertisementVal, ok := ipv6routerAdvertisementAttribute.(basetypes.ObjectValue)
+	ipv6RouterAdvertisementVal, ok := ipv6RouterAdvertisementAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv6router_advertisement expected to be basetypes.ObjectValue, was: %T`, ipv6routerAdvertisementAttribute))
+			fmt.Sprintf(`ipv6_router_advertisement expected to be basetypes.ObjectValue, was: %T`, ipv6RouterAdvertisementAttribute))
 	}
 
 	l3proxyArpndAttribute, ok := attributes["l3proxy_arpnd"]
@@ -1795,10 +1795,10 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 		Ingress:                 ingressVal,
 		Interface:               interfaceVal,
 		IpMtu:                   ipMtuVal,
-		Ipv4addresses:           ipv4addressesVal,
-		Ipv4parameters:          ipv4parametersVal,
-		Ipv6addresses:           ipv6addressesVal,
-		Ipv6routerAdvertisement: ipv6routerAdvertisementVal,
+		Ipv4Addresses:           ipv4AddressesVal,
+		Ipv4Parameters:          ipv4ParametersVal,
+		Ipv6Addresses:           ipv6AddressesVal,
+		Ipv6RouterAdvertisement: ipv6RouterAdvertisementVal,
 		L3proxyArpnd:            l3proxyArpndVal,
 		LearnUnsolicited:        learnUnsolicitedVal,
 		Router:                  routerVal,
@@ -1884,10 +1884,10 @@ type SpecValue struct {
 	Ingress                 basetypes.ObjectValue `tfsdk:"ingress"`
 	Interface               basetypes.StringValue `tfsdk:"interface"`
 	IpMtu                   basetypes.Int64Value  `tfsdk:"ip_mtu"`
-	Ipv4addresses           basetypes.ListValue   `tfsdk:"ipv4addresses"`
-	Ipv4parameters          basetypes.ObjectValue `tfsdk:"ipv4parameters"`
-	Ipv6addresses           basetypes.ListValue   `tfsdk:"ipv6addresses"`
-	Ipv6routerAdvertisement basetypes.ObjectValue `tfsdk:"ipv6router_advertisement"`
+	Ipv4Addresses           basetypes.ListValue   `tfsdk:"ipv4_addresses"`
+	Ipv4Parameters          basetypes.ObjectValue `tfsdk:"ipv4_parameters"`
+	Ipv6Addresses           basetypes.ListValue   `tfsdk:"ipv6_addresses"`
+	Ipv6RouterAdvertisement basetypes.ObjectValue `tfsdk:"ipv6_router_advertisement"`
 	L3proxyArpnd            basetypes.ObjectValue `tfsdk:"l3proxy_arpnd"`
 	LearnUnsolicited        basetypes.StringValue `tfsdk:"learn_unsolicited"`
 	Router                  basetypes.StringValue `tfsdk:"router"`
@@ -1916,17 +1916,17 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	}.TerraformType(ctx)
 	attrTypes["interface"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["ip_mtu"] = basetypes.Int64Type{}.TerraformType(ctx)
-	attrTypes["ipv4addresses"] = basetypes.ListType{
-		ElemType: Ipv4addressesValue{}.Type(ctx),
+	attrTypes["ipv4_addresses"] = basetypes.ListType{
+		ElemType: Ipv4AddressesValue{}.Type(ctx),
 	}.TerraformType(ctx)
-	attrTypes["ipv4parameters"] = basetypes.ObjectType{
-		AttrTypes: Ipv4parametersValue{}.AttributeTypes(ctx),
+	attrTypes["ipv4_parameters"] = basetypes.ObjectType{
+		AttrTypes: Ipv4ParametersValue{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
-	attrTypes["ipv6addresses"] = basetypes.ListType{
-		ElemType: Ipv6addressesValue{}.Type(ctx),
+	attrTypes["ipv6_addresses"] = basetypes.ListType{
+		ElemType: Ipv6AddressesValue{}.Type(ctx),
 	}.TerraformType(ctx)
-	attrTypes["ipv6router_advertisement"] = basetypes.ObjectType{
-		AttrTypes: Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
+	attrTypes["ipv6_router_advertisement"] = basetypes.ObjectType{
+		AttrTypes: Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
 	attrTypes["l3proxy_arpnd"] = basetypes.ObjectType{
 		AttrTypes: L3proxyArpndValue{}.AttributeTypes(ctx),
@@ -1999,37 +1999,37 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 
 		vals["ip_mtu"] = val
 
-		val, err = v.Ipv4addresses.ToTerraformValue(ctx)
+		val, err = v.Ipv4Addresses.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["ipv4addresses"] = val
+		vals["ipv4_addresses"] = val
 
-		val, err = v.Ipv4parameters.ToTerraformValue(ctx)
-
-		if err != nil {
-			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
-		}
-
-		vals["ipv4parameters"] = val
-
-		val, err = v.Ipv6addresses.ToTerraformValue(ctx)
+		val, err = v.Ipv4Parameters.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["ipv6addresses"] = val
+		vals["ipv4_parameters"] = val
 
-		val, err = v.Ipv6routerAdvertisement.ToTerraformValue(ctx)
+		val, err = v.Ipv6Addresses.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["ipv6router_advertisement"] = val
+		vals["ipv6_addresses"] = val
+
+		val, err = v.Ipv6RouterAdvertisement.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["ipv6_router_advertisement"] = val
 
 		val, err = v.L3proxyArpnd.ToTerraformValue(ctx)
 
@@ -2171,103 +2171,103 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		)
 	}
 
-	ipv4addresses := types.ListValueMust(
-		Ipv4addressesType{
+	ipv4Addresses := types.ListValueMust(
+		Ipv4AddressesType{
 			basetypes.ObjectType{
-				AttrTypes: Ipv4addressesValue{}.AttributeTypes(ctx),
+				AttrTypes: Ipv4AddressesValue{}.AttributeTypes(ctx),
 			},
 		},
-		v.Ipv4addresses.Elements(),
+		v.Ipv4Addresses.Elements(),
 	)
 
-	if v.Ipv4addresses.IsNull() {
-		ipv4addresses = types.ListNull(
-			Ipv4addressesType{
+	if v.Ipv4Addresses.IsNull() {
+		ipv4Addresses = types.ListNull(
+			Ipv4AddressesType{
 				basetypes.ObjectType{
-					AttrTypes: Ipv4addressesValue{}.AttributeTypes(ctx),
+					AttrTypes: Ipv4AddressesValue{}.AttributeTypes(ctx),
 				},
 			},
 		)
 	}
 
-	if v.Ipv4addresses.IsUnknown() {
-		ipv4addresses = types.ListUnknown(
-			Ipv4addressesType{
+	if v.Ipv4Addresses.IsUnknown() {
+		ipv4Addresses = types.ListUnknown(
+			Ipv4AddressesType{
 				basetypes.ObjectType{
-					AttrTypes: Ipv4addressesValue{}.AttributeTypes(ctx),
+					AttrTypes: Ipv4AddressesValue{}.AttributeTypes(ctx),
 				},
 			},
 		)
 	}
 
-	var ipv4parameters basetypes.ObjectValue
+	var ipv4Parameters basetypes.ObjectValue
 
-	if v.Ipv4parameters.IsNull() {
-		ipv4parameters = types.ObjectNull(
-			Ipv4parametersValue{}.AttributeTypes(ctx),
+	if v.Ipv4Parameters.IsNull() {
+		ipv4Parameters = types.ObjectNull(
+			Ipv4ParametersValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if v.Ipv4parameters.IsUnknown() {
-		ipv4parameters = types.ObjectUnknown(
-			Ipv4parametersValue{}.AttributeTypes(ctx),
+	if v.Ipv4Parameters.IsUnknown() {
+		ipv4Parameters = types.ObjectUnknown(
+			Ipv4ParametersValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if !v.Ipv4parameters.IsNull() && !v.Ipv4parameters.IsUnknown() {
-		ipv4parameters = types.ObjectValueMust(
-			Ipv4parametersValue{}.AttributeTypes(ctx),
-			v.Ipv4parameters.Attributes(),
+	if !v.Ipv4Parameters.IsNull() && !v.Ipv4Parameters.IsUnknown() {
+		ipv4Parameters = types.ObjectValueMust(
+			Ipv4ParametersValue{}.AttributeTypes(ctx),
+			v.Ipv4Parameters.Attributes(),
 		)
 	}
 
-	ipv6addresses := types.ListValueMust(
-		Ipv6addressesType{
+	ipv6Addresses := types.ListValueMust(
+		Ipv6AddressesType{
 			basetypes.ObjectType{
-				AttrTypes: Ipv6addressesValue{}.AttributeTypes(ctx),
+				AttrTypes: Ipv6AddressesValue{}.AttributeTypes(ctx),
 			},
 		},
-		v.Ipv6addresses.Elements(),
+		v.Ipv6Addresses.Elements(),
 	)
 
-	if v.Ipv6addresses.IsNull() {
-		ipv6addresses = types.ListNull(
-			Ipv6addressesType{
+	if v.Ipv6Addresses.IsNull() {
+		ipv6Addresses = types.ListNull(
+			Ipv6AddressesType{
 				basetypes.ObjectType{
-					AttrTypes: Ipv6addressesValue{}.AttributeTypes(ctx),
+					AttrTypes: Ipv6AddressesValue{}.AttributeTypes(ctx),
 				},
 			},
 		)
 	}
 
-	if v.Ipv6addresses.IsUnknown() {
-		ipv6addresses = types.ListUnknown(
-			Ipv6addressesType{
+	if v.Ipv6Addresses.IsUnknown() {
+		ipv6Addresses = types.ListUnknown(
+			Ipv6AddressesType{
 				basetypes.ObjectType{
-					AttrTypes: Ipv6addressesValue{}.AttributeTypes(ctx),
+					AttrTypes: Ipv6AddressesValue{}.AttributeTypes(ctx),
 				},
 			},
 		)
 	}
 
-	var ipv6routerAdvertisement basetypes.ObjectValue
+	var ipv6RouterAdvertisement basetypes.ObjectValue
 
-	if v.Ipv6routerAdvertisement.IsNull() {
-		ipv6routerAdvertisement = types.ObjectNull(
-			Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
+	if v.Ipv6RouterAdvertisement.IsNull() {
+		ipv6RouterAdvertisement = types.ObjectNull(
+			Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if v.Ipv6routerAdvertisement.IsUnknown() {
-		ipv6routerAdvertisement = types.ObjectUnknown(
-			Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
+	if v.Ipv6RouterAdvertisement.IsUnknown() {
+		ipv6RouterAdvertisement = types.ObjectUnknown(
+			Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if !v.Ipv6routerAdvertisement.IsNull() && !v.Ipv6routerAdvertisement.IsUnknown() {
-		ipv6routerAdvertisement = types.ObjectValueMust(
-			Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
-			v.Ipv6routerAdvertisement.Attributes(),
+	if !v.Ipv6RouterAdvertisement.IsNull() && !v.Ipv6RouterAdvertisement.IsUnknown() {
+		ipv6RouterAdvertisement = types.ObjectValueMust(
+			Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
+			v.Ipv6RouterAdvertisement.Attributes(),
 		)
 	}
 
@@ -2306,17 +2306,17 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		},
 		"interface": basetypes.StringType{},
 		"ip_mtu":    basetypes.Int64Type{},
-		"ipv4addresses": basetypes.ListType{
-			ElemType: Ipv4addressesValue{}.Type(ctx),
+		"ipv4_addresses": basetypes.ListType{
+			ElemType: Ipv4AddressesValue{}.Type(ctx),
 		},
-		"ipv4parameters": basetypes.ObjectType{
-			AttrTypes: Ipv4parametersValue{}.AttributeTypes(ctx),
+		"ipv4_parameters": basetypes.ObjectType{
+			AttrTypes: Ipv4ParametersValue{}.AttributeTypes(ctx),
 		},
-		"ipv6addresses": basetypes.ListType{
-			ElemType: Ipv6addressesValue{}.Type(ctx),
+		"ipv6_addresses": basetypes.ListType{
+			ElemType: Ipv6AddressesValue{}.Type(ctx),
 		},
-		"ipv6router_advertisement": basetypes.ObjectType{
-			AttrTypes: Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
+		"ipv6_router_advertisement": basetypes.ObjectType{
+			AttrTypes: Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 		},
 		"l3proxy_arpnd": basetypes.ObjectType{
 			AttrTypes: L3proxyArpndValue{}.AttributeTypes(ctx),
@@ -2339,23 +2339,23 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"arp_timeout":              v.ArpTimeout,
-			"bfd":                      bfd,
-			"description":              v.Description,
-			"egress":                   egress,
-			"ingress":                  ingress,
-			"interface":                v.Interface,
-			"ip_mtu":                   v.IpMtu,
-			"ipv4addresses":            ipv4addresses,
-			"ipv4parameters":           ipv4parameters,
-			"ipv6addresses":            ipv6addresses,
-			"ipv6router_advertisement": ipv6routerAdvertisement,
-			"l3proxy_arpnd":            l3proxyArpnd,
-			"learn_unsolicited":        v.LearnUnsolicited,
-			"router":                   v.Router,
-			"unnumbered":               v.Unnumbered,
-			"vlan_id":                  v.VlanId,
-			"vlan_pool":                v.VlanPool,
+			"arp_timeout":               v.ArpTimeout,
+			"bfd":                       bfd,
+			"description":               v.Description,
+			"egress":                    egress,
+			"ingress":                   ingress,
+			"interface":                 v.Interface,
+			"ip_mtu":                    v.IpMtu,
+			"ipv4_addresses":            ipv4Addresses,
+			"ipv4_parameters":           ipv4Parameters,
+			"ipv6_addresses":            ipv6Addresses,
+			"ipv6_router_advertisement": ipv6RouterAdvertisement,
+			"l3proxy_arpnd":             l3proxyArpnd,
+			"learn_unsolicited":         v.LearnUnsolicited,
+			"router":                    v.Router,
+			"unnumbered":                v.Unnumbered,
+			"vlan_id":                   v.VlanId,
+			"vlan_pool":                 v.VlanPool,
 		})
 
 	return objVal, diags
@@ -2404,19 +2404,19 @@ func (v SpecValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.Ipv4addresses.Equal(other.Ipv4addresses) {
+	if !v.Ipv4Addresses.Equal(other.Ipv4Addresses) {
 		return false
 	}
 
-	if !v.Ipv4parameters.Equal(other.Ipv4parameters) {
+	if !v.Ipv4Parameters.Equal(other.Ipv4Parameters) {
 		return false
 	}
 
-	if !v.Ipv6addresses.Equal(other.Ipv6addresses) {
+	if !v.Ipv6Addresses.Equal(other.Ipv6Addresses) {
 		return false
 	}
 
-	if !v.Ipv6routerAdvertisement.Equal(other.Ipv6routerAdvertisement) {
+	if !v.Ipv6RouterAdvertisement.Equal(other.Ipv6RouterAdvertisement) {
 		return false
 	}
 
@@ -2470,17 +2470,17 @@ func (v SpecValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		},
 		"interface": basetypes.StringType{},
 		"ip_mtu":    basetypes.Int64Type{},
-		"ipv4addresses": basetypes.ListType{
-			ElemType: Ipv4addressesValue{}.Type(ctx),
+		"ipv4_addresses": basetypes.ListType{
+			ElemType: Ipv4AddressesValue{}.Type(ctx),
 		},
-		"ipv4parameters": basetypes.ObjectType{
-			AttrTypes: Ipv4parametersValue{}.AttributeTypes(ctx),
+		"ipv4_parameters": basetypes.ObjectType{
+			AttrTypes: Ipv4ParametersValue{}.AttributeTypes(ctx),
 		},
-		"ipv6addresses": basetypes.ListType{
-			ElemType: Ipv6addressesValue{}.Type(ctx),
+		"ipv6_addresses": basetypes.ListType{
+			ElemType: Ipv6AddressesValue{}.Type(ctx),
 		},
-		"ipv6router_advertisement": basetypes.ObjectType{
-			AttrTypes: Ipv6routerAdvertisementValue{}.AttributeTypes(ctx),
+		"ipv6_router_advertisement": basetypes.ObjectType{
+			AttrTypes: Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 		},
 		"l3proxy_arpnd": basetypes.ObjectType{
 			AttrTypes: L3proxyArpndValue{}.AttributeTypes(ctx),
@@ -3966,14 +3966,14 @@ func (v IngressValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	}
 }
 
-var _ basetypes.ObjectTypable = Ipv4addressesType{}
+var _ basetypes.ObjectTypable = Ipv4AddressesType{}
 
-type Ipv4addressesType struct {
+type Ipv4AddressesType struct {
 	basetypes.ObjectType
 }
 
-func (t Ipv4addressesType) Equal(o attr.Type) bool {
-	other, ok := o.(Ipv4addressesType)
+func (t Ipv4AddressesType) Equal(o attr.Type) bool {
+	other, ok := o.(Ipv4AddressesType)
 
 	if !ok {
 		return false
@@ -3982,11 +3982,11 @@ func (t Ipv4addressesType) Equal(o attr.Type) bool {
 	return t.ObjectType.Equal(other.ObjectType)
 }
 
-func (t Ipv4addressesType) String() string {
-	return "Ipv4addressesType"
+func (t Ipv4AddressesType) String() string {
+	return "Ipv4AddressesType"
 }
 
-func (t Ipv4addressesType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+func (t Ipv4AddressesType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributes := in.Attributes()
@@ -4031,26 +4031,26 @@ func (t Ipv4addressesType) ValueFromObject(ctx context.Context, in basetypes.Obj
 		return nil, diags
 	}
 
-	return Ipv4addressesValue{
+	return Ipv4AddressesValue{
 		IpPrefix: ipPrefixVal,
 		Primary:  primaryVal,
 		state:    attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv4addressesValueNull() Ipv4addressesValue {
-	return Ipv4addressesValue{
+func NewIpv4AddressesValueNull() Ipv4AddressesValue {
+	return Ipv4AddressesValue{
 		state: attr.ValueStateNull,
 	}
 }
 
-func NewIpv4addressesValueUnknown() Ipv4addressesValue {
-	return Ipv4addressesValue{
+func NewIpv4AddressesValueUnknown() Ipv4AddressesValue {
+	return Ipv4AddressesValue{
 		state: attr.ValueStateUnknown,
 	}
 }
 
-func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv4addressesValue, diag.Diagnostics) {
+func NewIpv4AddressesValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv4AddressesValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
@@ -4061,11 +4061,11 @@ func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 
 		if !ok {
 			diags.AddError(
-				"Missing Ipv4addressesValue Attribute Value",
-				"While creating a Ipv4addressesValue value, a missing attribute value was detected. "+
-					"A Ipv4addressesValue must contain values for all attributes, even if null or unknown. "+
+				"Missing Ipv4AddressesValue Attribute Value",
+				"While creating a Ipv4AddressesValue value, a missing attribute value was detected. "+
+					"A Ipv4AddressesValue must contain values for all attributes, even if null or unknown. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv4addressesValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+					fmt.Sprintf("Ipv4AddressesValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
 			)
 
 			continue
@@ -4073,12 +4073,12 @@ func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 
 		if !attributeType.Equal(attribute.Type(ctx)) {
 			diags.AddError(
-				"Invalid Ipv4addressesValue Attribute Type",
-				"While creating a Ipv4addressesValue value, an invalid attribute value was detected. "+
-					"A Ipv4addressesValue must use a matching attribute type for the value. "+
+				"Invalid Ipv4AddressesValue Attribute Type",
+				"While creating a Ipv4AddressesValue value, an invalid attribute value was detected. "+
+					"A Ipv4AddressesValue must use a matching attribute type for the value. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv4addressesValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
-					fmt.Sprintf("Ipv4addressesValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+					fmt.Sprintf("Ipv4AddressesValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("Ipv4AddressesValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
 			)
 		}
 	}
@@ -4088,17 +4088,17 @@ func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 
 		if !ok {
 			diags.AddError(
-				"Extra Ipv4addressesValue Attribute Value",
-				"While creating a Ipv4addressesValue value, an extra attribute value was detected. "+
-					"A Ipv4addressesValue must not contain values beyond the expected attribute types. "+
+				"Extra Ipv4AddressesValue Attribute Value",
+				"While creating a Ipv4AddressesValue value, an extra attribute value was detected. "+
+					"A Ipv4AddressesValue must not contain values beyond the expected attribute types. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Extra Ipv4addressesValue Attribute Name: %s", name),
+					fmt.Sprintf("Extra Ipv4AddressesValue Attribute Name: %s", name),
 			)
 		}
 	}
 
 	if diags.HasError() {
-		return NewIpv4addressesValueUnknown(), diags
+		return NewIpv4AddressesValueUnknown(), diags
 	}
 
 	ipPrefixAttribute, ok := attributes["ip_prefix"]
@@ -4108,7 +4108,7 @@ func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 			"Attribute Missing",
 			`ip_prefix is missing from object`)
 
-		return NewIpv4addressesValueUnknown(), diags
+		return NewIpv4AddressesValueUnknown(), diags
 	}
 
 	ipPrefixVal, ok := ipPrefixAttribute.(basetypes.StringValue)
@@ -4126,7 +4126,7 @@ func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 			"Attribute Missing",
 			`primary is missing from object`)
 
-		return NewIpv4addressesValueUnknown(), diags
+		return NewIpv4AddressesValueUnknown(), diags
 	}
 
 	primaryVal, ok := primaryAttribute.(basetypes.BoolValue)
@@ -4138,18 +4138,18 @@ func NewIpv4addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 	}
 
 	if diags.HasError() {
-		return NewIpv4addressesValueUnknown(), diags
+		return NewIpv4AddressesValueUnknown(), diags
 	}
 
-	return Ipv4addressesValue{
+	return Ipv4AddressesValue{
 		IpPrefix: ipPrefixVal,
 		Primary:  primaryVal,
 		state:    attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv4addressesValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv4addressesValue {
-	object, diags := NewIpv4addressesValue(attributeTypes, attributes)
+func NewIpv4AddressesValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv4AddressesValue {
+	object, diags := NewIpv4AddressesValue(attributeTypes, attributes)
 
 	if diags.HasError() {
 		// This could potentially be added to the diag package.
@@ -4163,15 +4163,15 @@ func NewIpv4addressesValueMust(attributeTypes map[string]attr.Type, attributes m
 				diagnostic.Detail()))
 		}
 
-		panic("NewIpv4addressesValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+		panic("NewIpv4AddressesValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
 	}
 
 	return object
 }
 
-func (t Ipv4addressesType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+func (t Ipv4AddressesType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
 	if in.Type() == nil {
-		return NewIpv4addressesValueNull(), nil
+		return NewIpv4AddressesValueNull(), nil
 	}
 
 	if !in.Type().Equal(t.TerraformType(ctx)) {
@@ -4179,11 +4179,11 @@ func (t Ipv4addressesType) ValueFromTerraform(ctx context.Context, in tftypes.Va
 	}
 
 	if !in.IsKnown() {
-		return NewIpv4addressesValueUnknown(), nil
+		return NewIpv4AddressesValueUnknown(), nil
 	}
 
 	if in.IsNull() {
-		return NewIpv4addressesValueNull(), nil
+		return NewIpv4AddressesValueNull(), nil
 	}
 
 	attributes := map[string]attr.Value{}
@@ -4206,22 +4206,22 @@ func (t Ipv4addressesType) ValueFromTerraform(ctx context.Context, in tftypes.Va
 		attributes[k] = a
 	}
 
-	return NewIpv4addressesValueMust(Ipv4addressesValue{}.AttributeTypes(ctx), attributes), nil
+	return NewIpv4AddressesValueMust(Ipv4AddressesValue{}.AttributeTypes(ctx), attributes), nil
 }
 
-func (t Ipv4addressesType) ValueType(ctx context.Context) attr.Value {
-	return Ipv4addressesValue{}
+func (t Ipv4AddressesType) ValueType(ctx context.Context) attr.Value {
+	return Ipv4AddressesValue{}
 }
 
-var _ basetypes.ObjectValuable = Ipv4addressesValue{}
+var _ basetypes.ObjectValuable = Ipv4AddressesValue{}
 
-type Ipv4addressesValue struct {
+type Ipv4AddressesValue struct {
 	IpPrefix basetypes.StringValue `tfsdk:"ip_prefix"`
 	Primary  basetypes.BoolValue   `tfsdk:"primary"`
 	state    attr.ValueState
 }
 
-func (v Ipv4addressesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+func (v Ipv4AddressesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes := make(map[string]tftypes.Type, 2)
 
 	var val tftypes.Value
@@ -4266,19 +4266,19 @@ func (v Ipv4addressesValue) ToTerraformValue(ctx context.Context) (tftypes.Value
 	}
 }
 
-func (v Ipv4addressesValue) IsNull() bool {
+func (v Ipv4AddressesValue) IsNull() bool {
 	return v.state == attr.ValueStateNull
 }
 
-func (v Ipv4addressesValue) IsUnknown() bool {
+func (v Ipv4AddressesValue) IsUnknown() bool {
 	return v.state == attr.ValueStateUnknown
 }
 
-func (v Ipv4addressesValue) String() string {
-	return "Ipv4addressesValue"
+func (v Ipv4AddressesValue) String() string {
+	return "Ipv4AddressesValue"
 }
 
-func (v Ipv4addressesValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+func (v Ipv4AddressesValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributeTypes := map[string]attr.Type{
@@ -4304,8 +4304,8 @@ func (v Ipv4addressesValue) ToObjectValue(ctx context.Context) (basetypes.Object
 	return objVal, diags
 }
 
-func (v Ipv4addressesValue) Equal(o attr.Value) bool {
-	other, ok := o.(Ipv4addressesValue)
+func (v Ipv4AddressesValue) Equal(o attr.Value) bool {
+	other, ok := o.(Ipv4AddressesValue)
 
 	if !ok {
 		return false
@@ -4330,29 +4330,29 @@ func (v Ipv4addressesValue) Equal(o attr.Value) bool {
 	return true
 }
 
-func (v Ipv4addressesValue) Type(ctx context.Context) attr.Type {
-	return Ipv4addressesType{
+func (v Ipv4AddressesValue) Type(ctx context.Context) attr.Type {
+	return Ipv4AddressesType{
 		basetypes.ObjectType{
 			AttrTypes: v.AttributeTypes(ctx),
 		},
 	}
 }
 
-func (v Ipv4addressesValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+func (v Ipv4AddressesValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"ip_prefix": basetypes.StringType{},
 		"primary":   basetypes.BoolType{},
 	}
 }
 
-var _ basetypes.ObjectTypable = Ipv4parametersType{}
+var _ basetypes.ObjectTypable = Ipv4ParametersType{}
 
-type Ipv4parametersType struct {
+type Ipv4ParametersType struct {
 	basetypes.ObjectType
 }
 
-func (t Ipv4parametersType) Equal(o attr.Type) bool {
-	other, ok := o.(Ipv4parametersType)
+func (t Ipv4ParametersType) Equal(o attr.Type) bool {
+	other, ok := o.(Ipv4ParametersType)
 
 	if !ok {
 		return false
@@ -4361,11 +4361,11 @@ func (t Ipv4parametersType) Equal(o attr.Type) bool {
 	return t.ObjectType.Equal(other.ObjectType)
 }
 
-func (t Ipv4parametersType) String() string {
-	return "Ipv4parametersType"
+func (t Ipv4ParametersType) String() string {
+	return "Ipv4ParametersType"
 }
 
-func (t Ipv4parametersType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+func (t Ipv4ParametersType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributes := in.Attributes()
@@ -4392,25 +4392,25 @@ func (t Ipv4parametersType) ValueFromObject(ctx context.Context, in basetypes.Ob
 		return nil, diags
 	}
 
-	return Ipv4parametersValue{
+	return Ipv4ParametersValue{
 		DirectedBroadcast: directedBroadcastVal,
 		state:             attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv4parametersValueNull() Ipv4parametersValue {
-	return Ipv4parametersValue{
+func NewIpv4ParametersValueNull() Ipv4ParametersValue {
+	return Ipv4ParametersValue{
 		state: attr.ValueStateNull,
 	}
 }
 
-func NewIpv4parametersValueUnknown() Ipv4parametersValue {
-	return Ipv4parametersValue{
+func NewIpv4ParametersValueUnknown() Ipv4ParametersValue {
+	return Ipv4ParametersValue{
 		state: attr.ValueStateUnknown,
 	}
 }
 
-func NewIpv4parametersValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv4parametersValue, diag.Diagnostics) {
+func NewIpv4ParametersValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv4ParametersValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
@@ -4421,11 +4421,11 @@ func NewIpv4parametersValue(attributeTypes map[string]attr.Type, attributes map[
 
 		if !ok {
 			diags.AddError(
-				"Missing Ipv4parametersValue Attribute Value",
-				"While creating a Ipv4parametersValue value, a missing attribute value was detected. "+
-					"A Ipv4parametersValue must contain values for all attributes, even if null or unknown. "+
+				"Missing Ipv4ParametersValue Attribute Value",
+				"While creating a Ipv4ParametersValue value, a missing attribute value was detected. "+
+					"A Ipv4ParametersValue must contain values for all attributes, even if null or unknown. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv4parametersValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+					fmt.Sprintf("Ipv4ParametersValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
 			)
 
 			continue
@@ -4433,12 +4433,12 @@ func NewIpv4parametersValue(attributeTypes map[string]attr.Type, attributes map[
 
 		if !attributeType.Equal(attribute.Type(ctx)) {
 			diags.AddError(
-				"Invalid Ipv4parametersValue Attribute Type",
-				"While creating a Ipv4parametersValue value, an invalid attribute value was detected. "+
-					"A Ipv4parametersValue must use a matching attribute type for the value. "+
+				"Invalid Ipv4ParametersValue Attribute Type",
+				"While creating a Ipv4ParametersValue value, an invalid attribute value was detected. "+
+					"A Ipv4ParametersValue must use a matching attribute type for the value. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv4parametersValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
-					fmt.Sprintf("Ipv4parametersValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+					fmt.Sprintf("Ipv4ParametersValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("Ipv4ParametersValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
 			)
 		}
 	}
@@ -4448,17 +4448,17 @@ func NewIpv4parametersValue(attributeTypes map[string]attr.Type, attributes map[
 
 		if !ok {
 			diags.AddError(
-				"Extra Ipv4parametersValue Attribute Value",
-				"While creating a Ipv4parametersValue value, an extra attribute value was detected. "+
-					"A Ipv4parametersValue must not contain values beyond the expected attribute types. "+
+				"Extra Ipv4ParametersValue Attribute Value",
+				"While creating a Ipv4ParametersValue value, an extra attribute value was detected. "+
+					"A Ipv4ParametersValue must not contain values beyond the expected attribute types. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Extra Ipv4parametersValue Attribute Name: %s", name),
+					fmt.Sprintf("Extra Ipv4ParametersValue Attribute Name: %s", name),
 			)
 		}
 	}
 
 	if diags.HasError() {
-		return NewIpv4parametersValueUnknown(), diags
+		return NewIpv4ParametersValueUnknown(), diags
 	}
 
 	directedBroadcastAttribute, ok := attributes["directed_broadcast"]
@@ -4468,7 +4468,7 @@ func NewIpv4parametersValue(attributeTypes map[string]attr.Type, attributes map[
 			"Attribute Missing",
 			`directed_broadcast is missing from object`)
 
-		return NewIpv4parametersValueUnknown(), diags
+		return NewIpv4ParametersValueUnknown(), diags
 	}
 
 	directedBroadcastVal, ok := directedBroadcastAttribute.(basetypes.BoolValue)
@@ -4480,17 +4480,17 @@ func NewIpv4parametersValue(attributeTypes map[string]attr.Type, attributes map[
 	}
 
 	if diags.HasError() {
-		return NewIpv4parametersValueUnknown(), diags
+		return NewIpv4ParametersValueUnknown(), diags
 	}
 
-	return Ipv4parametersValue{
+	return Ipv4ParametersValue{
 		DirectedBroadcast: directedBroadcastVal,
 		state:             attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv4parametersValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv4parametersValue {
-	object, diags := NewIpv4parametersValue(attributeTypes, attributes)
+func NewIpv4ParametersValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv4ParametersValue {
+	object, diags := NewIpv4ParametersValue(attributeTypes, attributes)
 
 	if diags.HasError() {
 		// This could potentially be added to the diag package.
@@ -4504,15 +4504,15 @@ func NewIpv4parametersValueMust(attributeTypes map[string]attr.Type, attributes 
 				diagnostic.Detail()))
 		}
 
-		panic("NewIpv4parametersValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+		panic("NewIpv4ParametersValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
 	}
 
 	return object
 }
 
-func (t Ipv4parametersType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+func (t Ipv4ParametersType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
 	if in.Type() == nil {
-		return NewIpv4parametersValueNull(), nil
+		return NewIpv4ParametersValueNull(), nil
 	}
 
 	if !in.Type().Equal(t.TerraformType(ctx)) {
@@ -4520,11 +4520,11 @@ func (t Ipv4parametersType) ValueFromTerraform(ctx context.Context, in tftypes.V
 	}
 
 	if !in.IsKnown() {
-		return NewIpv4parametersValueUnknown(), nil
+		return NewIpv4ParametersValueUnknown(), nil
 	}
 
 	if in.IsNull() {
-		return NewIpv4parametersValueNull(), nil
+		return NewIpv4ParametersValueNull(), nil
 	}
 
 	attributes := map[string]attr.Value{}
@@ -4547,21 +4547,21 @@ func (t Ipv4parametersType) ValueFromTerraform(ctx context.Context, in tftypes.V
 		attributes[k] = a
 	}
 
-	return NewIpv4parametersValueMust(Ipv4parametersValue{}.AttributeTypes(ctx), attributes), nil
+	return NewIpv4ParametersValueMust(Ipv4ParametersValue{}.AttributeTypes(ctx), attributes), nil
 }
 
-func (t Ipv4parametersType) ValueType(ctx context.Context) attr.Value {
-	return Ipv4parametersValue{}
+func (t Ipv4ParametersType) ValueType(ctx context.Context) attr.Value {
+	return Ipv4ParametersValue{}
 }
 
-var _ basetypes.ObjectValuable = Ipv4parametersValue{}
+var _ basetypes.ObjectValuable = Ipv4ParametersValue{}
 
-type Ipv4parametersValue struct {
+type Ipv4ParametersValue struct {
 	DirectedBroadcast basetypes.BoolValue `tfsdk:"directed_broadcast"`
 	state             attr.ValueState
 }
 
-func (v Ipv4parametersValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+func (v Ipv4ParametersValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes := make(map[string]tftypes.Type, 1)
 
 	var val tftypes.Value
@@ -4597,19 +4597,19 @@ func (v Ipv4parametersValue) ToTerraformValue(ctx context.Context) (tftypes.Valu
 	}
 }
 
-func (v Ipv4parametersValue) IsNull() bool {
+func (v Ipv4ParametersValue) IsNull() bool {
 	return v.state == attr.ValueStateNull
 }
 
-func (v Ipv4parametersValue) IsUnknown() bool {
+func (v Ipv4ParametersValue) IsUnknown() bool {
 	return v.state == attr.ValueStateUnknown
 }
 
-func (v Ipv4parametersValue) String() string {
-	return "Ipv4parametersValue"
+func (v Ipv4ParametersValue) String() string {
+	return "Ipv4ParametersValue"
 }
 
-func (v Ipv4parametersValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+func (v Ipv4ParametersValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributeTypes := map[string]attr.Type{
@@ -4633,8 +4633,8 @@ func (v Ipv4parametersValue) ToObjectValue(ctx context.Context) (basetypes.Objec
 	return objVal, diags
 }
 
-func (v Ipv4parametersValue) Equal(o attr.Value) bool {
-	other, ok := o.(Ipv4parametersValue)
+func (v Ipv4ParametersValue) Equal(o attr.Value) bool {
+	other, ok := o.(Ipv4ParametersValue)
 
 	if !ok {
 		return false
@@ -4655,28 +4655,28 @@ func (v Ipv4parametersValue) Equal(o attr.Value) bool {
 	return true
 }
 
-func (v Ipv4parametersValue) Type(ctx context.Context) attr.Type {
-	return Ipv4parametersType{
+func (v Ipv4ParametersValue) Type(ctx context.Context) attr.Type {
+	return Ipv4ParametersType{
 		basetypes.ObjectType{
 			AttrTypes: v.AttributeTypes(ctx),
 		},
 	}
 }
 
-func (v Ipv4parametersValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+func (v Ipv4ParametersValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"directed_broadcast": basetypes.BoolType{},
 	}
 }
 
-var _ basetypes.ObjectTypable = Ipv6addressesType{}
+var _ basetypes.ObjectTypable = Ipv6AddressesType{}
 
-type Ipv6addressesType struct {
+type Ipv6AddressesType struct {
 	basetypes.ObjectType
 }
 
-func (t Ipv6addressesType) Equal(o attr.Type) bool {
-	other, ok := o.(Ipv6addressesType)
+func (t Ipv6AddressesType) Equal(o attr.Type) bool {
+	other, ok := o.(Ipv6AddressesType)
 
 	if !ok {
 		return false
@@ -4685,11 +4685,11 @@ func (t Ipv6addressesType) Equal(o attr.Type) bool {
 	return t.ObjectType.Equal(other.ObjectType)
 }
 
-func (t Ipv6addressesType) String() string {
-	return "Ipv6addressesType"
+func (t Ipv6AddressesType) String() string {
+	return "Ipv6AddressesType"
 }
 
-func (t Ipv6addressesType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+func (t Ipv6AddressesType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributes := in.Attributes()
@@ -4734,26 +4734,26 @@ func (t Ipv6addressesType) ValueFromObject(ctx context.Context, in basetypes.Obj
 		return nil, diags
 	}
 
-	return Ipv6addressesValue{
+	return Ipv6AddressesValue{
 		IpPrefix: ipPrefixVal,
 		Primary:  primaryVal,
 		state:    attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv6addressesValueNull() Ipv6addressesValue {
-	return Ipv6addressesValue{
+func NewIpv6AddressesValueNull() Ipv6AddressesValue {
+	return Ipv6AddressesValue{
 		state: attr.ValueStateNull,
 	}
 }
 
-func NewIpv6addressesValueUnknown() Ipv6addressesValue {
-	return Ipv6addressesValue{
+func NewIpv6AddressesValueUnknown() Ipv6AddressesValue {
+	return Ipv6AddressesValue{
 		state: attr.ValueStateUnknown,
 	}
 }
 
-func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv6addressesValue, diag.Diagnostics) {
+func NewIpv6AddressesValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv6AddressesValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
@@ -4764,11 +4764,11 @@ func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 
 		if !ok {
 			diags.AddError(
-				"Missing Ipv6addressesValue Attribute Value",
-				"While creating a Ipv6addressesValue value, a missing attribute value was detected. "+
-					"A Ipv6addressesValue must contain values for all attributes, even if null or unknown. "+
+				"Missing Ipv6AddressesValue Attribute Value",
+				"While creating a Ipv6AddressesValue value, a missing attribute value was detected. "+
+					"A Ipv6AddressesValue must contain values for all attributes, even if null or unknown. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv6addressesValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+					fmt.Sprintf("Ipv6AddressesValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
 			)
 
 			continue
@@ -4776,12 +4776,12 @@ func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 
 		if !attributeType.Equal(attribute.Type(ctx)) {
 			diags.AddError(
-				"Invalid Ipv6addressesValue Attribute Type",
-				"While creating a Ipv6addressesValue value, an invalid attribute value was detected. "+
-					"A Ipv6addressesValue must use a matching attribute type for the value. "+
+				"Invalid Ipv6AddressesValue Attribute Type",
+				"While creating a Ipv6AddressesValue value, an invalid attribute value was detected. "+
+					"A Ipv6AddressesValue must use a matching attribute type for the value. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv6addressesValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
-					fmt.Sprintf("Ipv6addressesValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+					fmt.Sprintf("Ipv6AddressesValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("Ipv6AddressesValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
 			)
 		}
 	}
@@ -4791,17 +4791,17 @@ func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 
 		if !ok {
 			diags.AddError(
-				"Extra Ipv6addressesValue Attribute Value",
-				"While creating a Ipv6addressesValue value, an extra attribute value was detected. "+
-					"A Ipv6addressesValue must not contain values beyond the expected attribute types. "+
+				"Extra Ipv6AddressesValue Attribute Value",
+				"While creating a Ipv6AddressesValue value, an extra attribute value was detected. "+
+					"A Ipv6AddressesValue must not contain values beyond the expected attribute types. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Extra Ipv6addressesValue Attribute Name: %s", name),
+					fmt.Sprintf("Extra Ipv6AddressesValue Attribute Name: %s", name),
 			)
 		}
 	}
 
 	if diags.HasError() {
-		return NewIpv6addressesValueUnknown(), diags
+		return NewIpv6AddressesValueUnknown(), diags
 	}
 
 	ipPrefixAttribute, ok := attributes["ip_prefix"]
@@ -4811,7 +4811,7 @@ func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 			"Attribute Missing",
 			`ip_prefix is missing from object`)
 
-		return NewIpv6addressesValueUnknown(), diags
+		return NewIpv6AddressesValueUnknown(), diags
 	}
 
 	ipPrefixVal, ok := ipPrefixAttribute.(basetypes.StringValue)
@@ -4829,7 +4829,7 @@ func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 			"Attribute Missing",
 			`primary is missing from object`)
 
-		return NewIpv6addressesValueUnknown(), diags
+		return NewIpv6AddressesValueUnknown(), diags
 	}
 
 	primaryVal, ok := primaryAttribute.(basetypes.BoolValue)
@@ -4841,18 +4841,18 @@ func NewIpv6addressesValue(attributeTypes map[string]attr.Type, attributes map[s
 	}
 
 	if diags.HasError() {
-		return NewIpv6addressesValueUnknown(), diags
+		return NewIpv6AddressesValueUnknown(), diags
 	}
 
-	return Ipv6addressesValue{
+	return Ipv6AddressesValue{
 		IpPrefix: ipPrefixVal,
 		Primary:  primaryVal,
 		state:    attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv6addressesValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv6addressesValue {
-	object, diags := NewIpv6addressesValue(attributeTypes, attributes)
+func NewIpv6AddressesValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv6AddressesValue {
+	object, diags := NewIpv6AddressesValue(attributeTypes, attributes)
 
 	if diags.HasError() {
 		// This could potentially be added to the diag package.
@@ -4866,15 +4866,15 @@ func NewIpv6addressesValueMust(attributeTypes map[string]attr.Type, attributes m
 				diagnostic.Detail()))
 		}
 
-		panic("NewIpv6addressesValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+		panic("NewIpv6AddressesValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
 	}
 
 	return object
 }
 
-func (t Ipv6addressesType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+func (t Ipv6AddressesType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
 	if in.Type() == nil {
-		return NewIpv6addressesValueNull(), nil
+		return NewIpv6AddressesValueNull(), nil
 	}
 
 	if !in.Type().Equal(t.TerraformType(ctx)) {
@@ -4882,11 +4882,11 @@ func (t Ipv6addressesType) ValueFromTerraform(ctx context.Context, in tftypes.Va
 	}
 
 	if !in.IsKnown() {
-		return NewIpv6addressesValueUnknown(), nil
+		return NewIpv6AddressesValueUnknown(), nil
 	}
 
 	if in.IsNull() {
-		return NewIpv6addressesValueNull(), nil
+		return NewIpv6AddressesValueNull(), nil
 	}
 
 	attributes := map[string]attr.Value{}
@@ -4909,22 +4909,22 @@ func (t Ipv6addressesType) ValueFromTerraform(ctx context.Context, in tftypes.Va
 		attributes[k] = a
 	}
 
-	return NewIpv6addressesValueMust(Ipv6addressesValue{}.AttributeTypes(ctx), attributes), nil
+	return NewIpv6AddressesValueMust(Ipv6AddressesValue{}.AttributeTypes(ctx), attributes), nil
 }
 
-func (t Ipv6addressesType) ValueType(ctx context.Context) attr.Value {
-	return Ipv6addressesValue{}
+func (t Ipv6AddressesType) ValueType(ctx context.Context) attr.Value {
+	return Ipv6AddressesValue{}
 }
 
-var _ basetypes.ObjectValuable = Ipv6addressesValue{}
+var _ basetypes.ObjectValuable = Ipv6AddressesValue{}
 
-type Ipv6addressesValue struct {
+type Ipv6AddressesValue struct {
 	IpPrefix basetypes.StringValue `tfsdk:"ip_prefix"`
 	Primary  basetypes.BoolValue   `tfsdk:"primary"`
 	state    attr.ValueState
 }
 
-func (v Ipv6addressesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+func (v Ipv6AddressesValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes := make(map[string]tftypes.Type, 2)
 
 	var val tftypes.Value
@@ -4969,19 +4969,19 @@ func (v Ipv6addressesValue) ToTerraformValue(ctx context.Context) (tftypes.Value
 	}
 }
 
-func (v Ipv6addressesValue) IsNull() bool {
+func (v Ipv6AddressesValue) IsNull() bool {
 	return v.state == attr.ValueStateNull
 }
 
-func (v Ipv6addressesValue) IsUnknown() bool {
+func (v Ipv6AddressesValue) IsUnknown() bool {
 	return v.state == attr.ValueStateUnknown
 }
 
-func (v Ipv6addressesValue) String() string {
-	return "Ipv6addressesValue"
+func (v Ipv6AddressesValue) String() string {
+	return "Ipv6AddressesValue"
 }
 
-func (v Ipv6addressesValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+func (v Ipv6AddressesValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributeTypes := map[string]attr.Type{
@@ -5007,8 +5007,8 @@ func (v Ipv6addressesValue) ToObjectValue(ctx context.Context) (basetypes.Object
 	return objVal, diags
 }
 
-func (v Ipv6addressesValue) Equal(o attr.Value) bool {
-	other, ok := o.(Ipv6addressesValue)
+func (v Ipv6AddressesValue) Equal(o attr.Value) bool {
+	other, ok := o.(Ipv6AddressesValue)
 
 	if !ok {
 		return false
@@ -5033,29 +5033,29 @@ func (v Ipv6addressesValue) Equal(o attr.Value) bool {
 	return true
 }
 
-func (v Ipv6addressesValue) Type(ctx context.Context) attr.Type {
-	return Ipv6addressesType{
+func (v Ipv6AddressesValue) Type(ctx context.Context) attr.Type {
+	return Ipv6AddressesType{
 		basetypes.ObjectType{
 			AttrTypes: v.AttributeTypes(ctx),
 		},
 	}
 }
 
-func (v Ipv6addressesValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+func (v Ipv6AddressesValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"ip_prefix": basetypes.StringType{},
 		"primary":   basetypes.BoolType{},
 	}
 }
 
-var _ basetypes.ObjectTypable = Ipv6routerAdvertisementType{}
+var _ basetypes.ObjectTypable = Ipv6RouterAdvertisementType{}
 
-type Ipv6routerAdvertisementType struct {
+type Ipv6RouterAdvertisementType struct {
 	basetypes.ObjectType
 }
 
-func (t Ipv6routerAdvertisementType) Equal(o attr.Type) bool {
-	other, ok := o.(Ipv6routerAdvertisementType)
+func (t Ipv6RouterAdvertisementType) Equal(o attr.Type) bool {
+	other, ok := o.(Ipv6RouterAdvertisementType)
 
 	if !ok {
 		return false
@@ -5064,11 +5064,11 @@ func (t Ipv6routerAdvertisementType) Equal(o attr.Type) bool {
 	return t.ObjectType.Equal(other.ObjectType)
 }
 
-func (t Ipv6routerAdvertisementType) String() string {
-	return "Ipv6routerAdvertisementType"
+func (t Ipv6RouterAdvertisementType) String() string {
+	return "Ipv6RouterAdvertisementType"
 }
 
-func (t Ipv6routerAdvertisementType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+func (t Ipv6RouterAdvertisementType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributes := in.Attributes()
@@ -5275,7 +5275,7 @@ func (t Ipv6routerAdvertisementType) ValueFromObject(ctx context.Context, in bas
 		return nil, diags
 	}
 
-	return Ipv6routerAdvertisementValue{
+	return Ipv6RouterAdvertisementValue{
 		CurrentHopLimit:          currentHopLimitVal,
 		Enabled:                  enabledVal,
 		IpMtu:                    ipMtuVal,
@@ -5291,19 +5291,19 @@ func (t Ipv6routerAdvertisementType) ValueFromObject(ctx context.Context, in bas
 	}, diags
 }
 
-func NewIpv6routerAdvertisementValueNull() Ipv6routerAdvertisementValue {
-	return Ipv6routerAdvertisementValue{
+func NewIpv6RouterAdvertisementValueNull() Ipv6RouterAdvertisementValue {
+	return Ipv6RouterAdvertisementValue{
 		state: attr.ValueStateNull,
 	}
 }
 
-func NewIpv6routerAdvertisementValueUnknown() Ipv6routerAdvertisementValue {
-	return Ipv6routerAdvertisementValue{
+func NewIpv6RouterAdvertisementValueUnknown() Ipv6RouterAdvertisementValue {
+	return Ipv6RouterAdvertisementValue{
 		state: attr.ValueStateUnknown,
 	}
 }
 
-func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv6routerAdvertisementValue, diag.Diagnostics) {
+func NewIpv6RouterAdvertisementValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv6RouterAdvertisementValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
@@ -5314,11 +5314,11 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 
 		if !ok {
 			diags.AddError(
-				"Missing Ipv6routerAdvertisementValue Attribute Value",
-				"While creating a Ipv6routerAdvertisementValue value, a missing attribute value was detected. "+
-					"A Ipv6routerAdvertisementValue must contain values for all attributes, even if null or unknown. "+
+				"Missing Ipv6RouterAdvertisementValue Attribute Value",
+				"While creating a Ipv6RouterAdvertisementValue value, a missing attribute value was detected. "+
+					"A Ipv6RouterAdvertisementValue must contain values for all attributes, even if null or unknown. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv6routerAdvertisementValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+					fmt.Sprintf("Ipv6RouterAdvertisementValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
 			)
 
 			continue
@@ -5326,12 +5326,12 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 
 		if !attributeType.Equal(attribute.Type(ctx)) {
 			diags.AddError(
-				"Invalid Ipv6routerAdvertisementValue Attribute Type",
-				"While creating a Ipv6routerAdvertisementValue value, an invalid attribute value was detected. "+
-					"A Ipv6routerAdvertisementValue must use a matching attribute type for the value. "+
+				"Invalid Ipv6RouterAdvertisementValue Attribute Type",
+				"While creating a Ipv6RouterAdvertisementValue value, an invalid attribute value was detected. "+
+					"A Ipv6RouterAdvertisementValue must use a matching attribute type for the value. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv6routerAdvertisementValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
-					fmt.Sprintf("Ipv6routerAdvertisementValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+					fmt.Sprintf("Ipv6RouterAdvertisementValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("Ipv6RouterAdvertisementValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
 			)
 		}
 	}
@@ -5341,17 +5341,17 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 
 		if !ok {
 			diags.AddError(
-				"Extra Ipv6routerAdvertisementValue Attribute Value",
-				"While creating a Ipv6routerAdvertisementValue value, an extra attribute value was detected. "+
-					"A Ipv6routerAdvertisementValue must not contain values beyond the expected attribute types. "+
+				"Extra Ipv6RouterAdvertisementValue Attribute Value",
+				"While creating a Ipv6RouterAdvertisementValue value, an extra attribute value was detected. "+
+					"A Ipv6RouterAdvertisementValue must not contain values beyond the expected attribute types. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Extra Ipv6routerAdvertisementValue Attribute Name: %s", name),
+					fmt.Sprintf("Extra Ipv6RouterAdvertisementValue Attribute Name: %s", name),
 			)
 		}
 	}
 
 	if diags.HasError() {
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	currentHopLimitAttribute, ok := attributes["current_hop_limit"]
@@ -5361,7 +5361,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`current_hop_limit is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	currentHopLimitVal, ok := currentHopLimitAttribute.(basetypes.Int64Value)
@@ -5379,7 +5379,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`enabled is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
@@ -5397,7 +5397,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`ip_mtu is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	ipMtuVal, ok := ipMtuAttribute.(basetypes.Int64Value)
@@ -5415,7 +5415,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`managed_configuration_flag is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	managedConfigurationFlagVal, ok := managedConfigurationFlagAttribute.(basetypes.BoolValue)
@@ -5433,7 +5433,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`max_advertisement_interval is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	maxAdvertisementIntervalVal, ok := maxAdvertisementIntervalAttribute.(basetypes.Int64Value)
@@ -5451,7 +5451,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`min_advertisement_interval is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	minAdvertisementIntervalVal, ok := minAdvertisementIntervalAttribute.(basetypes.Int64Value)
@@ -5469,7 +5469,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`other_configuration_flag is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	otherConfigurationFlagVal, ok := otherConfigurationFlagAttribute.(basetypes.BoolValue)
@@ -5487,7 +5487,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`prefixes is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	prefixesVal, ok := prefixesAttribute.(basetypes.ListValue)
@@ -5505,7 +5505,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`reachable_time is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	reachableTimeVal, ok := reachableTimeAttribute.(basetypes.Int64Value)
@@ -5523,7 +5523,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`retransmit_time is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	retransmitTimeVal, ok := retransmitTimeAttribute.(basetypes.Int64Value)
@@ -5541,7 +5541,7 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 			"Attribute Missing",
 			`router_lifetime is missing from object`)
 
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
 	routerLifetimeVal, ok := routerLifetimeAttribute.(basetypes.Int64Value)
@@ -5553,10 +5553,10 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 	}
 
 	if diags.HasError() {
-		return NewIpv6routerAdvertisementValueUnknown(), diags
+		return NewIpv6RouterAdvertisementValueUnknown(), diags
 	}
 
-	return Ipv6routerAdvertisementValue{
+	return Ipv6RouterAdvertisementValue{
 		CurrentHopLimit:          currentHopLimitVal,
 		Enabled:                  enabledVal,
 		IpMtu:                    ipMtuVal,
@@ -5572,8 +5572,8 @@ func NewIpv6routerAdvertisementValue(attributeTypes map[string]attr.Type, attrib
 	}, diags
 }
 
-func NewIpv6routerAdvertisementValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv6routerAdvertisementValue {
-	object, diags := NewIpv6routerAdvertisementValue(attributeTypes, attributes)
+func NewIpv6RouterAdvertisementValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv6RouterAdvertisementValue {
+	object, diags := NewIpv6RouterAdvertisementValue(attributeTypes, attributes)
 
 	if diags.HasError() {
 		// This could potentially be added to the diag package.
@@ -5587,15 +5587,15 @@ func NewIpv6routerAdvertisementValueMust(attributeTypes map[string]attr.Type, at
 				diagnostic.Detail()))
 		}
 
-		panic("NewIpv6routerAdvertisementValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+		panic("NewIpv6RouterAdvertisementValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
 	}
 
 	return object
 }
 
-func (t Ipv6routerAdvertisementType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+func (t Ipv6RouterAdvertisementType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
 	if in.Type() == nil {
-		return NewIpv6routerAdvertisementValueNull(), nil
+		return NewIpv6RouterAdvertisementValueNull(), nil
 	}
 
 	if !in.Type().Equal(t.TerraformType(ctx)) {
@@ -5603,11 +5603,11 @@ func (t Ipv6routerAdvertisementType) ValueFromTerraform(ctx context.Context, in 
 	}
 
 	if !in.IsKnown() {
-		return NewIpv6routerAdvertisementValueUnknown(), nil
+		return NewIpv6RouterAdvertisementValueUnknown(), nil
 	}
 
 	if in.IsNull() {
-		return NewIpv6routerAdvertisementValueNull(), nil
+		return NewIpv6RouterAdvertisementValueNull(), nil
 	}
 
 	attributes := map[string]attr.Value{}
@@ -5630,16 +5630,16 @@ func (t Ipv6routerAdvertisementType) ValueFromTerraform(ctx context.Context, in 
 		attributes[k] = a
 	}
 
-	return NewIpv6routerAdvertisementValueMust(Ipv6routerAdvertisementValue{}.AttributeTypes(ctx), attributes), nil
+	return NewIpv6RouterAdvertisementValueMust(Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx), attributes), nil
 }
 
-func (t Ipv6routerAdvertisementType) ValueType(ctx context.Context) attr.Value {
-	return Ipv6routerAdvertisementValue{}
+func (t Ipv6RouterAdvertisementType) ValueType(ctx context.Context) attr.Value {
+	return Ipv6RouterAdvertisementValue{}
 }
 
-var _ basetypes.ObjectValuable = Ipv6routerAdvertisementValue{}
+var _ basetypes.ObjectValuable = Ipv6RouterAdvertisementValue{}
 
-type Ipv6routerAdvertisementValue struct {
+type Ipv6RouterAdvertisementValue struct {
 	CurrentHopLimit          basetypes.Int64Value `tfsdk:"current_hop_limit"`
 	Enabled                  basetypes.BoolValue  `tfsdk:"enabled"`
 	IpMtu                    basetypes.Int64Value `tfsdk:"ip_mtu"`
@@ -5654,7 +5654,7 @@ type Ipv6routerAdvertisementValue struct {
 	state                    attr.ValueState
 }
 
-func (v Ipv6routerAdvertisementValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+func (v Ipv6RouterAdvertisementValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes := make(map[string]tftypes.Type, 11)
 
 	var val tftypes.Value
@@ -5782,19 +5782,19 @@ func (v Ipv6routerAdvertisementValue) ToTerraformValue(ctx context.Context) (tft
 	}
 }
 
-func (v Ipv6routerAdvertisementValue) IsNull() bool {
+func (v Ipv6RouterAdvertisementValue) IsNull() bool {
 	return v.state == attr.ValueStateNull
 }
 
-func (v Ipv6routerAdvertisementValue) IsUnknown() bool {
+func (v Ipv6RouterAdvertisementValue) IsUnknown() bool {
 	return v.state == attr.ValueStateUnknown
 }
 
-func (v Ipv6routerAdvertisementValue) String() string {
-	return "Ipv6routerAdvertisementValue"
+func (v Ipv6RouterAdvertisementValue) String() string {
+	return "Ipv6RouterAdvertisementValue"
 }
 
-func (v Ipv6routerAdvertisementValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+func (v Ipv6RouterAdvertisementValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	prefixes := types.ListValueMust(
@@ -5869,8 +5869,8 @@ func (v Ipv6routerAdvertisementValue) ToObjectValue(ctx context.Context) (basety
 	return objVal, diags
 }
 
-func (v Ipv6routerAdvertisementValue) Equal(o attr.Value) bool {
-	other, ok := o.(Ipv6routerAdvertisementValue)
+func (v Ipv6RouterAdvertisementValue) Equal(o attr.Value) bool {
+	other, ok := o.(Ipv6RouterAdvertisementValue)
 
 	if !ok {
 		return false
@@ -5931,15 +5931,15 @@ func (v Ipv6routerAdvertisementValue) Equal(o attr.Value) bool {
 	return true
 }
 
-func (v Ipv6routerAdvertisementValue) Type(ctx context.Context) attr.Type {
-	return Ipv6routerAdvertisementType{
+func (v Ipv6RouterAdvertisementValue) Type(ctx context.Context) attr.Type {
+	return Ipv6RouterAdvertisementType{
 		basetypes.ObjectType{
 			AttrTypes: v.AttributeTypes(ctx),
 		},
 	}
 }
 
-func (v Ipv6routerAdvertisementValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+func (v Ipv6RouterAdvertisementValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"current_hop_limit":          basetypes.Int64Type{},
 		"enabled":                    basetypes.BoolType{},

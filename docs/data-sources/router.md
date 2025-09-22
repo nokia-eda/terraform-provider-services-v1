@@ -62,12 +62,12 @@ Optional:
 - `enabled` (Boolean) Enable or disable BGP.
 - `ibgp_preference` (Number) Preference to be set for iBGP [default=170].
 - `ip_alias_nexthops` (Attributes List) IP aliasing configuration. (see [below for nested schema](#nestedatt--spec--bgp--ip_alias_nexthops))
-- `ipv4unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--bgp--ipv4unicast))
-- `ipv6unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--bgp--ipv6unicast))
+- `ipv4_unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--bgp--ipv4_unicast))
+- `ipv6_unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--bgp--ipv6_unicast))
 - `keychain` (String) Keychain to be used for authentication
 - `min_wait_to_advertise` (Number) Minimum wait time before advertising routes post BGP restart.
 - `rapid_withdrawl` (Boolean) Enable rapid withdrawal in BGP.
-- `wait_for_fibinstall` (Boolean) Wait for FIB installation before advertising routes.
+- `wait_for_fib_install` (Boolean) Wait for FIB installation before advertising routes.
 
 <a id="nestedatt--spec--bgp--ip_alias_nexthops"></a>
 ### Nested Schema for `spec.bgp.ip_alias_nexthops`
@@ -79,18 +79,18 @@ Optional:
 - `preferred_active_node` (String) When not set the ES is used in an all active mode. This references the ToppNode object and when set, the DF algorithm is configured to type preference and the selected Node is set with a higher preference value. All other Nodes have a lower value configured.
 
 
-<a id="nestedatt--spec--bgp--ipv4unicast"></a>
-### Nested Schema for `spec.bgp.ipv4unicast`
+<a id="nestedatt--spec--bgp--ipv4_unicast"></a>
+### Nested Schema for `spec.bgp.ipv4_unicast`
 
 Optional:
 
-- `advertise_ipv6next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
+- `advertise_ipv6_next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
 - `enabled` (Boolean) Enables the IPv4 unicast AFISAFI.
-- `multipath` (Attributes) Enable multipath. (see [below for nested schema](#nestedatt--spec--bgp--ipv4unicast--multipath))
-- `receive_ipv6next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
+- `multipath` (Attributes) Enable multipath. (see [below for nested schema](#nestedatt--spec--bgp--ipv4_unicast--multipath))
+- `receive_ipv6_next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
 
-<a id="nestedatt--spec--bgp--ipv4unicast--multipath"></a>
-### Nested Schema for `spec.bgp.ipv4unicast.multipath`
+<a id="nestedatt--spec--bgp--ipv4_unicast--multipath"></a>
+### Nested Schema for `spec.bgp.ipv4_unicast.multipath`
 
 Optional:
 
@@ -99,16 +99,16 @@ Optional:
 
 
 
-<a id="nestedatt--spec--bgp--ipv6unicast"></a>
-### Nested Schema for `spec.bgp.ipv6unicast`
+<a id="nestedatt--spec--bgp--ipv6_unicast"></a>
+### Nested Schema for `spec.bgp.ipv6_unicast`
 
 Optional:
 
 - `enabled` (Boolean) Enables the IPv6 unicast AFISAFI
-- `multipath_1` (Attributes) Enable multipath (see [below for nested schema](#nestedatt--spec--bgp--ipv6unicast--multipath_1))
+- `multipath` (Attributes) Enable multipath (see [below for nested schema](#nestedatt--spec--bgp--ipv6_unicast--multipath))
 
-<a id="nestedatt--spec--bgp--ipv6unicast--multipath_1"></a>
-### Nested Schema for `spec.bgp.ipv6unicast.multipath_1`
+<a id="nestedatt--spec--bgp--ipv6_unicast--multipath"></a>
+### Nested Schema for `spec.bgp.ipv6_unicast.multipath`
 
 Optional:
 

@@ -153,9 +153,9 @@ func RouterResourceSchema(ctx context.Context) schema.Schema {
 								Description:         "IP aliasing configuration.",
 								MarkdownDescription: "IP aliasing configuration.",
 							},
-							"ipv4unicast": schema.SingleNestedAttribute{
+							"ipv4_unicast": schema.SingleNestedAttribute{
 								Attributes: map[string]schema.Attribute{
-									"advertise_ipv6next_hops": schema.BoolAttribute{
+									"advertise_ipv6_next_hops": schema.BoolAttribute{
 										Optional:            true,
 										Description:         "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.",
 										MarkdownDescription: "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.",
@@ -194,22 +194,22 @@ func RouterResourceSchema(ctx context.Context) schema.Schema {
 										Description:         "Enable multipath.",
 										MarkdownDescription: "Enable multipath.",
 									},
-									"receive_ipv6next_hops": schema.BoolAttribute{
+									"receive_ipv6_next_hops": schema.BoolAttribute{
 										Optional:            true,
 										Description:         "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.",
 										MarkdownDescription: "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.",
 									},
 								},
-								CustomType: Ipv4unicastType{
+								CustomType: Ipv4UnicastType{
 									ObjectType: types.ObjectType{
-										AttrTypes: Ipv4unicastValue{}.AttributeTypes(ctx),
+										AttrTypes: Ipv4UnicastValue{}.AttributeTypes(ctx),
 									},
 								},
 								Optional:            true,
 								Description:         "Parameters relating to the IPv4 unicast AFI/SAFI.",
 								MarkdownDescription: "Parameters relating to the IPv4 unicast AFI/SAFI.",
 							},
-							"ipv6unicast": schema.SingleNestedAttribute{
+							"ipv6_unicast": schema.SingleNestedAttribute{
 								Attributes: map[string]schema.Attribute{
 									"enabled": schema.BoolAttribute{
 										Optional:            true,
@@ -218,7 +218,7 @@ func RouterResourceSchema(ctx context.Context) schema.Schema {
 										MarkdownDescription: "Enables the IPv6 unicast AFISAFI",
 										Default:             booldefault.StaticBool(false),
 									},
-									"multipath_1": schema.SingleNestedAttribute{
+									"multipath": schema.SingleNestedAttribute{
 										Attributes: map[string]schema.Attribute{
 											"allow_multiple_as": schema.BoolAttribute{
 												Optional:            true,
@@ -246,9 +246,9 @@ func RouterResourceSchema(ctx context.Context) schema.Schema {
 										MarkdownDescription: "Enable multipath",
 									},
 								},
-								CustomType: Ipv6unicastType{
+								CustomType: Ipv6UnicastType{
 									ObjectType: types.ObjectType{
-										AttrTypes: Ipv6unicastValue{}.AttributeTypes(ctx),
+										AttrTypes: Ipv6UnicastValue{}.AttributeTypes(ctx),
 									},
 								},
 								Optional:            true,
@@ -277,7 +277,7 @@ func RouterResourceSchema(ctx context.Context) schema.Schema {
 								MarkdownDescription: "Enable rapid withdrawal in BGP.",
 								Default:             booldefault.StaticBool(true),
 							},
-							"wait_for_fibinstall": schema.BoolAttribute{
+							"wait_for_fib_install": schema.BoolAttribute{
 								Optional:            true,
 								Computed:            true,
 								Description:         "Wait for FIB installation before advertising routes.",
@@ -2405,40 +2405,40 @@ func (t BgpType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) 
 			fmt.Sprintf(`ip_alias_nexthops expected to be basetypes.ListValue, was: %T`, ipAliasNexthopsAttribute))
 	}
 
-	ipv4unicastAttribute, ok := attributes["ipv4unicast"]
+	ipv4UnicastAttribute, ok := attributes["ipv4_unicast"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv4unicast is missing from object`)
+			`ipv4_unicast is missing from object`)
 
 		return nil, diags
 	}
 
-	ipv4unicastVal, ok := ipv4unicastAttribute.(basetypes.ObjectValue)
+	ipv4UnicastVal, ok := ipv4UnicastAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv4unicast expected to be basetypes.ObjectValue, was: %T`, ipv4unicastAttribute))
+			fmt.Sprintf(`ipv4_unicast expected to be basetypes.ObjectValue, was: %T`, ipv4UnicastAttribute))
 	}
 
-	ipv6unicastAttribute, ok := attributes["ipv6unicast"]
+	ipv6UnicastAttribute, ok := attributes["ipv6_unicast"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv6unicast is missing from object`)
+			`ipv6_unicast is missing from object`)
 
 		return nil, diags
 	}
 
-	ipv6unicastVal, ok := ipv6unicastAttribute.(basetypes.ObjectValue)
+	ipv6UnicastVal, ok := ipv6UnicastAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv6unicast expected to be basetypes.ObjectValue, was: %T`, ipv6unicastAttribute))
+			fmt.Sprintf(`ipv6_unicast expected to be basetypes.ObjectValue, was: %T`, ipv6UnicastAttribute))
 	}
 
 	keychainAttribute, ok := attributes["keychain"]
@@ -2495,22 +2495,22 @@ func (t BgpType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) 
 			fmt.Sprintf(`rapid_withdrawl expected to be basetypes.BoolValue, was: %T`, rapidWithdrawlAttribute))
 	}
 
-	waitForFibinstallAttribute, ok := attributes["wait_for_fibinstall"]
+	waitForFibInstallAttribute, ok := attributes["wait_for_fib_install"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`wait_for_fibinstall is missing from object`)
+			`wait_for_fib_install is missing from object`)
 
 		return nil, diags
 	}
 
-	waitForFibinstallVal, ok := waitForFibinstallAttribute.(basetypes.BoolValue)
+	waitForFibInstallVal, ok := waitForFibInstallAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`wait_for_fibinstall expected to be basetypes.BoolValue, was: %T`, waitForFibinstallAttribute))
+			fmt.Sprintf(`wait_for_fib_install expected to be basetypes.BoolValue, was: %T`, waitForFibInstallAttribute))
 	}
 
 	if diags.HasError() {
@@ -2523,12 +2523,12 @@ func (t BgpType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) 
 		Enabled:            enabledVal,
 		IbgpPreference:     ibgpPreferenceVal,
 		IpAliasNexthops:    ipAliasNexthopsVal,
-		Ipv4unicast:        ipv4unicastVal,
-		Ipv6unicast:        ipv6unicastVal,
+		Ipv4Unicast:        ipv4UnicastVal,
+		Ipv6Unicast:        ipv6UnicastVal,
 		Keychain:           keychainVal,
 		MinWaitToAdvertise: minWaitToAdvertiseVal,
 		RapidWithdrawl:     rapidWithdrawlVal,
-		WaitForFibinstall:  waitForFibinstallVal,
+		WaitForFibInstall:  waitForFibInstallVal,
 		state:              attr.ValueStateKnown,
 	}, diags
 }
@@ -2686,40 +2686,40 @@ func NewBgpValue(attributeTypes map[string]attr.Type, attributes map[string]attr
 			fmt.Sprintf(`ip_alias_nexthops expected to be basetypes.ListValue, was: %T`, ipAliasNexthopsAttribute))
 	}
 
-	ipv4unicastAttribute, ok := attributes["ipv4unicast"]
+	ipv4UnicastAttribute, ok := attributes["ipv4_unicast"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv4unicast is missing from object`)
+			`ipv4_unicast is missing from object`)
 
 		return NewBgpValueUnknown(), diags
 	}
 
-	ipv4unicastVal, ok := ipv4unicastAttribute.(basetypes.ObjectValue)
+	ipv4UnicastVal, ok := ipv4UnicastAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv4unicast expected to be basetypes.ObjectValue, was: %T`, ipv4unicastAttribute))
+			fmt.Sprintf(`ipv4_unicast expected to be basetypes.ObjectValue, was: %T`, ipv4UnicastAttribute))
 	}
 
-	ipv6unicastAttribute, ok := attributes["ipv6unicast"]
+	ipv6UnicastAttribute, ok := attributes["ipv6_unicast"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`ipv6unicast is missing from object`)
+			`ipv6_unicast is missing from object`)
 
 		return NewBgpValueUnknown(), diags
 	}
 
-	ipv6unicastVal, ok := ipv6unicastAttribute.(basetypes.ObjectValue)
+	ipv6UnicastVal, ok := ipv6UnicastAttribute.(basetypes.ObjectValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`ipv6unicast expected to be basetypes.ObjectValue, was: %T`, ipv6unicastAttribute))
+			fmt.Sprintf(`ipv6_unicast expected to be basetypes.ObjectValue, was: %T`, ipv6UnicastAttribute))
 	}
 
 	keychainAttribute, ok := attributes["keychain"]
@@ -2776,22 +2776,22 @@ func NewBgpValue(attributeTypes map[string]attr.Type, attributes map[string]attr
 			fmt.Sprintf(`rapid_withdrawl expected to be basetypes.BoolValue, was: %T`, rapidWithdrawlAttribute))
 	}
 
-	waitForFibinstallAttribute, ok := attributes["wait_for_fibinstall"]
+	waitForFibInstallAttribute, ok := attributes["wait_for_fib_install"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`wait_for_fibinstall is missing from object`)
+			`wait_for_fib_install is missing from object`)
 
 		return NewBgpValueUnknown(), diags
 	}
 
-	waitForFibinstallVal, ok := waitForFibinstallAttribute.(basetypes.BoolValue)
+	waitForFibInstallVal, ok := waitForFibInstallAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`wait_for_fibinstall expected to be basetypes.BoolValue, was: %T`, waitForFibinstallAttribute))
+			fmt.Sprintf(`wait_for_fib_install expected to be basetypes.BoolValue, was: %T`, waitForFibInstallAttribute))
 	}
 
 	if diags.HasError() {
@@ -2804,12 +2804,12 @@ func NewBgpValue(attributeTypes map[string]attr.Type, attributes map[string]attr
 		Enabled:            enabledVal,
 		IbgpPreference:     ibgpPreferenceVal,
 		IpAliasNexthops:    ipAliasNexthopsVal,
-		Ipv4unicast:        ipv4unicastVal,
-		Ipv6unicast:        ipv6unicastVal,
+		Ipv4Unicast:        ipv4UnicastVal,
+		Ipv6Unicast:        ipv6UnicastVal,
 		Keychain:           keychainVal,
 		MinWaitToAdvertise: minWaitToAdvertiseVal,
 		RapidWithdrawl:     rapidWithdrawlVal,
-		WaitForFibinstall:  waitForFibinstallVal,
+		WaitForFibInstall:  waitForFibInstallVal,
 		state:              attr.ValueStateKnown,
 	}, diags
 }
@@ -2887,12 +2887,12 @@ type BgpValue struct {
 	Enabled            basetypes.BoolValue   `tfsdk:"enabled"`
 	IbgpPreference     basetypes.Int64Value  `tfsdk:"ibgp_preference"`
 	IpAliasNexthops    basetypes.ListValue   `tfsdk:"ip_alias_nexthops"`
-	Ipv4unicast        basetypes.ObjectValue `tfsdk:"ipv4unicast"`
-	Ipv6unicast        basetypes.ObjectValue `tfsdk:"ipv6unicast"`
+	Ipv4Unicast        basetypes.ObjectValue `tfsdk:"ipv4_unicast"`
+	Ipv6Unicast        basetypes.ObjectValue `tfsdk:"ipv6_unicast"`
 	Keychain           basetypes.StringValue `tfsdk:"keychain"`
 	MinWaitToAdvertise basetypes.Int64Value  `tfsdk:"min_wait_to_advertise"`
 	RapidWithdrawl     basetypes.BoolValue   `tfsdk:"rapid_withdrawl"`
-	WaitForFibinstall  basetypes.BoolValue   `tfsdk:"wait_for_fibinstall"`
+	WaitForFibInstall  basetypes.BoolValue   `tfsdk:"wait_for_fib_install"`
 	state              attr.ValueState
 }
 
@@ -2909,16 +2909,16 @@ func (v BgpValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes["ip_alias_nexthops"] = basetypes.ListType{
 		ElemType: IpAliasNexthopsValue{}.Type(ctx),
 	}.TerraformType(ctx)
-	attrTypes["ipv4unicast"] = basetypes.ObjectType{
-		AttrTypes: Ipv4unicastValue{}.AttributeTypes(ctx),
+	attrTypes["ipv4_unicast"] = basetypes.ObjectType{
+		AttrTypes: Ipv4UnicastValue{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
-	attrTypes["ipv6unicast"] = basetypes.ObjectType{
-		AttrTypes: Ipv6unicastValue{}.AttributeTypes(ctx),
+	attrTypes["ipv6_unicast"] = basetypes.ObjectType{
+		AttrTypes: Ipv6UnicastValue{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
 	attrTypes["keychain"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["min_wait_to_advertise"] = basetypes.Int64Type{}.TerraformType(ctx)
 	attrTypes["rapid_withdrawl"] = basetypes.BoolType{}.TerraformType(ctx)
-	attrTypes["wait_for_fibinstall"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["wait_for_fib_install"] = basetypes.BoolType{}.TerraformType(ctx)
 
 	objectType := tftypes.Object{AttributeTypes: attrTypes}
 
@@ -2966,21 +2966,21 @@ func (v BgpValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 
 		vals["ip_alias_nexthops"] = val
 
-		val, err = v.Ipv4unicast.ToTerraformValue(ctx)
+		val, err = v.Ipv4Unicast.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["ipv4unicast"] = val
+		vals["ipv4_unicast"] = val
 
-		val, err = v.Ipv6unicast.ToTerraformValue(ctx)
+		val, err = v.Ipv6Unicast.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["ipv6unicast"] = val
+		vals["ipv6_unicast"] = val
 
 		val, err = v.Keychain.ToTerraformValue(ctx)
 
@@ -3006,13 +3006,13 @@ func (v BgpValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 
 		vals["rapid_withdrawl"] = val
 
-		val, err = v.WaitForFibinstall.ToTerraformValue(ctx)
+		val, err = v.WaitForFibInstall.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["wait_for_fibinstall"] = val
+		vals["wait_for_fib_install"] = val
 
 		if err := tftypes.ValidateValue(objectType, vals); err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
@@ -3072,45 +3072,45 @@ func (v BgpValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, dia
 		)
 	}
 
-	var ipv4unicast basetypes.ObjectValue
+	var ipv4Unicast basetypes.ObjectValue
 
-	if v.Ipv4unicast.IsNull() {
-		ipv4unicast = types.ObjectNull(
-			Ipv4unicastValue{}.AttributeTypes(ctx),
+	if v.Ipv4Unicast.IsNull() {
+		ipv4Unicast = types.ObjectNull(
+			Ipv4UnicastValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if v.Ipv4unicast.IsUnknown() {
-		ipv4unicast = types.ObjectUnknown(
-			Ipv4unicastValue{}.AttributeTypes(ctx),
+	if v.Ipv4Unicast.IsUnknown() {
+		ipv4Unicast = types.ObjectUnknown(
+			Ipv4UnicastValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if !v.Ipv4unicast.IsNull() && !v.Ipv4unicast.IsUnknown() {
-		ipv4unicast = types.ObjectValueMust(
-			Ipv4unicastValue{}.AttributeTypes(ctx),
-			v.Ipv4unicast.Attributes(),
+	if !v.Ipv4Unicast.IsNull() && !v.Ipv4Unicast.IsUnknown() {
+		ipv4Unicast = types.ObjectValueMust(
+			Ipv4UnicastValue{}.AttributeTypes(ctx),
+			v.Ipv4Unicast.Attributes(),
 		)
 	}
 
-	var ipv6unicast basetypes.ObjectValue
+	var ipv6Unicast basetypes.ObjectValue
 
-	if v.Ipv6unicast.IsNull() {
-		ipv6unicast = types.ObjectNull(
-			Ipv6unicastValue{}.AttributeTypes(ctx),
+	if v.Ipv6Unicast.IsNull() {
+		ipv6Unicast = types.ObjectNull(
+			Ipv6UnicastValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if v.Ipv6unicast.IsUnknown() {
-		ipv6unicast = types.ObjectUnknown(
-			Ipv6unicastValue{}.AttributeTypes(ctx),
+	if v.Ipv6Unicast.IsUnknown() {
+		ipv6Unicast = types.ObjectUnknown(
+			Ipv6UnicastValue{}.AttributeTypes(ctx),
 		)
 	}
 
-	if !v.Ipv6unicast.IsNull() && !v.Ipv6unicast.IsUnknown() {
-		ipv6unicast = types.ObjectValueMust(
-			Ipv6unicastValue{}.AttributeTypes(ctx),
-			v.Ipv6unicast.Attributes(),
+	if !v.Ipv6Unicast.IsNull() && !v.Ipv6Unicast.IsUnknown() {
+		ipv6Unicast = types.ObjectValueMust(
+			Ipv6UnicastValue{}.AttributeTypes(ctx),
+			v.Ipv6Unicast.Attributes(),
 		)
 	}
 
@@ -3122,16 +3122,16 @@ func (v BgpValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, dia
 		"ip_alias_nexthops": basetypes.ListType{
 			ElemType: IpAliasNexthopsValue{}.Type(ctx),
 		},
-		"ipv4unicast": basetypes.ObjectType{
-			AttrTypes: Ipv4unicastValue{}.AttributeTypes(ctx),
+		"ipv4_unicast": basetypes.ObjectType{
+			AttrTypes: Ipv4UnicastValue{}.AttributeTypes(ctx),
 		},
-		"ipv6unicast": basetypes.ObjectType{
-			AttrTypes: Ipv6unicastValue{}.AttributeTypes(ctx),
+		"ipv6_unicast": basetypes.ObjectType{
+			AttrTypes: Ipv6UnicastValue{}.AttributeTypes(ctx),
 		},
 		"keychain":              basetypes.StringType{},
 		"min_wait_to_advertise": basetypes.Int64Type{},
 		"rapid_withdrawl":       basetypes.BoolType{},
-		"wait_for_fibinstall":   basetypes.BoolType{},
+		"wait_for_fib_install":  basetypes.BoolType{},
 	}
 
 	if v.IsNull() {
@@ -3150,12 +3150,12 @@ func (v BgpValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, dia
 			"enabled":               v.Enabled,
 			"ibgp_preference":       v.IbgpPreference,
 			"ip_alias_nexthops":     ipAliasNexthops,
-			"ipv4unicast":           ipv4unicast,
-			"ipv6unicast":           ipv6unicast,
+			"ipv4_unicast":          ipv4Unicast,
+			"ipv6_unicast":          ipv6Unicast,
 			"keychain":              v.Keychain,
 			"min_wait_to_advertise": v.MinWaitToAdvertise,
 			"rapid_withdrawl":       v.RapidWithdrawl,
-			"wait_for_fibinstall":   v.WaitForFibinstall,
+			"wait_for_fib_install":  v.WaitForFibInstall,
 		})
 
 	return objVal, diags
@@ -3196,11 +3196,11 @@ func (v BgpValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.Ipv4unicast.Equal(other.Ipv4unicast) {
+	if !v.Ipv4Unicast.Equal(other.Ipv4Unicast) {
 		return false
 	}
 
-	if !v.Ipv6unicast.Equal(other.Ipv6unicast) {
+	if !v.Ipv6Unicast.Equal(other.Ipv6Unicast) {
 		return false
 	}
 
@@ -3216,7 +3216,7 @@ func (v BgpValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.WaitForFibinstall.Equal(other.WaitForFibinstall) {
+	if !v.WaitForFibInstall.Equal(other.WaitForFibInstall) {
 		return false
 	}
 
@@ -3240,16 +3240,16 @@ func (v BgpValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"ip_alias_nexthops": basetypes.ListType{
 			ElemType: IpAliasNexthopsValue{}.Type(ctx),
 		},
-		"ipv4unicast": basetypes.ObjectType{
-			AttrTypes: Ipv4unicastValue{}.AttributeTypes(ctx),
+		"ipv4_unicast": basetypes.ObjectType{
+			AttrTypes: Ipv4UnicastValue{}.AttributeTypes(ctx),
 		},
-		"ipv6unicast": basetypes.ObjectType{
-			AttrTypes: Ipv6unicastValue{}.AttributeTypes(ctx),
+		"ipv6_unicast": basetypes.ObjectType{
+			AttrTypes: Ipv6UnicastValue{}.AttributeTypes(ctx),
 		},
 		"keychain":              basetypes.StringType{},
 		"min_wait_to_advertise": basetypes.Int64Type{},
 		"rapid_withdrawl":       basetypes.BoolType{},
-		"wait_for_fibinstall":   basetypes.BoolType{},
+		"wait_for_fib_install":  basetypes.BoolType{},
 	}
 }
 
@@ -3687,14 +3687,14 @@ func (v IpAliasNexthopsValue) AttributeTypes(ctx context.Context) map[string]att
 	}
 }
 
-var _ basetypes.ObjectTypable = Ipv4unicastType{}
+var _ basetypes.ObjectTypable = Ipv4UnicastType{}
 
-type Ipv4unicastType struct {
+type Ipv4UnicastType struct {
 	basetypes.ObjectType
 }
 
-func (t Ipv4unicastType) Equal(o attr.Type) bool {
-	other, ok := o.(Ipv4unicastType)
+func (t Ipv4UnicastType) Equal(o attr.Type) bool {
+	other, ok := o.(Ipv4UnicastType)
 
 	if !ok {
 		return false
@@ -3703,31 +3703,31 @@ func (t Ipv4unicastType) Equal(o attr.Type) bool {
 	return t.ObjectType.Equal(other.ObjectType)
 }
 
-func (t Ipv4unicastType) String() string {
-	return "Ipv4unicastType"
+func (t Ipv4UnicastType) String() string {
+	return "Ipv4UnicastType"
 }
 
-func (t Ipv4unicastType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+func (t Ipv4UnicastType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributes := in.Attributes()
 
-	advertiseIpv6nextHopsAttribute, ok := attributes["advertise_ipv6next_hops"]
+	advertiseIpv6NextHopsAttribute, ok := attributes["advertise_ipv6_next_hops"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`advertise_ipv6next_hops is missing from object`)
+			`advertise_ipv6_next_hops is missing from object`)
 
 		return nil, diags
 	}
 
-	advertiseIpv6nextHopsVal, ok := advertiseIpv6nextHopsAttribute.(basetypes.BoolValue)
+	advertiseIpv6NextHopsVal, ok := advertiseIpv6NextHopsAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`advertise_ipv6next_hops expected to be basetypes.BoolValue, was: %T`, advertiseIpv6nextHopsAttribute))
+			fmt.Sprintf(`advertise_ipv6_next_hops expected to be basetypes.BoolValue, was: %T`, advertiseIpv6NextHopsAttribute))
 	}
 
 	enabledAttribute, ok := attributes["enabled"]
@@ -3766,50 +3766,50 @@ func (t Ipv4unicastType) ValueFromObject(ctx context.Context, in basetypes.Objec
 			fmt.Sprintf(`multipath expected to be basetypes.ObjectValue, was: %T`, multipathAttribute))
 	}
 
-	receiveIpv6nextHopsAttribute, ok := attributes["receive_ipv6next_hops"]
+	receiveIpv6NextHopsAttribute, ok := attributes["receive_ipv6_next_hops"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`receive_ipv6next_hops is missing from object`)
+			`receive_ipv6_next_hops is missing from object`)
 
 		return nil, diags
 	}
 
-	receiveIpv6nextHopsVal, ok := receiveIpv6nextHopsAttribute.(basetypes.BoolValue)
+	receiveIpv6NextHopsVal, ok := receiveIpv6NextHopsAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`receive_ipv6next_hops expected to be basetypes.BoolValue, was: %T`, receiveIpv6nextHopsAttribute))
+			fmt.Sprintf(`receive_ipv6_next_hops expected to be basetypes.BoolValue, was: %T`, receiveIpv6NextHopsAttribute))
 	}
 
 	if diags.HasError() {
 		return nil, diags
 	}
 
-	return Ipv4unicastValue{
-		AdvertiseIpv6nextHops: advertiseIpv6nextHopsVal,
+	return Ipv4UnicastValue{
+		AdvertiseIpv6NextHops: advertiseIpv6NextHopsVal,
 		Enabled:               enabledVal,
 		Multipath:             multipathVal,
-		ReceiveIpv6nextHops:   receiveIpv6nextHopsVal,
+		ReceiveIpv6NextHops:   receiveIpv6NextHopsVal,
 		state:                 attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv4unicastValueNull() Ipv4unicastValue {
-	return Ipv4unicastValue{
+func NewIpv4UnicastValueNull() Ipv4UnicastValue {
+	return Ipv4UnicastValue{
 		state: attr.ValueStateNull,
 	}
 }
 
-func NewIpv4unicastValueUnknown() Ipv4unicastValue {
-	return Ipv4unicastValue{
+func NewIpv4UnicastValueUnknown() Ipv4UnicastValue {
+	return Ipv4UnicastValue{
 		state: attr.ValueStateUnknown,
 	}
 }
 
-func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv4unicastValue, diag.Diagnostics) {
+func NewIpv4UnicastValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv4UnicastValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
@@ -3820,11 +3820,11 @@ func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 
 		if !ok {
 			diags.AddError(
-				"Missing Ipv4unicastValue Attribute Value",
-				"While creating a Ipv4unicastValue value, a missing attribute value was detected. "+
-					"A Ipv4unicastValue must contain values for all attributes, even if null or unknown. "+
+				"Missing Ipv4UnicastValue Attribute Value",
+				"While creating a Ipv4UnicastValue value, a missing attribute value was detected. "+
+					"A Ipv4UnicastValue must contain values for all attributes, even if null or unknown. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv4unicastValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+					fmt.Sprintf("Ipv4UnicastValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
 			)
 
 			continue
@@ -3832,12 +3832,12 @@ func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 
 		if !attributeType.Equal(attribute.Type(ctx)) {
 			diags.AddError(
-				"Invalid Ipv4unicastValue Attribute Type",
-				"While creating a Ipv4unicastValue value, an invalid attribute value was detected. "+
-					"A Ipv4unicastValue must use a matching attribute type for the value. "+
+				"Invalid Ipv4UnicastValue Attribute Type",
+				"While creating a Ipv4UnicastValue value, an invalid attribute value was detected. "+
+					"A Ipv4UnicastValue must use a matching attribute type for the value. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv4unicastValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
-					fmt.Sprintf("Ipv4unicastValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+					fmt.Sprintf("Ipv4UnicastValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("Ipv4UnicastValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
 			)
 		}
 	}
@@ -3847,35 +3847,35 @@ func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 
 		if !ok {
 			diags.AddError(
-				"Extra Ipv4unicastValue Attribute Value",
-				"While creating a Ipv4unicastValue value, an extra attribute value was detected. "+
-					"A Ipv4unicastValue must not contain values beyond the expected attribute types. "+
+				"Extra Ipv4UnicastValue Attribute Value",
+				"While creating a Ipv4UnicastValue value, an extra attribute value was detected. "+
+					"A Ipv4UnicastValue must not contain values beyond the expected attribute types. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Extra Ipv4unicastValue Attribute Name: %s", name),
+					fmt.Sprintf("Extra Ipv4UnicastValue Attribute Name: %s", name),
 			)
 		}
 	}
 
 	if diags.HasError() {
-		return NewIpv4unicastValueUnknown(), diags
+		return NewIpv4UnicastValueUnknown(), diags
 	}
 
-	advertiseIpv6nextHopsAttribute, ok := attributes["advertise_ipv6next_hops"]
+	advertiseIpv6NextHopsAttribute, ok := attributes["advertise_ipv6_next_hops"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`advertise_ipv6next_hops is missing from object`)
+			`advertise_ipv6_next_hops is missing from object`)
 
-		return NewIpv4unicastValueUnknown(), diags
+		return NewIpv4UnicastValueUnknown(), diags
 	}
 
-	advertiseIpv6nextHopsVal, ok := advertiseIpv6nextHopsAttribute.(basetypes.BoolValue)
+	advertiseIpv6NextHopsVal, ok := advertiseIpv6NextHopsAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`advertise_ipv6next_hops expected to be basetypes.BoolValue, was: %T`, advertiseIpv6nextHopsAttribute))
+			fmt.Sprintf(`advertise_ipv6_next_hops expected to be basetypes.BoolValue, was: %T`, advertiseIpv6NextHopsAttribute))
 	}
 
 	enabledAttribute, ok := attributes["enabled"]
@@ -3885,7 +3885,7 @@ func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 			"Attribute Missing",
 			`enabled is missing from object`)
 
-		return NewIpv4unicastValueUnknown(), diags
+		return NewIpv4UnicastValueUnknown(), diags
 	}
 
 	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
@@ -3903,7 +3903,7 @@ func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 			"Attribute Missing",
 			`multipath is missing from object`)
 
-		return NewIpv4unicastValueUnknown(), diags
+		return NewIpv4UnicastValueUnknown(), diags
 	}
 
 	multipathVal, ok := multipathAttribute.(basetypes.ObjectValue)
@@ -3914,39 +3914,39 @@ func NewIpv4unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 			fmt.Sprintf(`multipath expected to be basetypes.ObjectValue, was: %T`, multipathAttribute))
 	}
 
-	receiveIpv6nextHopsAttribute, ok := attributes["receive_ipv6next_hops"]
+	receiveIpv6NextHopsAttribute, ok := attributes["receive_ipv6_next_hops"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
-			`receive_ipv6next_hops is missing from object`)
+			`receive_ipv6_next_hops is missing from object`)
 
-		return NewIpv4unicastValueUnknown(), diags
+		return NewIpv4UnicastValueUnknown(), diags
 	}
 
-	receiveIpv6nextHopsVal, ok := receiveIpv6nextHopsAttribute.(basetypes.BoolValue)
+	receiveIpv6NextHopsVal, ok := receiveIpv6NextHopsAttribute.(basetypes.BoolValue)
 
 	if !ok {
 		diags.AddError(
 			"Attribute Wrong Type",
-			fmt.Sprintf(`receive_ipv6next_hops expected to be basetypes.BoolValue, was: %T`, receiveIpv6nextHopsAttribute))
+			fmt.Sprintf(`receive_ipv6_next_hops expected to be basetypes.BoolValue, was: %T`, receiveIpv6NextHopsAttribute))
 	}
 
 	if diags.HasError() {
-		return NewIpv4unicastValueUnknown(), diags
+		return NewIpv4UnicastValueUnknown(), diags
 	}
 
-	return Ipv4unicastValue{
-		AdvertiseIpv6nextHops: advertiseIpv6nextHopsVal,
+	return Ipv4UnicastValue{
+		AdvertiseIpv6NextHops: advertiseIpv6NextHopsVal,
 		Enabled:               enabledVal,
 		Multipath:             multipathVal,
-		ReceiveIpv6nextHops:   receiveIpv6nextHopsVal,
+		ReceiveIpv6NextHops:   receiveIpv6NextHopsVal,
 		state:                 attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv4unicastValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv4unicastValue {
-	object, diags := NewIpv4unicastValue(attributeTypes, attributes)
+func NewIpv4UnicastValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv4UnicastValue {
+	object, diags := NewIpv4UnicastValue(attributeTypes, attributes)
 
 	if diags.HasError() {
 		// This could potentially be added to the diag package.
@@ -3960,15 +3960,15 @@ func NewIpv4unicastValueMust(attributeTypes map[string]attr.Type, attributes map
 				diagnostic.Detail()))
 		}
 
-		panic("NewIpv4unicastValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+		panic("NewIpv4UnicastValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
 	}
 
 	return object
 }
 
-func (t Ipv4unicastType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+func (t Ipv4UnicastType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
 	if in.Type() == nil {
-		return NewIpv4unicastValueNull(), nil
+		return NewIpv4UnicastValueNull(), nil
 	}
 
 	if !in.Type().Equal(t.TerraformType(ctx)) {
@@ -3976,11 +3976,11 @@ func (t Ipv4unicastType) ValueFromTerraform(ctx context.Context, in tftypes.Valu
 	}
 
 	if !in.IsKnown() {
-		return NewIpv4unicastValueUnknown(), nil
+		return NewIpv4UnicastValueUnknown(), nil
 	}
 
 	if in.IsNull() {
-		return NewIpv4unicastValueNull(), nil
+		return NewIpv4UnicastValueNull(), nil
 	}
 
 	attributes := map[string]attr.Value{}
@@ -4003,35 +4003,35 @@ func (t Ipv4unicastType) ValueFromTerraform(ctx context.Context, in tftypes.Valu
 		attributes[k] = a
 	}
 
-	return NewIpv4unicastValueMust(Ipv4unicastValue{}.AttributeTypes(ctx), attributes), nil
+	return NewIpv4UnicastValueMust(Ipv4UnicastValue{}.AttributeTypes(ctx), attributes), nil
 }
 
-func (t Ipv4unicastType) ValueType(ctx context.Context) attr.Value {
-	return Ipv4unicastValue{}
+func (t Ipv4UnicastType) ValueType(ctx context.Context) attr.Value {
+	return Ipv4UnicastValue{}
 }
 
-var _ basetypes.ObjectValuable = Ipv4unicastValue{}
+var _ basetypes.ObjectValuable = Ipv4UnicastValue{}
 
-type Ipv4unicastValue struct {
-	AdvertiseIpv6nextHops basetypes.BoolValue   `tfsdk:"advertise_ipv6next_hops"`
+type Ipv4UnicastValue struct {
+	AdvertiseIpv6NextHops basetypes.BoolValue   `tfsdk:"advertise_ipv6_next_hops"`
 	Enabled               basetypes.BoolValue   `tfsdk:"enabled"`
 	Multipath             basetypes.ObjectValue `tfsdk:"multipath"`
-	ReceiveIpv6nextHops   basetypes.BoolValue   `tfsdk:"receive_ipv6next_hops"`
+	ReceiveIpv6NextHops   basetypes.BoolValue   `tfsdk:"receive_ipv6_next_hops"`
 	state                 attr.ValueState
 }
 
-func (v Ipv4unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+func (v Ipv4UnicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes := make(map[string]tftypes.Type, 4)
 
 	var val tftypes.Value
 	var err error
 
-	attrTypes["advertise_ipv6next_hops"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["advertise_ipv6_next_hops"] = basetypes.BoolType{}.TerraformType(ctx)
 	attrTypes["enabled"] = basetypes.BoolType{}.TerraformType(ctx)
 	attrTypes["multipath"] = basetypes.ObjectType{
 		AttrTypes: MultipathValue{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
-	attrTypes["receive_ipv6next_hops"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["receive_ipv6_next_hops"] = basetypes.BoolType{}.TerraformType(ctx)
 
 	objectType := tftypes.Object{AttributeTypes: attrTypes}
 
@@ -4039,13 +4039,13 @@ func (v Ipv4unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, 
 	case attr.ValueStateKnown:
 		vals := make(map[string]tftypes.Value, 4)
 
-		val, err = v.AdvertiseIpv6nextHops.ToTerraformValue(ctx)
+		val, err = v.AdvertiseIpv6NextHops.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["advertise_ipv6next_hops"] = val
+		vals["advertise_ipv6_next_hops"] = val
 
 		val, err = v.Enabled.ToTerraformValue(ctx)
 
@@ -4063,13 +4063,13 @@ func (v Ipv4unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, 
 
 		vals["multipath"] = val
 
-		val, err = v.ReceiveIpv6nextHops.ToTerraformValue(ctx)
+		val, err = v.ReceiveIpv6NextHops.ToTerraformValue(ctx)
 
 		if err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["receive_ipv6next_hops"] = val
+		vals["receive_ipv6_next_hops"] = val
 
 		if err := tftypes.ValidateValue(objectType, vals); err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
@@ -4085,19 +4085,19 @@ func (v Ipv4unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, 
 	}
 }
 
-func (v Ipv4unicastValue) IsNull() bool {
+func (v Ipv4UnicastValue) IsNull() bool {
 	return v.state == attr.ValueStateNull
 }
 
-func (v Ipv4unicastValue) IsUnknown() bool {
+func (v Ipv4UnicastValue) IsUnknown() bool {
 	return v.state == attr.ValueStateUnknown
 }
 
-func (v Ipv4unicastValue) String() string {
-	return "Ipv4unicastValue"
+func (v Ipv4UnicastValue) String() string {
+	return "Ipv4UnicastValue"
 }
 
-func (v Ipv4unicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+func (v Ipv4UnicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	var multipath basetypes.ObjectValue
@@ -4122,12 +4122,12 @@ func (v Ipv4unicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectVa
 	}
 
 	attributeTypes := map[string]attr.Type{
-		"advertise_ipv6next_hops": basetypes.BoolType{},
-		"enabled":                 basetypes.BoolType{},
+		"advertise_ipv6_next_hops": basetypes.BoolType{},
+		"enabled":                  basetypes.BoolType{},
 		"multipath": basetypes.ObjectType{
 			AttrTypes: MultipathValue{}.AttributeTypes(ctx),
 		},
-		"receive_ipv6next_hops": basetypes.BoolType{},
+		"receive_ipv6_next_hops": basetypes.BoolType{},
 	}
 
 	if v.IsNull() {
@@ -4141,17 +4141,17 @@ func (v Ipv4unicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectVa
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"advertise_ipv6next_hops": v.AdvertiseIpv6nextHops,
-			"enabled":                 v.Enabled,
-			"multipath":               multipath,
-			"receive_ipv6next_hops":   v.ReceiveIpv6nextHops,
+			"advertise_ipv6_next_hops": v.AdvertiseIpv6NextHops,
+			"enabled":                  v.Enabled,
+			"multipath":                multipath,
+			"receive_ipv6_next_hops":   v.ReceiveIpv6NextHops,
 		})
 
 	return objVal, diags
 }
 
-func (v Ipv4unicastValue) Equal(o attr.Value) bool {
-	other, ok := o.(Ipv4unicastValue)
+func (v Ipv4UnicastValue) Equal(o attr.Value) bool {
+	other, ok := o.(Ipv4UnicastValue)
 
 	if !ok {
 		return false
@@ -4165,7 +4165,7 @@ func (v Ipv4unicastValue) Equal(o attr.Value) bool {
 		return true
 	}
 
-	if !v.AdvertiseIpv6nextHops.Equal(other.AdvertiseIpv6nextHops) {
+	if !v.AdvertiseIpv6NextHops.Equal(other.AdvertiseIpv6NextHops) {
 		return false
 	}
 
@@ -4177,29 +4177,29 @@ func (v Ipv4unicastValue) Equal(o attr.Value) bool {
 		return false
 	}
 
-	if !v.ReceiveIpv6nextHops.Equal(other.ReceiveIpv6nextHops) {
+	if !v.ReceiveIpv6NextHops.Equal(other.ReceiveIpv6NextHops) {
 		return false
 	}
 
 	return true
 }
 
-func (v Ipv4unicastValue) Type(ctx context.Context) attr.Type {
-	return Ipv4unicastType{
+func (v Ipv4UnicastValue) Type(ctx context.Context) attr.Type {
+	return Ipv4UnicastType{
 		basetypes.ObjectType{
 			AttrTypes: v.AttributeTypes(ctx),
 		},
 	}
 }
 
-func (v Ipv4unicastValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+func (v Ipv4UnicastValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
-		"advertise_ipv6next_hops": basetypes.BoolType{},
-		"enabled":                 basetypes.BoolType{},
+		"advertise_ipv6_next_hops": basetypes.BoolType{},
+		"enabled":                  basetypes.BoolType{},
 		"multipath": basetypes.ObjectType{
 			AttrTypes: MultipathValue{}.AttributeTypes(ctx),
 		},
-		"receive_ipv6next_hops": basetypes.BoolType{},
+		"receive_ipv6_next_hops": basetypes.BoolType{},
 	}
 }
 
@@ -4582,14 +4582,14 @@ func (v MultipathValue) AttributeTypes(ctx context.Context) map[string]attr.Type
 	}
 }
 
-var _ basetypes.ObjectTypable = Ipv6unicastType{}
+var _ basetypes.ObjectTypable = Ipv6UnicastType{}
 
-type Ipv6unicastType struct {
+type Ipv6UnicastType struct {
 	basetypes.ObjectType
 }
 
-func (t Ipv6unicastType) Equal(o attr.Type) bool {
-	other, ok := o.(Ipv6unicastType)
+func (t Ipv6UnicastType) Equal(o attr.Type) bool {
+	other, ok := o.(Ipv6UnicastType)
 
 	if !ok {
 		return false
@@ -4598,11 +4598,11 @@ func (t Ipv6unicastType) Equal(o attr.Type) bool {
 	return t.ObjectType.Equal(other.ObjectType)
 }
 
-func (t Ipv6unicastType) String() string {
-	return "Ipv6unicastType"
+func (t Ipv6UnicastType) String() string {
+	return "Ipv6UnicastType"
 }
 
-func (t Ipv6unicastType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+func (t Ipv6UnicastType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	attributes := in.Attributes()
@@ -4625,7 +4625,7 @@ func (t Ipv6unicastType) ValueFromObject(ctx context.Context, in basetypes.Objec
 			fmt.Sprintf(`enabled expected to be basetypes.BoolValue, was: %T`, enabledAttribute))
 	}
 
-	multipath1Attribute, ok := attributes["multipath_1"]
+	multipath1Attribute, ok := attributes["multipath"]
 
 	if !ok {
 		diags.AddError(
@@ -4647,26 +4647,26 @@ func (t Ipv6unicastType) ValueFromObject(ctx context.Context, in basetypes.Objec
 		return nil, diags
 	}
 
-	return Ipv6unicastValue{
+	return Ipv6UnicastValue{
 		Enabled:    enabledVal,
 		Multipath1: multipath1Val,
 		state:      attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv6unicastValueNull() Ipv6unicastValue {
-	return Ipv6unicastValue{
+func NewIpv6UnicastValueNull() Ipv6UnicastValue {
+	return Ipv6UnicastValue{
 		state: attr.ValueStateNull,
 	}
 }
 
-func NewIpv6unicastValueUnknown() Ipv6unicastValue {
-	return Ipv6unicastValue{
+func NewIpv6UnicastValueUnknown() Ipv6UnicastValue {
+	return Ipv6UnicastValue{
 		state: attr.ValueStateUnknown,
 	}
 }
 
-func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv6unicastValue, diag.Diagnostics) {
+func NewIpv6UnicastValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (Ipv6UnicastValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
@@ -4677,11 +4677,11 @@ func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 
 		if !ok {
 			diags.AddError(
-				"Missing Ipv6unicastValue Attribute Value",
-				"While creating a Ipv6unicastValue value, a missing attribute value was detected. "+
-					"A Ipv6unicastValue must contain values for all attributes, even if null or unknown. "+
+				"Missing Ipv6UnicastValue Attribute Value",
+				"While creating a Ipv6UnicastValue value, a missing attribute value was detected. "+
+					"A Ipv6UnicastValue must contain values for all attributes, even if null or unknown. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv6unicastValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+					fmt.Sprintf("Ipv6UnicastValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
 			)
 
 			continue
@@ -4689,12 +4689,12 @@ func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 
 		if !attributeType.Equal(attribute.Type(ctx)) {
 			diags.AddError(
-				"Invalid Ipv6unicastValue Attribute Type",
-				"While creating a Ipv6unicastValue value, an invalid attribute value was detected. "+
-					"A Ipv6unicastValue must use a matching attribute type for the value. "+
+				"Invalid Ipv6UnicastValue Attribute Type",
+				"While creating a Ipv6UnicastValue value, an invalid attribute value was detected. "+
+					"A Ipv6UnicastValue must use a matching attribute type for the value. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Ipv6unicastValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
-					fmt.Sprintf("Ipv6unicastValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+					fmt.Sprintf("Ipv6UnicastValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("Ipv6UnicastValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
 			)
 		}
 	}
@@ -4704,17 +4704,17 @@ func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 
 		if !ok {
 			diags.AddError(
-				"Extra Ipv6unicastValue Attribute Value",
-				"While creating a Ipv6unicastValue value, an extra attribute value was detected. "+
-					"A Ipv6unicastValue must not contain values beyond the expected attribute types. "+
+				"Extra Ipv6UnicastValue Attribute Value",
+				"While creating a Ipv6UnicastValue value, an extra attribute value was detected. "+
+					"A Ipv6UnicastValue must not contain values beyond the expected attribute types. "+
 					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
-					fmt.Sprintf("Extra Ipv6unicastValue Attribute Name: %s", name),
+					fmt.Sprintf("Extra Ipv6UnicastValue Attribute Name: %s", name),
 			)
 		}
 	}
 
 	if diags.HasError() {
-		return NewIpv6unicastValueUnknown(), diags
+		return NewIpv6UnicastValueUnknown(), diags
 	}
 
 	enabledAttribute, ok := attributes["enabled"]
@@ -4724,7 +4724,7 @@ func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 			"Attribute Missing",
 			`enabled is missing from object`)
 
-		return NewIpv6unicastValueUnknown(), diags
+		return NewIpv6UnicastValueUnknown(), diags
 	}
 
 	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
@@ -4735,14 +4735,14 @@ func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 			fmt.Sprintf(`enabled expected to be basetypes.BoolValue, was: %T`, enabledAttribute))
 	}
 
-	multipath1Attribute, ok := attributes["multipath_1"]
+	multipath1Attribute, ok := attributes["multipath"]
 
 	if !ok {
 		diags.AddError(
 			"Attribute Missing",
 			`multipath_1 is missing from object`)
 
-		return NewIpv6unicastValueUnknown(), diags
+		return NewIpv6UnicastValueUnknown(), diags
 	}
 
 	multipath1Val, ok := multipath1Attribute.(basetypes.ObjectValue)
@@ -4754,18 +4754,18 @@ func NewIpv6unicastValue(attributeTypes map[string]attr.Type, attributes map[str
 	}
 
 	if diags.HasError() {
-		return NewIpv6unicastValueUnknown(), diags
+		return NewIpv6UnicastValueUnknown(), diags
 	}
 
-	return Ipv6unicastValue{
+	return Ipv6UnicastValue{
 		Enabled:    enabledVal,
 		Multipath1: multipath1Val,
 		state:      attr.ValueStateKnown,
 	}, diags
 }
 
-func NewIpv6unicastValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv6unicastValue {
-	object, diags := NewIpv6unicastValue(attributeTypes, attributes)
+func NewIpv6UnicastValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) Ipv6UnicastValue {
+	object, diags := NewIpv6UnicastValue(attributeTypes, attributes)
 
 	if diags.HasError() {
 		// This could potentially be added to the diag package.
@@ -4779,15 +4779,15 @@ func NewIpv6unicastValueMust(attributeTypes map[string]attr.Type, attributes map
 				diagnostic.Detail()))
 		}
 
-		panic("NewIpv6unicastValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+		panic("NewIpv6UnicastValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
 	}
 
 	return object
 }
 
-func (t Ipv6unicastType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+func (t Ipv6UnicastType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
 	if in.Type() == nil {
-		return NewIpv6unicastValueNull(), nil
+		return NewIpv6UnicastValueNull(), nil
 	}
 
 	if !in.Type().Equal(t.TerraformType(ctx)) {
@@ -4795,11 +4795,11 @@ func (t Ipv6unicastType) ValueFromTerraform(ctx context.Context, in tftypes.Valu
 	}
 
 	if !in.IsKnown() {
-		return NewIpv6unicastValueUnknown(), nil
+		return NewIpv6UnicastValueUnknown(), nil
 	}
 
 	if in.IsNull() {
-		return NewIpv6unicastValueNull(), nil
+		return NewIpv6UnicastValueNull(), nil
 	}
 
 	attributes := map[string]attr.Value{}
@@ -4822,29 +4822,29 @@ func (t Ipv6unicastType) ValueFromTerraform(ctx context.Context, in tftypes.Valu
 		attributes[k] = a
 	}
 
-	return NewIpv6unicastValueMust(Ipv6unicastValue{}.AttributeTypes(ctx), attributes), nil
+	return NewIpv6UnicastValueMust(Ipv6UnicastValue{}.AttributeTypes(ctx), attributes), nil
 }
 
-func (t Ipv6unicastType) ValueType(ctx context.Context) attr.Value {
-	return Ipv6unicastValue{}
+func (t Ipv6UnicastType) ValueType(ctx context.Context) attr.Value {
+	return Ipv6UnicastValue{}
 }
 
-var _ basetypes.ObjectValuable = Ipv6unicastValue{}
+var _ basetypes.ObjectValuable = Ipv6UnicastValue{}
 
-type Ipv6unicastValue struct {
+type Ipv6UnicastValue struct {
 	Enabled    basetypes.BoolValue   `tfsdk:"enabled"`
-	Multipath1 basetypes.ObjectValue `tfsdk:"multipath_1"`
+	Multipath1 basetypes.ObjectValue `tfsdk:"multipath"`
 	state      attr.ValueState
 }
 
-func (v Ipv6unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+func (v Ipv6UnicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
 	attrTypes := make(map[string]tftypes.Type, 2)
 
 	var val tftypes.Value
 	var err error
 
 	attrTypes["enabled"] = basetypes.BoolType{}.TerraformType(ctx)
-	attrTypes["multipath_1"] = basetypes.ObjectType{
+	attrTypes["multipath"] = basetypes.ObjectType{
 		AttrTypes: Multipath1Value{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
 
@@ -4868,7 +4868,7 @@ func (v Ipv6unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, 
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
 		}
 
-		vals["multipath_1"] = val
+		vals["multipath"] = val
 
 		if err := tftypes.ValidateValue(objectType, vals); err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
@@ -4884,19 +4884,19 @@ func (v Ipv6unicastValue) ToTerraformValue(ctx context.Context) (tftypes.Value, 
 	}
 }
 
-func (v Ipv6unicastValue) IsNull() bool {
+func (v Ipv6UnicastValue) IsNull() bool {
 	return v.state == attr.ValueStateNull
 }
 
-func (v Ipv6unicastValue) IsUnknown() bool {
+func (v Ipv6UnicastValue) IsUnknown() bool {
 	return v.state == attr.ValueStateUnknown
 }
 
-func (v Ipv6unicastValue) String() string {
-	return "Ipv6unicastValue"
+func (v Ipv6UnicastValue) String() string {
+	return "Ipv6UnicastValue"
 }
 
-func (v Ipv6unicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+func (v Ipv6UnicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	var multipath1 basetypes.ObjectValue
@@ -4922,7 +4922,7 @@ func (v Ipv6unicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectVa
 
 	attributeTypes := map[string]attr.Type{
 		"enabled": basetypes.BoolType{},
-		"multipath_1": basetypes.ObjectType{
+		"multipath": basetypes.ObjectType{
 			AttrTypes: Multipath1Value{}.AttributeTypes(ctx),
 		},
 	}
@@ -4938,15 +4938,15 @@ func (v Ipv6unicastValue) ToObjectValue(ctx context.Context) (basetypes.ObjectVa
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
-			"enabled":     v.Enabled,
-			"multipath_1": multipath1,
+			"enabled":   v.Enabled,
+			"multipath": multipath1,
 		})
 
 	return objVal, diags
 }
 
-func (v Ipv6unicastValue) Equal(o attr.Value) bool {
-	other, ok := o.(Ipv6unicastValue)
+func (v Ipv6UnicastValue) Equal(o attr.Value) bool {
+	other, ok := o.(Ipv6UnicastValue)
 
 	if !ok {
 		return false
@@ -4971,18 +4971,18 @@ func (v Ipv6unicastValue) Equal(o attr.Value) bool {
 	return true
 }
 
-func (v Ipv6unicastValue) Type(ctx context.Context) attr.Type {
-	return Ipv6unicastType{
+func (v Ipv6UnicastValue) Type(ctx context.Context) attr.Type {
+	return Ipv6UnicastType{
 		basetypes.ObjectType{
 			AttrTypes: v.AttributeTypes(ctx),
 		},
 	}
 }
 
-func (v Ipv6unicastValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+func (v Ipv6UnicastValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"enabled": basetypes.BoolType{},
-		"multipath_1": basetypes.ObjectType{
+		"multipath": basetypes.ObjectType{
 			AttrTypes: Multipath1Value{}.AttributeTypes(ctx),
 		},
 	}

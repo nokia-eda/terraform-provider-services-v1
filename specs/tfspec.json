@@ -499,7 +499,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -1082,7 +1082,7 @@
                                     }
                                 },
                                 {
-                                    "name": "l2mtu",
+                                    "name": "l2_mtu",
                                     "int64": {
                                         "computed_optional_required": "optional",
                                         "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -1176,14 +1176,14 @@
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanid",
+                                                "name": "uplink_vlan_id",
                                                 "string": {
                                                     "computed_optional_required": "optional",
                                                     "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanpool",
+                                                "name": "uplink_vlan_pool",
                                                 "string": {
                                                     "computed_optional_required": "optional",
                                                     "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -1343,7 +1343,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -1503,7 +1503,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "l2mtu",
+                                                    "name": "l2_mtu",
                                                     "int64": {
                                                         "computed_optional_required": "optional",
                                                         "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -1597,14 +1597,14 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "uplink_vlanid",
+                                                                "name": "uplink_vlan_id",
                                                                 "string": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                                 }
                                                             },
                                                             {
-                                                                "name": "uplink_vlanpool",
+                                                                "name": "uplink_vlan_pool",
                                                                 "string": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -1922,7 +1922,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -2232,7 +2232,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -2673,7 +2673,7 @@
                                         "nested_object": {
                                             "attributes": [
                                                 {
-                                                    "name": "ipv4address",
+                                                    "name": "ipv4_address",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -2696,7 +2696,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6address",
+                                                    "name": "ipv6_address",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -2737,7 +2737,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv4parameters",
+                                    "name": "ipv4_parameters",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -2752,7 +2752,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv6router_advertisement",
+                                    "name": "ipv6_router_advertisement",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -2920,7 +2920,7 @@
                                     }
                                 },
                                 {
-                                    "name": "virtual_ipdiscovery",
+                                    "name": "virtual_ip_discovery",
                                     "list_nested": {
                                         "computed_optional_required": "optional",
                                         "nested_object": {
@@ -3011,7 +3011,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv4addresses",
+                                                    "name": "ipv4_addresses",
                                                     "list_nested": {
                                                         "computed_optional_required": "computed",
                                                         "nested_object": {
@@ -3036,7 +3036,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6addresses",
+                                                    "name": "ipv6_addresses",
                                                     "list_nested": {
                                                         "computed_optional_required": "computed",
                                                         "nested_object": {
@@ -3140,7 +3140,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -3431,7 +3431,7 @@
                                                         "nested_object": {
                                                             "attributes": [
                                                                 {
-                                                                    "name": "ipv4address",
+                                                                    "name": "ipv4_address",
                                                                     "single_nested": {
                                                                         "computed_optional_required": "optional",
                                                                         "attributes": [
@@ -3454,7 +3454,7 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "name": "ipv6address",
+                                                                    "name": "ipv6_address",
                                                                     "single_nested": {
                                                                         "computed_optional_required": "optional",
                                                                         "attributes": [
@@ -3495,7 +3495,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv4parameters",
+                                                    "name": "ipv4_parameters",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -3510,7 +3510,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6router_advertisement",
+                                                    "name": "ipv6_router_advertisement",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -3678,7 +3678,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "virtual_ipdiscovery",
+                                                    "name": "virtual_ip_discovery",
                                                     "list_nested": {
                                                         "computed_optional_required": "optional",
                                                         "nested_object": {
@@ -3769,7 +3769,7 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "name": "ipv4addresses",
+                                                                    "name": "ipv4_addresses",
                                                                     "list_nested": {
                                                                         "computed_optional_required": "computed",
                                                                         "nested_object": {
@@ -3794,7 +3794,7 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "name": "ipv6addresses",
+                                                                    "name": "ipv6_addresses",
                                                                     "list_nested": {
                                                                         "computed_optional_required": "computed",
                                                                         "nested_object": {
@@ -4178,7 +4178,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv4addresses",
+                                    "name": "ipv4_addresses",
                                     "list_nested": {
                                         "computed_optional_required": "optional",
                                         "nested_object": {
@@ -4203,7 +4203,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv4parameters",
+                                    "name": "ipv4_parameters",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -4218,7 +4218,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv6addresses",
+                                    "name": "ipv6_addresses",
                                     "list_nested": {
                                         "computed_optional_required": "optional",
                                         "nested_object": {
@@ -4243,7 +4243,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv6router_advertisement",
+                                    "name": "ipv6_router_advertisement",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -4568,7 +4568,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -4786,7 +4786,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv4addresses",
+                                                    "name": "ipv4_addresses",
                                                     "list_nested": {
                                                         "computed_optional_required": "optional",
                                                         "nested_object": {
@@ -4811,7 +4811,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv4parameters",
+                                                    "name": "ipv4_parameters",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -4826,7 +4826,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6addresses",
+                                                    "name": "ipv6_addresses",
                                                     "list_nested": {
                                                         "computed_optional_required": "optional",
                                                         "nested_object": {
@@ -4851,7 +4851,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6router_advertisement",
+                                                    "name": "ipv6_router_advertisement",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -5313,12 +5313,12 @@
                                                 }
                                             },
                                             {
-                                                "name": "ipv4unicast",
+                                                "name": "ipv4_unicast",
                                                 "single_nested": {
                                                     "computed_optional_required": "optional",
                                                     "attributes": [
                                                         {
-                                                            "name": "advertise_ipv6next_hops",
+                                                            "name": "advertise_ipv6_next_hops",
                                                             "bool": {
                                                                 "computed_optional_required": "optional",
                                                                 "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -5355,7 +5355,7 @@
                                                             }
                                                         },
                                                         {
-                                                            "name": "receive_ipv6next_hops",
+                                                            "name": "receive_ipv6_next_hops",
                                                             "bool": {
                                                                 "computed_optional_required": "optional",
                                                                 "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -5366,7 +5366,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "ipv6unicast",
+                                                "name": "ipv6_unicast",
                                                 "single_nested": {
                                                     "computed_optional_required": "optional",
                                                     "attributes": [
@@ -5426,7 +5426,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "wait_for_fibinstall",
+                                                "name": "wait_for_fib_install",
                                                 "bool": {
                                                     "computed_optional_required": "optional",
                                                     "description": "Wait for FIB installation before advertising routes."
@@ -5725,7 +5725,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -5871,12 +5871,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4unicast",
+                                                                "name": "ipv4_unicast",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
                                                                         {
-                                                                            "name": "advertise_ipv6next_hops",
+                                                                            "name": "advertise_ipv6_next_hops",
                                                                             "bool": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -5913,7 +5913,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "receive_ipv6next_hops",
+                                                                            "name": "receive_ipv6_next_hops",
                                                                             "bool": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -5924,7 +5924,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6unicast",
+                                                                "name": "ipv6_unicast",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -5984,7 +5984,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "wait_for_fibinstall",
+                                                                "name": "wait_for_fib_install",
                                                                 "bool": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "Wait for FIB installation before advertising routes."
@@ -6702,7 +6702,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "l2mtu",
+                                                                "name": "l2_mtu",
                                                                 "int64": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -6796,14 +6796,14 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanid",
+                                                                            "name": "uplink_vlan_id",
                                                                             "string": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanpool",
+                                                                            "name": "uplink_vlan_pool",
                                                                             "string": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -7058,7 +7058,7 @@
                                                                     "nested_object": {
                                                                         "attributes": [
                                                                             {
-                                                                                "name": "ipv4address",
+                                                                                "name": "ipv4_address",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -7081,7 +7081,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv6address",
+                                                                                "name": "ipv6_address",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -7122,7 +7122,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4parameters",
+                                                                "name": "ipv4_parameters",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -7137,7 +7137,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6router_advertisement",
+                                                                "name": "ipv6_router_advertisement",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -7305,7 +7305,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "virtual_ipdiscovery",
+                                                                "name": "virtual_ip_discovery",
                                                                 "list_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "nested_object": {
@@ -7428,7 +7428,7 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             {
-                                                                                                                "name": "remove_private_asmode",
+                                                                                                                "name": "remove_private_as_mode",
                                                                                                                 "string": {
                                                                                                                     "computed_optional_required": "optional",
                                                                                                                     "description": "The method by which private AS numbers are removed from the advertised AS_PATH attribute."
@@ -7498,12 +7498,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv4unicast",
+                                                                                        "name": "ipv4_unicast",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
                                                                                                 {
-                                                                                                    "name": "advertise_ipv6next_hops",
+                                                                                                    "name": "advertise_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -7583,7 +7583,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "receive_ipv6next_hops",
+                                                                                                    "name": "receive_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -7594,7 +7594,7 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv6unicast",
+                                                                                        "name": "ipv6_unicast",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
@@ -7885,7 +7885,7 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             {
-                                                                                                                "name": "remove_private_asmode",
+                                                                                                                "name": "remove_private_as_mode",
                                                                                                                 "string": {
                                                                                                                     "computed_optional_required": "optional",
                                                                                                                     "description": "The method by which private AS numbers are removed from the advertised AS_PATH attribute."
@@ -7993,12 +7993,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv4unicast_1",
+                                                                                        "name": "ipv4_unicast_1",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
                                                                                                 {
-                                                                                                    "name": "advertise_ipv6next_hops",
+                                                                                                    "name": "advertise_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -8078,7 +8078,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "receive_ipv6next_hops",
+                                                                                                    "name": "receive_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -8089,7 +8089,7 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv6unicast_1",
+                                                                                        "name": "ipv6_unicast_1",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
@@ -9157,7 +9157,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4addresses",
+                                                                "name": "ipv4_addresses",
                                                                 "list_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "nested_object": {
@@ -9182,7 +9182,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4parameters_1",
+                                                                "name": "ipv4_parameters_1",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -9197,7 +9197,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6addresses",
+                                                                "name": "ipv6_addresses",
                                                                 "list_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "nested_object": {
@@ -9222,7 +9222,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6router_advertisement_1",
+                                                                "name": "ipv6_router_advertisement_1",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -9496,12 +9496,12 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "ipv4unicast_2",
+                                                                            "name": "ipv4_unicast_2",
                                                                             "single_nested": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "attributes": [
                                                                                     {
-                                                                                        "name": "advertise_ipv6next_hops",
+                                                                                        "name": "advertise_ipv6_next_hops",
                                                                                         "bool": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -9538,7 +9538,7 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "receive_ipv6next_hops",
+                                                                                        "name": "receive_ipv6_next_hops",
                                                                                         "bool": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -9549,7 +9549,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "ipv6unicast_2",
+                                                                            "name": "ipv6_unicast_2",
                                                                             "single_nested": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "attributes": [
@@ -9609,7 +9609,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "wait_for_fibinstall",
+                                                                            "name": "wait_for_fib_install",
                                                                             "bool": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "Wait for FIB installation before advertising routes."
@@ -9873,7 +9873,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "l2mtu",
+                                                                "name": "l2_mtu",
                                                                 "int64": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -9967,14 +9967,14 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanid",
+                                                                            "name": "uplink_vlan_id",
                                                                             "string": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanpool",
+                                                                            "name": "uplink_vlan_pool",
                                                                             "string": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -10048,28 +10048,28 @@
                                     }
                                 },
                                 {
-                                    "name": "num_bgppeers",
+                                    "name": "num_bgp_peers",
                                     "int64": {
                                         "computed_optional_required": "computed",
                                         "description": "Total number of configured BGP Peers."
                                     }
                                 },
                                 {
-                                    "name": "num_bgppeers_oper_down",
+                                    "name": "num_bgp_peers_oper_down",
                                     "int64": {
                                         "computed_optional_required": "computed",
                                         "description": "Total Number of BGP Peer operationally down."
                                     }
                                 },
                                 {
-                                    "name": "num_irbinterfaces",
+                                    "name": "num_irb_interfaces",
                                     "int64": {
                                         "computed_optional_required": "computed",
                                         "description": "Total number of irb-interfaces configured by the VNET."
                                     }
                                 },
                                 {
-                                    "name": "num_irbinterfaces_oper_down",
+                                    "name": "num_irb_interfaces_oper_down",
                                     "int64": {
                                         "computed_optional_required": "computed",
                                         "description": "Total number of irb-interfaces configured by the VNET which are oper-down."
@@ -10142,7 +10142,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -10570,7 +10570,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "l2mtu",
+                                                                                "name": "l2_mtu",
                                                                                 "int64": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -10664,14 +10664,14 @@
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "uplink_vlanid",
+                                                                                            "name": "uplink_vlan_id",
                                                                                             "string": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "uplink_vlanpool",
+                                                                                            "name": "uplink_vlan_pool",
                                                                                             "string": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -10926,7 +10926,7 @@
                                                                                     "nested_object": {
                                                                                         "attributes": [
                                                                                             {
-                                                                                                "name": "ipv4address",
+                                                                                                "name": "ipv4_address",
                                                                                                 "single_nested": {
                                                                                                     "computed_optional_required": "optional",
                                                                                                     "attributes": [
@@ -10949,7 +10949,7 @@
                                                                                                 }
                                                                                             },
                                                                                             {
-                                                                                                "name": "ipv6address",
+                                                                                                "name": "ipv6_address",
                                                                                                 "single_nested": {
                                                                                                     "computed_optional_required": "optional",
                                                                                                     "attributes": [
@@ -10990,7 +10990,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv4parameters",
+                                                                                "name": "ipv4_parameters",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -11005,7 +11005,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv6router_advertisement",
+                                                                                "name": "ipv6_router_advertisement",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -11173,7 +11173,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "virtual_ipdiscovery",
+                                                                                "name": "virtual_ip_discovery",
                                                                                 "list_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "nested_object": {
@@ -11296,7 +11296,7 @@
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             {
-                                                                                                                                "name": "remove_private_asmode",
+                                                                                                                                "name": "remove_private_as_mode",
                                                                                                                                 "string": {
                                                                                                                                     "computed_optional_required": "optional",
                                                                                                                                     "description": "The method by which private AS numbers are removed from the advertised AS_PATH attribute."
@@ -11366,12 +11366,12 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "name": "ipv4unicast",
+                                                                                                        "name": "ipv4_unicast",
                                                                                                         "single_nested": {
                                                                                                             "computed_optional_required": "optional",
                                                                                                             "attributes": [
                                                                                                                 {
-                                                                                                                    "name": "advertise_ipv6next_hops",
+                                                                                                                    "name": "advertise_ipv6_next_hops",
                                                                                                                     "bool": {
                                                                                                                         "computed_optional_required": "optional",
                                                                                                                         "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -11451,7 +11451,7 @@
                                                                                                                     }
                                                                                                                 },
                                                                                                                 {
-                                                                                                                    "name": "receive_ipv6next_hops",
+                                                                                                                    "name": "receive_ipv6_next_hops",
                                                                                                                     "bool": {
                                                                                                                         "computed_optional_required": "optional",
                                                                                                                         "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -11462,7 +11462,7 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "name": "ipv6unicast",
+                                                                                                        "name": "ipv6_unicast",
                                                                                                         "single_nested": {
                                                                                                             "computed_optional_required": "optional",
                                                                                                             "attributes": [
@@ -11753,7 +11753,7 @@
                                                                                                                                 }
                                                                                                                             },
                                                                                                                             {
-                                                                                                                                "name": "remove_private_asmode",
+                                                                                                                                "name": "remove_private_as_mode",
                                                                                                                                 "string": {
                                                                                                                                     "computed_optional_required": "optional",
                                                                                                                                     "description": "The method by which private AS numbers are removed from the advertised AS_PATH attribute."
@@ -11861,12 +11861,12 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "name": "ipv4unicast_1",
+                                                                                                        "name": "ipv4_unicast_1",
                                                                                                         "single_nested": {
                                                                                                             "computed_optional_required": "optional",
                                                                                                             "attributes": [
                                                                                                                 {
-                                                                                                                    "name": "advertise_ipv6next_hops",
+                                                                                                                    "name": "advertise_ipv6_next_hops",
                                                                                                                     "bool": {
                                                                                                                         "computed_optional_required": "optional",
                                                                                                                         "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -11946,7 +11946,7 @@
                                                                                                                     }
                                                                                                                 },
                                                                                                                 {
-                                                                                                                    "name": "receive_ipv6next_hops",
+                                                                                                                    "name": "receive_ipv6_next_hops",
                                                                                                                     "bool": {
                                                                                                                         "computed_optional_required": "optional",
                                                                                                                         "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -11957,7 +11957,7 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "name": "ipv6unicast_1",
+                                                                                                        "name": "ipv6_unicast_1",
                                                                                                         "single_nested": {
                                                                                                             "computed_optional_required": "optional",
                                                                                                             "attributes": [
@@ -13025,7 +13025,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv4addresses",
+                                                                                "name": "ipv4_addresses",
                                                                                 "list_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "nested_object": {
@@ -13050,7 +13050,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv4parameters_1",
+                                                                                "name": "ipv4_parameters_1",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -13065,7 +13065,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv6addresses",
+                                                                                "name": "ipv6_addresses",
                                                                                 "list_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "nested_object": {
@@ -13090,7 +13090,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv6router_advertisement_1",
+                                                                                "name": "ipv6_router_advertisement_1",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -13364,12 +13364,12 @@
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "ipv4unicast_2",
+                                                                                            "name": "ipv4_unicast_2",
                                                                                             "single_nested": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "attributes": [
                                                                                                     {
-                                                                                                        "name": "advertise_ipv6next_hops",
+                                                                                                        "name": "advertise_ipv6_next_hops",
                                                                                                         "bool": {
                                                                                                             "computed_optional_required": "optional",
                                                                                                             "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -13406,7 +13406,7 @@
                                                                                                         }
                                                                                                     },
                                                                                                     {
-                                                                                                        "name": "receive_ipv6next_hops",
+                                                                                                        "name": "receive_ipv6_next_hops",
                                                                                                         "bool": {
                                                                                                             "computed_optional_required": "optional",
                                                                                                             "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -13417,7 +13417,7 @@
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "ipv6unicast_2",
+                                                                                            "name": "ipv6_unicast_2",
                                                                                             "single_nested": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "attributes": [
@@ -13477,7 +13477,7 @@
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "wait_for_fibinstall",
+                                                                                            "name": "wait_for_fib_install",
                                                                                             "bool": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "description": "Wait for FIB installation before advertising routes."
@@ -13741,7 +13741,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "l2mtu",
+                                                                                "name": "l2_mtu",
                                                                                 "int64": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -13835,14 +13835,14 @@
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "uplink_vlanid",
+                                                                                            "name": "uplink_vlan_id",
                                                                                             "string": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                                                             }
                                                                                         },
                                                                                         {
-                                                                                            "name": "uplink_vlanpool",
+                                                                                            "name": "uplink_vlan_pool",
                                                                                             "string": {
                                                                                                 "computed_optional_required": "optional",
                                                                                                 "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -13916,28 +13916,28 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "num_bgppeers",
+                                                    "name": "num_bgp_peers",
                                                     "int64": {
                                                         "computed_optional_required": "computed",
                                                         "description": "Total number of configured BGP Peers."
                                                     }
                                                 },
                                                 {
-                                                    "name": "num_bgppeers_oper_down",
+                                                    "name": "num_bgp_peers_oper_down",
                                                     "int64": {
                                                         "computed_optional_required": "computed",
                                                         "description": "Total Number of BGP Peer operationally down."
                                                     }
                                                 },
                                                 {
-                                                    "name": "num_irbinterfaces",
+                                                    "name": "num_irb_interfaces",
                                                     "int64": {
                                                         "computed_optional_required": "computed",
                                                         "description": "Total number of irb-interfaces configured by the VNET."
                                                     }
                                                 },
                                                 {
-                                                    "name": "num_irbinterfaces_oper_down",
+                                                    "name": "num_irb_interfaces_oper_down",
                                                     "int64": {
                                                         "computed_optional_required": "computed",
                                                         "description": "Total number of irb-interfaces configured by the VNET which are oper-down."
@@ -14164,7 +14164,7 @@
                                     }
                                 },
                                 {
-                                    "name": "l2mtu",
+                                    "name": "l2_mtu",
                                     "int64": {
                                         "computed_optional_required": "optional",
                                         "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -14258,14 +14258,14 @@
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanid",
+                                                "name": "uplink_vlan_id",
                                                 "string": {
                                                     "computed_optional_required": "optional",
                                                     "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanpool",
+                                                "name": "uplink_vlan_pool",
                                                 "string": {
                                                     "computed_optional_required": "optional",
                                                     "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -14446,7 +14446,7 @@
                         }
                     },
                     {
-                        "name": "labelselector",
+                        "name": "label_selector",
                         "string": {
                             "computed_optional_required": "computed_optional",
                             "description": "a label selector string to filter the results based on CR labels"
@@ -14609,7 +14609,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "l2mtu",
+                                                    "name": "l2_mtu",
                                                     "int64": {
                                                         "computed_optional_required": "optional",
                                                         "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down."
@@ -14703,14 +14703,14 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "uplink_vlanid",
+                                                                "name": "uplink_vlan_id",
                                                                 "string": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
                                                                 }
                                                             },
                                                             {
-                                                                "name": "uplink_vlanpool",
+                                                                "name": "uplink_vlan_pool",
                                                                 "string": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -15894,7 +15894,7 @@
                                     }
                                 },
                                 {
-                                    "name": "l2mtu",
+                                    "name": "l2_mtu",
                                     "int64": {
                                         "computed_optional_required": "optional",
                                         "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.",
@@ -16012,7 +16012,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanid",
+                                                "name": "uplink_vlan_id",
                                                 "string": {
                                                     "computed_optional_required": "computed_optional",
                                                     "default": {
@@ -16022,7 +16022,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanpool",
+                                                "name": "uplink_vlan_pool",
                                                 "string": {
                                                     "computed_optional_required": "optional",
                                                     "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -16821,7 +16821,7 @@
                                         "nested_object": {
                                             "attributes": [
                                                 {
-                                                    "name": "ipv4address",
+                                                    "name": "ipv4_address",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -16844,7 +16844,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6address",
+                                                    "name": "ipv6_address",
                                                     "single_nested": {
                                                         "computed_optional_required": "optional",
                                                         "attributes": [
@@ -16900,7 +16900,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv4parameters",
+                                    "name": "ipv4_parameters",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -16915,7 +16915,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv6router_advertisement",
+                                    "name": "ipv6_router_advertisement",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -17263,7 +17263,7 @@
                                     }
                                 },
                                 {
-                                    "name": "virtual_ipdiscovery",
+                                    "name": "virtual_ip_discovery",
                                     "list_nested": {
                                         "computed_optional_required": "optional",
                                         "nested_object": {
@@ -17369,7 +17369,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv4addresses",
+                                                    "name": "ipv4_addresses",
                                                     "list_nested": {
                                                         "computed_optional_required": "computed_optional",
                                                         "nested_object": {
@@ -17394,7 +17394,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "name": "ipv6addresses",
+                                                    "name": "ipv6_addresses",
                                                     "list_nested": {
                                                         "computed_optional_required": "computed_optional",
                                                         "nested_object": {
@@ -17844,7 +17844,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv4addresses",
+                                    "name": "ipv4_addresses",
                                     "list_nested": {
                                         "computed_optional_required": "optional",
                                         "nested_object": {
@@ -17869,7 +17869,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv4parameters",
+                                    "name": "ipv4_parameters",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -17884,7 +17884,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv6addresses",
+                                    "name": "ipv6_addresses",
                                     "list_nested": {
                                         "computed_optional_required": "optional",
                                         "nested_object": {
@@ -17909,7 +17909,7 @@
                                     }
                                 },
                                 {
-                                    "name": "ipv6router_advertisement",
+                                    "name": "ipv6_router_advertisement",
                                     "single_nested": {
                                         "computed_optional_required": "optional",
                                         "attributes": [
@@ -18649,12 +18649,12 @@
                                                 }
                                             },
                                             {
-                                                "name": "ipv4unicast",
+                                                "name": "ipv4_unicast",
                                                 "single_nested": {
                                                     "computed_optional_required": "optional",
                                                     "attributes": [
                                                         {
-                                                            "name": "advertise_ipv6next_hops",
+                                                            "name": "advertise_ipv6_next_hops",
                                                             "bool": {
                                                                 "computed_optional_required": "optional",
                                                                 "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -18709,7 +18709,7 @@
                                                             }
                                                         },
                                                         {
-                                                            "name": "receive_ipv6next_hops",
+                                                            "name": "receive_ipv6_next_hops",
                                                             "bool": {
                                                                 "computed_optional_required": "optional",
                                                                 "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -18720,7 +18720,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "ipv6unicast",
+                                                "name": "ipv6_unicast",
                                                 "single_nested": {
                                                     "computed_optional_required": "optional",
                                                     "attributes": [
@@ -18816,7 +18816,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "wait_for_fibinstall",
+                                                "name": "wait_for_fib_install",
                                                 "bool": {
                                                     "computed_optional_required": "computed_optional",
                                                     "default": {
@@ -19956,7 +19956,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "l2mtu",
+                                                                "name": "l2_mtu",
                                                                 "int64": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.",
@@ -20074,7 +20074,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanid",
+                                                                            "name": "uplink_vlan_id",
                                                                             "string": {
                                                                                 "computed_optional_required": "computed_optional",
                                                                                 "default": {
@@ -20084,7 +20084,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanpool",
+                                                                            "name": "uplink_vlan_pool",
                                                                             "string": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -20438,7 +20438,7 @@
                                                                     "nested_object": {
                                                                         "attributes": [
                                                                             {
-                                                                                "name": "ipv4address",
+                                                                                "name": "ipv4_address",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -20461,7 +20461,7 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "name": "ipv6address",
+                                                                                "name": "ipv6_address",
                                                                                 "single_nested": {
                                                                                     "computed_optional_required": "optional",
                                                                                     "attributes": [
@@ -20517,7 +20517,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4parameters",
+                                                                "name": "ipv4_parameters",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -20532,7 +20532,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6router_advertisement",
+                                                                "name": "ipv6_router_advertisement",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -20880,7 +20880,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "virtual_ipdiscovery",
+                                                                "name": "virtual_ip_discovery",
                                                                 "list_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "nested_object": {
@@ -21039,7 +21039,7 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             {
-                                                                                                                "name": "remove_private_asmode",
+                                                                                                                "name": "remove_private_as_mode",
                                                                                                                 "string": {
                                                                                                                     "computed_optional_required": "computed_optional",
                                                                                                                     "default": {
@@ -21136,12 +21136,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv4unicast",
+                                                                                        "name": "ipv4_unicast",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
                                                                                                 {
-                                                                                                    "name": "advertise_ipv6next_hops",
+                                                                                                    "name": "advertise_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -21269,7 +21269,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "receive_ipv6next_hops",
+                                                                                                    "name": "receive_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -21280,7 +21280,7 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv6unicast",
+                                                                                        "name": "ipv6_unicast",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
@@ -21736,7 +21736,7 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             {
-                                                                                                                "name": "remove_private_asmode",
+                                                                                                                "name": "remove_private_as_mode",
                                                                                                                 "string": {
                                                                                                                     "computed_optional_required": "computed_optional",
                                                                                                                     "default": {
@@ -21886,12 +21886,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv4unicast_1",
+                                                                                        "name": "ipv4_unicast_1",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
                                                                                                 {
-                                                                                                    "name": "advertise_ipv6next_hops",
+                                                                                                    "name": "advertise_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -22019,7 +22019,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "receive_ipv6next_hops",
+                                                                                                    "name": "receive_ipv6_next_hops",
                                                                                                     "bool": {
                                                                                                         "computed_optional_required": "optional",
                                                                                                         "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -22030,7 +22030,7 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "ipv6unicast_1",
+                                                                                        "name": "ipv6_unicast_1",
                                                                                         "single_nested": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "attributes": [
@@ -23638,7 +23638,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4addresses",
+                                                                "name": "ipv4_addresses",
                                                                 "list_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "nested_object": {
@@ -23663,7 +23663,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv4parameters_1",
+                                                                "name": "ipv4_parameters_1",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -23678,7 +23678,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6addresses",
+                                                                "name": "ipv6_addresses",
                                                                 "list_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "nested_object": {
@@ -23703,7 +23703,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "ipv6router_advertisement_1",
+                                                                "name": "ipv6_router_advertisement_1",
                                                                 "single_nested": {
                                                                     "computed_optional_required": "optional",
                                                                     "attributes": [
@@ -24211,12 +24211,12 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "ipv4unicast_2",
+                                                                            "name": "ipv4_unicast_2",
                                                                             "single_nested": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "attributes": [
                                                                                     {
-                                                                                        "name": "advertise_ipv6next_hops",
+                                                                                        "name": "advertise_ipv6_next_hops",
                                                                                         "bool": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "description": "Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers."
@@ -24271,7 +24271,7 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "name": "receive_ipv6next_hops",
+                                                                                        "name": "receive_ipv6_next_hops",
                                                                                         "bool": {
                                                                                             "computed_optional_required": "optional",
                                                                                             "description": "Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops."
@@ -24282,7 +24282,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "ipv6unicast_2",
+                                                                            "name": "ipv6_unicast_2",
                                                                             "single_nested": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "attributes": [
@@ -24378,7 +24378,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "wait_for_fibinstall",
+                                                                            "name": "wait_for_fib_install",
                                                                             "bool": {
                                                                                 "computed_optional_required": "computed_optional",
                                                                                 "default": {
@@ -24753,7 +24753,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "name": "l2mtu",
+                                                                "name": "l2_mtu",
                                                                 "int64": {
                                                                     "computed_optional_required": "optional",
                                                                     "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.",
@@ -24871,7 +24871,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanid",
+                                                                            "name": "uplink_vlan_id",
                                                                             "string": {
                                                                                 "computed_optional_required": "computed_optional",
                                                                                 "default": {
@@ -24881,7 +24881,7 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "name": "uplink_vlanpool",
+                                                                            "name": "uplink_vlan_pool",
                                                                             "string": {
                                                                                 "computed_optional_required": "optional",
                                                                                 "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."
@@ -24958,28 +24958,28 @@
                                     }
                                 },
                                 {
-                                    "name": "num_bgppeers",
+                                    "name": "num_bgp_peers",
                                     "int64": {
                                         "computed_optional_required": "computed_optional",
                                         "description": "Total number of configured BGP Peers."
                                     }
                                 },
                                 {
-                                    "name": "num_bgppeers_oper_down",
+                                    "name": "num_bgp_peers_oper_down",
                                     "int64": {
                                         "computed_optional_required": "computed_optional",
                                         "description": "Total Number of BGP Peer operationally down."
                                     }
                                 },
                                 {
-                                    "name": "num_irbinterfaces",
+                                    "name": "num_irb_interfaces",
                                     "int64": {
                                         "computed_optional_required": "computed_optional",
                                         "description": "Total number of irb-interfaces configured by the VNET."
                                     }
                                 },
                                 {
-                                    "name": "num_irbinterfaces_oper_down",
+                                    "name": "num_irb_interfaces_oper_down",
                                     "int64": {
                                         "computed_optional_required": "computed_optional",
                                         "description": "Total number of irb-interfaces configured by the VNET which are oper-down."
@@ -25250,7 +25250,7 @@
                                     }
                                 },
                                 {
-                                    "name": "l2mtu",
+                                    "name": "l2_mtu",
                                     "int64": {
                                         "computed_optional_required": "optional",
                                         "description": "L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.",
@@ -25368,7 +25368,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanid",
+                                                "name": "uplink_vlan_id",
                                                 "string": {
                                                     "computed_optional_required": "computed_optional",
                                                     "default": {
@@ -25378,7 +25378,7 @@
                                                 }
                                             },
                                             {
-                                                "name": "uplink_vlanpool",
+                                                "name": "uplink_vlan_pool",
                                                 "string": {
                                                     "computed_optional_required": "optional",
                                                     "description": "A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink."

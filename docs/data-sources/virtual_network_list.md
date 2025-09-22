@@ -23,7 +23,7 @@ description: |-
 
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
-- `labelselector` (String) a label selector string to filter the results based on CR labels
+- `label_selector` (String) a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -64,10 +64,10 @@ Optional:
 Optional:
 
 - `name` (String) The name of the BridgeDomain.
-- `spec_1` (Attributes) Specification of the BridgeDomain (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec_1))
+- `spec` (Attributes) Specification of the BridgeDomain (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec))
 
-<a id="nestedatt--items--spec--bridge_domains--spec_1"></a>
-### Nested Schema for `items.spec.bridge_domains.spec_1`
+<a id="nestedatt--items--spec--bridge_domains--spec"></a>
+### Nested Schema for `items.spec.bridge_domains.spec`
 
 Optional:
 
@@ -76,9 +76,9 @@ Optional:
 - `evi_pool` (String) Reference to an EVI pool to use for allocations if EVI is left blank.
 - `export_target` (String) Export route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
 - `import_target` (String) Import route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
-- `l2proxy_arpnd` (Attributes) Enables / Disabled Proxy ARP / Proxy ND. (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec_1--l2proxy_arpnd))
+- `l2proxy_arpnd` (Attributes) Enables / Disabled Proxy ARP / Proxy ND. (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec--l2proxy_arpnd))
 - `mac_aging` (Number) Configurable aging time for dynamically learned mac addresses.
-- `mac_duplication_detection` (Attributes) Enable or disable MAC duplication detection and resolution mechanisms. (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec_1--mac_duplication_detection))
+- `mac_duplication_detection` (Attributes) Enable or disable MAC duplication detection and resolution mechanisms. (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec--mac_duplication_detection))
 - `mac_learning` (Boolean) Enable MAC learning for this BridgeDomain.
 - `mac_limit` (Number) Sets the maximum number of MAC entries accepted in the bridge table.
 - `tunnel_index_pool` (String) Reference to a tunnel index pool to use for allocations.
@@ -86,19 +86,19 @@ Optional:
 - `vni` (Number) VNI to use for this BridgeDomain, can be optionally left blank to have it allocated using the VNI Pool.
 - `vni_pool` (String) Reference to a VNI pool to use for allocations if VNI is left blank.
 
-<a id="nestedatt--items--spec--bridge_domains--spec_1--l2proxy_arpnd"></a>
-### Nested Schema for `items.spec.bridge_domains.spec_1.l2proxy_arpnd`
+<a id="nestedatt--items--spec--bridge_domains--spec--l2proxy_arpnd"></a>
+### Nested Schema for `items.spec.bridge_domains.spec.l2proxy_arpnd`
 
 Optional:
 
-- `dynamic_learning` (Attributes) (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec_1--l2proxy_arpnd--dynamic_learning))
-- `ip_duplication` (Attributes) (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec_1--l2proxy_arpnd--ip_duplication))
+- `dynamic_learning` (Attributes) (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec--l2proxy_arpnd--dynamic_learning))
+- `ip_duplication` (Attributes) (see [below for nested schema](#nestedatt--items--spec--bridge_domains--spec--l2proxy_arpnd--ip_duplication))
 - `proxy_arp` (Boolean) Enables proxy ARP.
 - `proxy_nd` (Boolean) Enables proxy ND.
 - `table_size` (Number) Maximum number of entries allowed in the proxy table of the bridge domain.
 
-<a id="nestedatt--items--spec--bridge_domains--spec_1--l2proxy_arpnd--dynamic_learning"></a>
-### Nested Schema for `items.spec.bridge_domains.spec_1.l2proxy_arpnd.dynamic_learning`
+<a id="nestedatt--items--spec--bridge_domains--spec--l2proxy_arpnd--dynamic_learning"></a>
+### Nested Schema for `items.spec.bridge_domains.spec.l2proxy_arpnd.dynamic_learning`
 
 Optional:
 
@@ -107,8 +107,8 @@ Optional:
 - `send_refresh` (Number) The interval determines the frequency at which the system generates three ARP Requests or Neighbor Solicitations with the intent to refresh the proxy entry. The refresh is sent within the age-time window.
 
 
-<a id="nestedatt--items--spec--bridge_domains--spec_1--l2proxy_arpnd--ip_duplication"></a>
-### Nested Schema for `items.spec.bridge_domains.spec_1.l2proxy_arpnd.ip_duplication`
+<a id="nestedatt--items--spec--bridge_domains--spec--l2proxy_arpnd--ip_duplication"></a>
+### Nested Schema for `items.spec.bridge_domains.spec.l2proxy_arpnd.ip_duplication`
 
 Optional:
 
@@ -119,8 +119,8 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--bridge_domains--spec_1--mac_duplication_detection"></a>
-### Nested Schema for `items.spec.bridge_domains.spec_1.mac_duplication_detection`
+<a id="nestedatt--items--spec--bridge_domains--spec--mac_duplication_detection"></a>
+### Nested Schema for `items.spec.bridge_domains.spec.mac_duplication_detection`
 
 Optional:
 
@@ -139,26 +139,26 @@ Optional:
 Optional:
 
 - `name` (String) The name of the BridgeInterface.
-- `spec_2` (Attributes) Specification of the BridgeInterface (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec_2))
+- `spec` (Attributes) Specification of the BridgeInterface (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec))
 
-<a id="nestedatt--items--spec--bridge_interfaces--spec_2"></a>
-### Nested Schema for `items.spec.bridge_interfaces.spec_2`
+<a id="nestedatt--items--spec--bridge_interfaces--spec"></a>
+### Nested Schema for `items.spec.bridge_interfaces.spec`
 
 Optional:
 
 - `bridge_domain` (String) Reference to a BridgeDomain in which to attach the BridgeInterface.
 - `description` (String) The description of the BridgeInterface.
-- `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec_2--egress))
-- `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec_2--ingress))
+- `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec--ingress))
 - `interface` (String) Reference to an Interface resource to attach this BridgeInterface.
-- `l2mtu` (Number) L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.
+- `l2_mtu` (Number) L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.
 - `mac_duplication_detection_action` (String) Override for Mac Duplication Detection action if enabled in the associated BridgeDomain.
 - `split_horizon_group` (String) Split Horizon Group to be used for this BridgeInterface. The subinterface within this BridgeInterface will be a member of this Split Horizon Group.
-- `uplink` (Attributes) The Uplink between your access breakout switch and your leaf switch. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec_2--uplink))
+- `uplink` (Attributes) The Uplink between your access breakout switch and your leaf switch. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec--uplink))
 - `vlan_id` (String) Single value between 1-4094 support, ranges supported in the format x-y,x-y, or the special keyword null, any, untagged or pool for auto allocation.
 
-<a id="nestedatt--items--spec--bridge_interfaces--spec_2--egress"></a>
-### Nested Schema for `items.spec.bridge_interfaces.spec_2.egress`
+<a id="nestedatt--items--spec--bridge_interfaces--spec--egress"></a>
+### Nested Schema for `items.spec.bridge_interfaces.spec.egress`
 
 Optional:
 
@@ -166,8 +166,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--items--spec--bridge_interfaces--spec_2--ingress"></a>
-### Nested Schema for `items.spec.bridge_interfaces.spec_2.ingress`
+<a id="nestedatt--items--spec--bridge_interfaces--spec--ingress"></a>
+### Nested Schema for `items.spec.bridge_interfaces.spec.ingress`
 
 Optional:
 
@@ -175,19 +175,19 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
-<a id="nestedatt--items--spec--bridge_interfaces--spec_2--uplink"></a>
-### Nested Schema for `items.spec.bridge_interfaces.spec_2.uplink`
+<a id="nestedatt--items--spec--bridge_interfaces--spec--uplink"></a>
+### Nested Schema for `items.spec.bridge_interfaces.spec.uplink`
 
 Optional:
 
-- `egress_1` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec_2--uplink--egress_1))
-- `ingress_1` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec_2--uplink--ingress_1))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--bridge_interfaces--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
-- `uplink_vlanid` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
-- `uplink_vlanpool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
+- `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
+- `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 
-<a id="nestedatt--items--spec--bridge_interfaces--spec_2--uplink--egress_1"></a>
-### Nested Schema for `items.spec.bridge_interfaces.spec_2.uplink.egress_1`
+<a id="nestedatt--items--spec--bridge_interfaces--spec--uplink--egress"></a>
+### Nested Schema for `items.spec.bridge_interfaces.spec.uplink.egress`
 
 Optional:
 
@@ -195,8 +195,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--items--spec--bridge_interfaces--spec_2--uplink--ingress_1"></a>
-### Nested Schema for `items.spec.bridge_interfaces.spec_2.uplink.ingress_1`
+<a id="nestedatt--items--spec--bridge_interfaces--spec--uplink--ingress"></a>
+### Nested Schema for `items.spec.bridge_interfaces.spec.uplink.ingress`
 
 Optional:
 
@@ -213,34 +213,34 @@ Optional:
 Optional:
 
 - `name` (String) The name of the IrbInterface.
-- `spec_3` (Attributes) Specification of the IrbInterface (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3))
+- `spec` (Attributes) Specification of the IrbInterface (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec))
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3`
+<a id="nestedatt--items--spec--irb_interfaces--spec"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec`
 
 Optional:
 
 - `anycast_gateway_mac` (String) The gateway MAC to use on the anycast address, if left empty the node will automatically assign one.
 - `arp_timeout` (Number) Duration of time that dynamic ARP entries remain in the ARP cache before they expire.
-- `bfd` (Attributes) Enable BFD on the IRBInterface. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--bfd))
+- `bfd` (Attributes) Enable BFD on the IRBInterface. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--bfd))
 - `bridge_domain` (String) Reference to a BridgeDomain.
 - `description` (String) The description of the IRBInterface.
-- `egress_2` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--egress_2))
-- `evpn_route_advertisement_type` (Attributes) Controls the type of ARP/ND entries to advertise. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--evpn_route_advertisement_type))
-- `host_route_populate` (Attributes) Configures host route population based on ARP entries. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--host_route_populate))
-- `ingress_2` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ingress_2))
-- `ip_addresses` (Attributes List) (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ip_addresses))
+- `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--egress))
+- `evpn_route_advertisement_type` (Attributes) Controls the type of ARP/ND entries to advertise. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--evpn_route_advertisement_type))
+- `host_route_populate` (Attributes) Configures host route population based on ARP entries. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--host_route_populate))
+- `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ingress))
+- `ip_addresses` (Attributes List) (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ip_addresses))
 - `ip_mtu` (Number) IP MTU for the IRBInterface [default=1500].
-- `ipv4parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ipv4parameters))
-- `ipv6router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ipv6router_advertisement))
-- `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--l3proxy_arpnd))
+- `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ipv4_parameters))
+- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ipv6_router_advertisement))
+- `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `router` (String) Reference to a Router.
 - `unnumbered` (String) Enables the use of unnumbered interfaces on the IRBInterface.  If IPv6 is specified, no IP address are configured on the sub-interface and only the link local address will be used.  If any IP addresses are specified for either IPv4 or IPv6 that will take precedence and IPs will be assigned to the interfaces.(Deprecated, Use IPv6RouterAdvertisement)
-- `virtual_ipdiscovery` (Attributes List) Configuration for Virtual IP discovery on the interface. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--virtual_ipdiscovery))
+- `virtual_ip_discovery` (Attributes List) Configuration for Virtual IP discovery on the interface. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--virtual_ip_discovery))
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--bfd"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.bfd`
+<a id="nestedatt--items--spec--irb_interfaces--spec--bfd"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.bfd`
 
 Optional:
 
@@ -252,8 +252,8 @@ Optional:
 - `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--egress_2"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.egress_2`
+<a id="nestedatt--items--spec--irb_interfaces--spec--egress"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.egress`
 
 Optional:
 
@@ -261,8 +261,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--evpn_route_advertisement_type"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.evpn_route_advertisement_type`
+<a id="nestedatt--items--spec--irb_interfaces--spec--evpn_route_advertisement_type"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.evpn_route_advertisement_type`
 
 Optional:
 
@@ -272,8 +272,8 @@ Optional:
 - `nd_static` (Boolean) Advertise static ND entries.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--host_route_populate"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.host_route_populate`
+<a id="nestedatt--items--spec--irb_interfaces--spec--host_route_populate"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.host_route_populate`
 
 Optional:
 
@@ -282,8 +282,8 @@ Optional:
 - `static` (Boolean) Create host routes out of static ARP entries.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ingress_2"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ingress_2`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ingress"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ingress`
 
 Optional:
 
@@ -291,17 +291,17 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ip_addresses"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ip_addresses`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ip_addresses"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ip_addresses`
 
 Optional:
 
-- `ipv4address` (Attributes) IPv4 address in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ip_addresses--ipv4address))
-- `ipv6address` (Attributes) IPv6 address in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ip_addresses--ipv6address))
+- `ipv4_address` (Attributes) IPv4 address in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ip_addresses--ipv4_address))
+- `ipv6_address` (Attributes) IPv6 address in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ip_addresses--ipv6_address))
 - `node` (String) Reference to a TopoNode resource, if not specified the IP address will be assigned to all nodes on which the IRB is deployed.  If specified the IP address will be assigned to the specified node.
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ip_addresses--ipv4address"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ip_addresses.ipv4address`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ip_addresses--ipv4_address"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ip_addresses.ipv4_address`
 
 Optional:
 
@@ -309,8 +309,8 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ip_addresses--ipv6address"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ip_addresses.ipv6address`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ip_addresses--ipv6_address"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ip_addresses.ipv6_address`
 
 Optional:
 
@@ -319,16 +319,16 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ipv4parameters"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ipv4parameters`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ipv4_parameters"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ipv4_parameters`
 
 Optional:
 
 - `directed_broadcast` (Boolean) Allow receiving and forwarding of directed broadcast packets. Enabled when set to true.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ipv6router_advertisement"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ipv6router_advertisement`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ipv6_router_advertisement"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ipv6_router_advertisement`
 
 Optional:
 
@@ -339,13 +339,13 @@ Optional:
 - `max_advertisement_interval` (Number) Maximum time between router advertisements (in seconds).
 - `min_advertisement_interval` (Number) Minimum time between router advertisements (in seconds).
 - `other_configuration_flag` (Boolean) Enable DHCPv6 for other configuration (O-bit).
-- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec_3--ipv6router_advertisement--prefixes))
+- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--items--spec--irb_interfaces--spec--ipv6_router_advertisement--prefixes))
 - `reachable_time` (Number) Time in milliseconds for Neighbor Unreachability Detection.
 - `retransmit_time` (Number) Time in milliseconds between retransmitted NS messages.
 - `router_lifetime` (Number) Router lifetime in seconds for default gateway.
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--ipv6router_advertisement--prefixes"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.ipv6router_advertisement.prefixes`
+<a id="nestedatt--items--spec--irb_interfaces--spec--ipv6_router_advertisement--prefixes"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.ipv6_router_advertisement.prefixes`
 
 Optional:
 
@@ -357,8 +357,8 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--l3proxy_arpnd"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.l3proxy_arpnd`
+<a id="nestedatt--items--spec--irb_interfaces--spec--l3proxy_arpnd"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.l3proxy_arpnd`
 
 Optional:
 
@@ -366,8 +366,8 @@ Optional:
 - `proxy_nd` (Boolean) Select whether Proxy ND should be enabled.
 
 
-<a id="nestedatt--items--spec--irb_interfaces--spec_3--virtual_ipdiscovery"></a>
-### Nested Schema for `items.spec.irb_interfaces.spec_3.virtual_ipdiscovery`
+<a id="nestedatt--items--spec--irb_interfaces--spec--virtual_ip_discovery"></a>
+### Nested Schema for `items.spec.irb_interfaces.spec.virtual_ip_discovery`
 
 Optional:
 
@@ -403,14 +403,14 @@ Optional:
 Optional:
 
 - `name` (String) The name of the BgpGroup.
-- `spec_4` (Attributes) Specification of the BgpGroup (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4))
+- `spec` (Attributes) Specification of the BgpGroup (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec`
 
 Optional:
 
-- `as_path_options` (Attributes) AS Path Options (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--as_path_options))
+- `as_path_options` (Attributes) AS Path Options (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--as_path_options))
 - `bfd` (Boolean) Enable or disable Bi-forward Forwarding Detection (BFD) with fast failover.
 - `client` (Boolean) When set to true, all configured and dynamic BGP peers are considered RR clients.
 - `cluster_id` (String) Enables route reflect client and sets the cluster ID.
@@ -418,58 +418,58 @@ Optional:
 - `export_policy` (List of String) Reference to a Policy CR that will be used to filter routes advertised to peers.
 - `gr_stale_route_time` (Number) Enables Graceful Restart on the peer and sets the stale route time.
 - `import_policy` (List of String) Reference to a Policy CR that will be used to filter routes received from peers.
-- `ipv4unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast))
-- `ipv6unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast))
+- `ipv4_unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast))
+- `ipv6_unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast))
 - `keychain` (String) Reference to a Keychain resource that will be used for authentication with the BGP peer.
-- `local_as` (Attributes) The local autonomous system number advertised to peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--local_as))
+- `local_as` (Attributes) The local autonomous system number advertised to peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--local_as))
 - `local_preference` (Number) Local Preference attribute added to received routes from the BGP peers, also sets local preference for generated routes.
 - `multi_hop_max_hop` (Number) Enable multihop for eBGP peers and sets the maximum number of hops allowed.
 - `next_hop_self` (Boolean) When set to true, the next-hop in all IPv4-unicast, IPv6-unicast and EVPN BGP routes advertised to the peer is set to the local-address.
-- `peer_as` (Attributes) The autonomous system number expected from peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--peer_as))
+- `peer_as` (Attributes) The autonomous system number expected from peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--peer_as))
 - `send_community_large` (Boolean) When false, all large (12 byte) BGP communities from all outbound routes advertised to the peer are stripped.
 - `send_community_standard` (Boolean) When false, all standard (4 byte) communities from all outbound routes advertised to the peer are stripped.
-- `send_default_route` (Attributes) Options for controlling the generation of default routes towards BGP peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--send_default_route))
-- `timers` (Attributes) Timer configurations (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--timers))
+- `send_default_route` (Attributes) Options for controlling the generation of default routes towards BGP peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--send_default_route))
+- `timers` (Attributes) Timer configurations (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--timers))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--as_path_options"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.as_path_options`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--as_path_options"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.as_path_options`
 
 Optional:
 
 - `allow_own_as` (Number) The maximum number of times the global AS number or a local AS number of the BGP instance can appear in any received AS_PATH before it is considered a loop and considered invalid.
-- `remove_private_as` (Attributes) Options for removing private AS numbers (2-byte and 4-byte) from the advertised AS path towards all peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--as_path_options--remove_private_as))
+- `remove_private_as` (Attributes) Options for removing private AS numbers (2-byte and 4-byte) from the advertised AS path towards all peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--as_path_options--remove_private_as))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--as_path_options--remove_private_as"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.as_path_options.remove_private_as`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--as_path_options--remove_private_as"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.as_path_options.remove_private_as`
 
 Optional:
 
 - `ignore_peer_as` (Boolean) If set to true then do not delete or replace a private AS number that is the same as the peer AS number.
 - `leading_only` (Boolean) If set to true then only delete or replace private AS numbers that appear before the first occurrence of a non-private ASN in the sequence of most recent ASNs in the AS path.
-- `remove_private_asmode` (String) The method by which private AS numbers are removed from the advertised AS_PATH attribute.
+- `remove_private_as_mode` (String) The method by which private AS numbers are removed from the advertised AS_PATH attribute.
 
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv4unicast`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv4_unicast`
 
 Optional:
 
-- `advertise_ipv6next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
+- `advertise_ipv6_next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
 - `enabled` (Boolean) Enables the IPv4 unicast AFISAFI.
-- `prefix_limit` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast--prefix_limit))
-- `receive_ipv6next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
+- `prefix_limit` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast--prefix_limit))
+- `receive_ipv6_next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast--prefix_limit"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv4unicast.prefix_limit`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast--prefix_limit"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv4_unicast.prefix_limit`
 
 Optional:
 
-- `prefix_limit_accepted` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast--prefix_limit--prefix_limit_accepted))
-- `prefix_limit_received` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast--prefix_limit--prefix_limit_received))
+- `prefix_limit_accepted` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast--prefix_limit--prefix_limit_accepted))
+- `prefix_limit_received` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast--prefix_limit--prefix_limit_received))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast--prefix_limit--prefix_limit_accepted"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv4unicast.prefix_limit.prefix_limit_accepted`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast--prefix_limit--prefix_limit_accepted"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv4_unicast.prefix_limit.prefix_limit_accepted`
 
 Optional:
 
@@ -478,8 +478,8 @@ Optional:
 - `warning_threshold` (Number) A percentage of the maximum number of prefixes that can be accepted before a warning is logged.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv4unicast--prefix_limit--prefix_limit_received"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv4unicast.prefix_limit.prefix_limit_received`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv4_unicast--prefix_limit--prefix_limit_received"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv4_unicast.prefix_limit.prefix_limit_received`
 
 Optional:
 
@@ -490,24 +490,24 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv6unicast`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv6_unicast`
 
 Optional:
 
 - `enabled` (Boolean) Enables the IPv6 unicast AFISAFI
-- `prefix_limit_1` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast--prefix_limit_1))
+- `prefix_limit` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast--prefix_limit))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast--prefix_limit_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv6unicast.prefix_limit_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast--prefix_limit"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv6_unicast.prefix_limit`
 
 Optional:
 
-- `prefix_limit_accepted_1` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast--prefix_limit_1--prefix_limit_accepted_1))
-- `prefix_limit_received_1` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast--prefix_limit_1--prefix_limit_received_1))
+- `prefix_limit_accepted` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast--prefix_limit--prefix_limit_accepted))
+- `prefix_limit_received` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast--prefix_limit--prefix_limit_received))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast--prefix_limit_1--prefix_limit_accepted_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv6unicast.prefix_limit_1.prefix_limit_accepted_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast--prefix_limit--prefix_limit_accepted"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv6_unicast.prefix_limit.prefix_limit_accepted`
 
 Optional:
 
@@ -516,8 +516,8 @@ Optional:
 - `warning_threshold` (Number) A percentage of the maximum number of prefixes that can be accepted before a warning is logged.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--ipv6unicast--prefix_limit_1--prefix_limit_received_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.ipv6unicast.prefix_limit_1.prefix_limit_received_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--ipv6_unicast--prefix_limit--prefix_limit_received"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.ipv6_unicast.prefix_limit.prefix_limit_received`
 
 Optional:
 
@@ -528,8 +528,8 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--local_as"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.local_as`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--local_as"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.local_as`
 
 Optional:
 
@@ -538,16 +538,16 @@ Optional:
 - `prepend_local_as` (Boolean) When set to true, the local AS value is prepended to the AS path of inbound routes from each EBGP peer.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--peer_as"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.peer_as`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--peer_as"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.peer_as`
 
 Optional:
 
 - `autonomous_system` (Number) Local Autonomous System number.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--send_default_route"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.send_default_route`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--send_default_route"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.send_default_route`
 
 Optional:
 
@@ -555,8 +555,8 @@ Optional:
 - `export_policy` (String) Reference to a Policy that should be applied to the advertised default routes, in order to set their attributes to non-default values.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec_4--timers"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec_4.timers`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_groups--spec--timers"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_groups.spec.timers`
 
 Optional:
 
@@ -574,14 +574,14 @@ Optional:
 Optional:
 
 - `name` (String) The name of the BgpPeer.
-- `spec_5` (Attributes) Specification of the BgpPeer (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5))
+- `spec` (Attributes) Specification of the BgpPeer (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec`
 
 Optional:
 
-- `as_path_options_1` (Attributes) AS Path Options (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--as_path_options_1))
+- `as_path_options` (Attributes) AS Path Options (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--as_path_options))
 - `bfd` (Boolean) Enable or disable Bi-forward Forwarding Detection (BFD) with fast failover.
 - `client` (Boolean) When set to true, all configured and dynamic BGP peers are considered RR clients.
 - `cluster_id` (String) Enables route reflect client and sets the cluster ID.
@@ -594,60 +594,60 @@ Optional:
 - `import_policy` (List of String) Reference to a Policy CR that will be used to filter routes received from peers.
 - `interface` (String) Reference to a RoutedInterface or IrbInterface resource whose IP will be used as a source IP for the BGP session.
 - `interface_kind` (String) InterfaceReference type defines whether the provided Reference is a RoutedInterface or IrbInterface.
-- `ipv4unicast_1` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1))
-- `ipv6unicast_1` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1))
+- `ipv4_unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast))
+- `ipv6_unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast))
 - `keychain` (String) Reference to a Keychain resource that will be used for authentication with the BGP peer.
-- `local_as_1` (Attributes) The local autonomous system number advertised to peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--local_as_1))
+- `local_as` (Attributes) The local autonomous system number advertised to peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--local_as))
 - `local_preference` (Number) Local Preference attribute added to received routes from the BGP peers, also sets local preference for generated routes.
 - `multi_hop_max_hop` (Number) Enable multihop for eBGP peers and sets the maximum number of hops allowed.
 - `next_hop_self` (Boolean) When set to true, the next-hop in all IPv4-unicast, IPv6-unicast and EVPN BGP routes advertised to the peer is set to the local-address.
 - `node` (String) Node on which to configure the BGP peer. This node must be one of the nodes on which the IRBInterface is configured.  When left blank or if the node is not part of the IRBInterface, the peer will not be deployed. Ignored for RoutedInterfaces.
-- `peer_as_1` (Attributes) The autonomous system number expected from peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--peer_as_1))
+- `peer_as` (Attributes) The autonomous system number expected from peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--peer_as))
 - `peer_ip` (String) Peer IP to which the peering session will be established.
 - `send_community_large` (Boolean) When false, all large (12 byte) BGP communities from all outbound routes advertised to the peer are stripped.
 - `send_community_standard` (Boolean) When false, all standard (4 byte) communities from all outbound routes advertised to the peer are stripped.
-- `send_default_route_1` (Attributes) Options for controlling the generation of default routes towards BGP peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--send_default_route_1))
-- `timers_1` (Attributes) Timer configurations (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--timers_1))
+- `send_default_route` (Attributes) Options for controlling the generation of default routes towards BGP peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--send_default_route))
+- `timers` (Attributes) Timer configurations (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--timers))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--as_path_options_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.as_path_options_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--as_path_options"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.as_path_options`
 
 Optional:
 
 - `allow_own_as` (Number) The maximum number of times the global AS number or a local AS number of the BGP instance can appear in any received AS_PATH before it is considered a loop and considered invalid.
-- `remove_private_as_1` (Attributes) Options for removing private AS numbers (2-byte and 4-byte) from the advertised AS path towards all peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--as_path_options_1--remove_private_as_1))
+- `remove_private_as` (Attributes) Options for removing private AS numbers (2-byte and 4-byte) from the advertised AS path towards all peers. (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--as_path_options--remove_private_as))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--as_path_options_1--remove_private_as_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.as_path_options_1.remove_private_as_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--as_path_options--remove_private_as"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.as_path_options.remove_private_as`
 
 Optional:
 
 - `ignore_peer_as` (Boolean) If set to true then do not delete or replace a private AS number that is the same as the peer AS number.
 - `leading_only` (Boolean) If set to true then only delete or replace private AS numbers that appear before the first occurrence of a non-private ASN in the sequence of most recent ASNs in the AS path.
-- `remove_private_asmode` (String) The method by which private AS numbers are removed from the advertised AS_PATH attribute.
+- `remove_private_as_mode` (String) The method by which private AS numbers are removed from the advertised AS_PATH attribute.
 
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv4unicast_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv4_unicast`
 
 Optional:
 
-- `advertise_ipv6next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
+- `advertise_ipv6_next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
 - `enabled` (Boolean) Enables the IPv4 unicast AFISAFI.
-- `prefix_limit_2` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1--prefix_limit_2))
-- `receive_ipv6next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
+- `prefix_limit` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast--prefix_limit))
+- `receive_ipv6_next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1--prefix_limit_2"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv4unicast_1.prefix_limit_2`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast--prefix_limit"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv4_unicast.prefix_limit`
 
 Optional:
 
-- `prefix_limit_accepted_2` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1--prefix_limit_2--prefix_limit_accepted_2))
-- `prefix_limit_received_2` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1--prefix_limit_2--prefix_limit_received_2))
+- `prefix_limit_accepted` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast--prefix_limit--prefix_limit_accepted))
+- `prefix_limit_received` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast--prefix_limit--prefix_limit_received))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1--prefix_limit_2--prefix_limit_accepted_2"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv4unicast_1.prefix_limit_2.prefix_limit_accepted_2`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast--prefix_limit--prefix_limit_accepted"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv4_unicast.prefix_limit.prefix_limit_accepted`
 
 Optional:
 
@@ -656,8 +656,8 @@ Optional:
 - `warning_threshold` (Number) A percentage of the maximum number of prefixes that can be accepted before a warning is logged.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv4unicast_1--prefix_limit_2--prefix_limit_received_2"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv4unicast_1.prefix_limit_2.prefix_limit_received_2`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv4_unicast--prefix_limit--prefix_limit_received"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv4_unicast.prefix_limit.prefix_limit_received`
 
 Optional:
 
@@ -668,24 +668,24 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv6unicast_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv6_unicast`
 
 Optional:
 
 - `enabled` (Boolean) Enables the IPv6 unicast AFISAFI
-- `prefix_limit_3` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1--prefix_limit_3))
+- `prefix_limit` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast--prefix_limit))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1--prefix_limit_3"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv6unicast_1.prefix_limit_3`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast--prefix_limit"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv6_unicast.prefix_limit`
 
 Optional:
 
-- `prefix_limit_accepted_3` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1--prefix_limit_3--prefix_limit_accepted_3))
-- `prefix_limit_received_3` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1--prefix_limit_3--prefix_limit_received_3))
+- `prefix_limit_accepted` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast--prefix_limit--prefix_limit_accepted))
+- `prefix_limit_received` (Attributes) (see [below for nested schema](#nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast--prefix_limit--prefix_limit_received))
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1--prefix_limit_3--prefix_limit_accepted_3"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv6unicast_1.prefix_limit_3.prefix_limit_accepted_3`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast--prefix_limit--prefix_limit_accepted"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv6_unicast.prefix_limit.prefix_limit_accepted`
 
 Optional:
 
@@ -694,8 +694,8 @@ Optional:
 - `warning_threshold` (Number) A percentage of the maximum number of prefixes that can be accepted before a warning is logged.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--ipv6unicast_1--prefix_limit_3--prefix_limit_received_3"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.ipv6unicast_1.prefix_limit_3.prefix_limit_received_3`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--ipv6_unicast--prefix_limit--prefix_limit_received"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.ipv6_unicast.prefix_limit.prefix_limit_received`
 
 Optional:
 
@@ -706,8 +706,8 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--local_as_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.local_as_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--local_as"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.local_as`
 
 Optional:
 
@@ -716,16 +716,16 @@ Optional:
 - `prepend_local_as` (Boolean) When set to true, the local AS value is prepended to the AS path of inbound routes from each EBGP peer.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--peer_as_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.peer_as_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--peer_as"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.peer_as`
 
 Optional:
 
 - `autonomous_system` (Number) Local Autonomous System number.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--send_default_route_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.send_default_route_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--send_default_route"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.send_default_route`
 
 Optional:
 
@@ -733,8 +733,8 @@ Optional:
 - `export_policy` (String) Reference to a Policy that should be applied to the advertised default routes, in order to set their attributes to non-default values.
 
 
-<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec_5--timers_1"></a>
-### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec_5.timers_1`
+<a id="nestedatt--items--spec--protocols--bgp--bgp_peers--spec--timers"></a>
+### Nested Schema for `items.spec.protocols.bgp.bgp_peers.spec.timers`
 
 Optional:
 
@@ -761,39 +761,39 @@ Optional:
 Optional:
 
 - `name` (String) Name of the Policy.
-- `spec_6` (Attributes) A policy (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6))
+- `spec` (Attributes) A policy (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec))
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6`
-
-Optional:
-
-- `default_action` (Attributes) The default action to apply if no other actions are defined. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action))
-- `statement` (Attributes List) List of policy statements. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement))
-
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.default_action`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec`
 
 Optional:
 
-- `bgp_1` (Attributes) Actions related to the BGP protocol. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action--bgp_1))
+- `default_action` (Attributes) The default action to apply if no other actions are defined. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action))
+- `statement` (Attributes List) List of policy statements. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement))
+
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.default_action`
+
+Optional:
+
+- `bgp` (Attributes) Actions related to the BGP protocol. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action--bgp))
 - `policy_result` (String) Final disposition for the route.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action--bgp_1"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.default_action.bgp_1`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action--bgp"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.default_action.bgp`
 
 Optional:
 
 - `as_path_prepend` (Number) AS number to prepend to the AS Path attributes.
 - `as_path_remove` (Boolean) Clear the AS path to make it empty.
 - `as_path_replace` (List of Number) Replace the existing AS path with a new AS_SEQUENCE containing the listed AS numbers.
-- `community_set` (Attributes) Modify BGP communities associated with the route using hybrid Community Sets. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action--bgp_1--community_set))
+- `community_set` (Attributes) Modify BGP communities associated with the route using hybrid Community Sets. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action--bgp--community_set))
 - `local_preference` (Number) Set a new LOCAL_PREF value for matching BGP routes.
-- `med` (Attributes) Set a new MED value. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action--bgp_1--med))
+- `med` (Attributes) Set a new MED value. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action--bgp--med))
 - `set_origin` (String) Set a new ORIGIN attribute for matching BGP routes.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action--bgp_1--community_set"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.default_action.bgp_1.community_set`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action--bgp--community_set"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.default_action.bgp.community_set`
 
 Optional:
 
@@ -802,8 +802,8 @@ Optional:
 - `replace` (List of String) List of community sets to replace the existing communities with. Cannot be combined with Add or Remove.
 
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--default_action--bgp_1--med"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.default_action.bgp_1.med`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--default_action--bgp--med"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.default_action.bgp.med`
 
 Optional:
 
@@ -814,38 +814,38 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement`
 
 Optional:
 
-- `action` (Attributes) Actions for routes that match the policy statement. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action))
-- `match` (Attributes) Match conditions of the policy statement. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--match))
+- `action` (Attributes) Actions for routes that match the policy statement. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action))
+- `match` (Attributes) Match conditions of the policy statement. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--match))
 - `name` (String) Name of the policy statement.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.action`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.action`
 
 Optional:
 
-- `bgp_2` (Attributes) Actions related to the BGP protocol. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action--bgp_2))
+- `bgp` (Attributes) Actions related to the BGP protocol. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action--bgp))
 - `policy_result` (String) Final disposition for the route.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action--bgp_2"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.action.bgp_2`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action--bgp"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.action.bgp`
 
 Optional:
 
 - `as_path_prepend` (Number) AS number to prepend to the AS Path attributes.
 - `as_path_remove` (Boolean) Clear the AS path to make it empty.
 - `as_path_replace` (List of Number) Replace the existing AS path with a new AS_SEQUENCE containing the listed AS numbers.
-- `community_set_1` (Attributes) Modify BGP communities associated with the route using hybrid Community Sets. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action--bgp_2--community_set_1))
+- `community_set` (Attributes) Modify BGP communities associated with the route using hybrid Community Sets. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action--bgp--community_set))
 - `local_preference` (Number) Set a new LOCAL_PREF value for matching BGP routes.
-- `med_1` (Attributes) Set a new MED value. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action--bgp_2--med_1))
+- `med` (Attributes) Set a new MED value. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action--bgp--med))
 - `set_origin` (String) Set a new ORIGIN attribute for matching BGP routes.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action--bgp_2--community_set_1"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.action.bgp_2.community_set_1`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action--bgp--community_set"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.action.bgp.community_set`
 
 Optional:
 
@@ -854,8 +854,8 @@ Optional:
 - `replace` (List of String) List of community sets to replace the existing communities with. Cannot be combined with Add or Remove.
 
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--action--bgp_2--med_1"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.action.bgp_2.med_1`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--action--bgp--med"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.action.bgp.med`
 
 Optional:
 
@@ -866,27 +866,27 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--match"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.match`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--match"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.match`
 
 Optional:
 
-- `bgp_3` (Attributes) Configuration for BGP-specific policy match criteria. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--match--bgp_3))
+- `bgp` (Attributes) Configuration for BGP-specific policy match criteria. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--match--bgp))
 - `family` (List of String) Address families that the route belongs to.
 - `prefix_set` (String) Reference to a PrefixSet resource.
 - `protocol` (String) The route protocol type to match.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--match--bgp_3"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.match.bgp_3`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--match--bgp"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.match.bgp`
 
 Optional:
 
-- `as_path_match` (Attributes) AS Path match criteria. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--match--bgp_3--as_path_match))
+- `as_path_match` (Attributes) AS Path match criteria. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--match--bgp--as_path_match))
 - `community_set` (String) Match conditions for BGP communities.
 - `evpn_route_type` (List of Number) Match conditions for EVPN route types.
 
-<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec_6--statement--match--bgp_3--as_path_match"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.policies.spec_6.statement.match.bgp_3.as_path_match`
+<a id="nestedatt--items--spec--protocols--routing_policies--policies--spec--statement--match--bgp--as_path_match"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.policies.spec.statement.match.bgp.as_path_match`
 
 Optional:
 
@@ -906,17 +906,17 @@ Optional:
 Optional:
 
 - `name` (String) Name of the PrefixSet.
-- `spec_7` (Attributes) A PrefixSets (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec_7))
+- `spec` (Attributes) A PrefixSets (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec))
 
-<a id="nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec_7"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.prefix_sets.spec_7`
+<a id="nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.prefix_sets.spec`
 
 Optional:
 
-- `prefix` (Attributes List) List of IPv4 or IPv6 prefixes in CIDR notation. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec_7--prefix))
+- `prefix` (Attributes List) List of IPv4 or IPv6 prefixes in CIDR notation. (see [below for nested schema](#nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec--prefix))
 
-<a id="nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec_7--prefix"></a>
-### Nested Schema for `items.spec.protocols.routing_policies.prefix_sets.spec_7.prefix`
+<a id="nestedatt--items--spec--protocols--routing_policies--prefix_sets--spec--prefix"></a>
+### Nested Schema for `items.spec.protocols.routing_policies.prefix_sets.spec.prefix`
 
 Optional:
 
@@ -935,32 +935,32 @@ Optional:
 Optional:
 
 - `name` (String) Name of the StaticRoute.
-- `spec_8` (Attributes) A StaticRoutes (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec_8))
+- `spec` (Attributes) A StaticRoutes (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec))
 
-<a id="nestedatt--items--spec--protocols--static_routes--spec_8"></a>
-### Nested Schema for `items.spec.protocols.static_routes.spec_8`
+<a id="nestedatt--items--spec--protocols--static_routes--spec"></a>
+### Nested Schema for `items.spec.protocols.static_routes.spec`
 
 Optional:
 
-- `nexthop_group` (Attributes) Group of nexthops for the list of prefixes. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group))
+- `nexthop_group` (Attributes) Group of nexthops for the list of prefixes. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec--nexthop_group))
 - `nodes` (List of String) List of nodes on which to configure the static routes. An AND operation is executed against the nodes in this list and the nodes on which the Router is configured to determine the Nodes on which to configure the static routes.
 - `preference` (Number) Defines the route preference.
 - `prefixes` (List of String) List of destination prefixes and mask to use for the static routes.
 - `router` (String) Reference to a Router on which to configure the static routes.  If no Nodes are provided then the static routes will be provisioned on all Nodes on which the Router is provisioned.
 
-<a id="nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group"></a>
-### Nested Schema for `items.spec.protocols.static_routes.spec_8.nexthop_group`
+<a id="nestedatt--items--spec--protocols--static_routes--spec--nexthop_group"></a>
+### Nested Schema for `items.spec.protocols.static_routes.spec.nexthop_group`
 
 Optional:
 
-- `bfd_1` (Attributes) Enables BFD to the next-hops in the group. Local and Remote discriminator parameters have been deprecated at this level. Use Nexthop to set these parameters. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group--bfd_1))
+- `bfd` (Attributes) Enables BFD to the next-hops in the group. Local and Remote discriminator parameters have been deprecated at this level. Use Nexthop to set these parameters. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec--nexthop_group--bfd))
 - `blackhole` (Boolean) If set to true all traffic destined to the prefixes will be blackholed.  If enabled, next-hops are ignored and this takes precedence.
 - `blackhole_send_icmp` (Boolean) When enabled, the router will generate ICMP Unreachable messages for packets destined to the blackhole route.
-- `nexthops` (Attributes List) Ordered list of nexthops. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group--nexthops))
+- `nexthops` (Attributes List) Ordered list of nexthops. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec--nexthop_group--nexthops))
 - `resolve` (Boolean) If set to true the next-hops can be destinations which are resolved in the route table.
 
-<a id="nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group--bfd_1"></a>
-### Nested Schema for `items.spec.protocols.static_routes.spec_8.nexthop_group.bfd_1`
+<a id="nestedatt--items--spec--protocols--static_routes--spec--nexthop_group--bfd"></a>
+### Nested Schema for `items.spec.protocols.static_routes.spec.nexthop_group.bfd`
 
 Optional:
 
@@ -968,17 +968,17 @@ Optional:
 - `local_address` (String) Defines the local address to use when establishing the BFD session with the nexthop.
 
 
-<a id="nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group--nexthops"></a>
-### Nested Schema for `items.spec.protocols.static_routes.spec_8.nexthop_group.nexthops`
+<a id="nestedatt--items--spec--protocols--static_routes--spec--nexthop_group--nexthops"></a>
+### Nested Schema for `items.spec.protocols.static_routes.spec.nexthop_group.nexthops`
 
 Optional:
 
-- `bfd_2` (Attributes) Enables BFD to the next-hops in the group. This overrides the configuration at the group. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group--nexthops--bfd_2))
+- `bfd` (Attributes) Enables BFD to the next-hops in the group. This overrides the configuration at the group. (see [below for nested schema](#nestedatt--items--spec--protocols--static_routes--spec--nexthop_group--nexthops--bfd))
 - `ip_prefix` (String) Address to use.
 - `resolve` (Boolean) If set to true the next-hops can be destinations which are resolved in the route table. This overrides the configuration at the group.
 
-<a id="nestedatt--items--spec--protocols--static_routes--spec_8--nexthop_group--nexthops--bfd_2"></a>
-### Nested Schema for `items.spec.protocols.static_routes.spec_8.nexthop_group.nexthops.bfd_2`
+<a id="nestedatt--items--spec--protocols--static_routes--spec--nexthop_group--nexthops--bfd"></a>
+### Nested Schema for `items.spec.protocols.static_routes.spec.nexthop_group.nexthops.bfd`
 
 Optional:
 
@@ -999,33 +999,33 @@ Optional:
 Optional:
 
 - `name` (String) The name of the RoutedInterface.
-- `spec_9` (Attributes) Specification of the RoutedInterface (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9))
+- `spec` (Attributes) Specification of the RoutedInterface (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec))
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9`
+<a id="nestedatt--items--spec--routed_interfaces--spec"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec`
 
 Optional:
 
 - `arp_timeout` (Number) Duration of time that dynamic ARP entries remain in the ARP cache before they expire.
-- `bfd_3` (Attributes) Enables BFD on the RoutedInterface. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--bfd_3))
+- `bfd` (Attributes) Enables BFD on the RoutedInterface. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--bfd))
 - `description` (String) The description of the RoutedInterface.
-- `egress_3` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--egress_3))
-- `ingress_3` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--ingress_3))
+- `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--ingress))
 - `interface` (String) Reference to an Interface to use for attachment.
 - `ip_mtu` (Number) IP MTU for the RoutedInterface.
-- `ipv4addresses` (Attributes List) List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--ipv4addresses))
-- `ipv4parameters_1` (Attributes) (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--ipv4parameters_1))
-- `ipv6addresses` (Attributes List) List of IPv6 addresses in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--ipv6addresses))
-- `ipv6router_advertisement_1` (Attributes) (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--ipv6router_advertisement_1))
-- `l3proxy_arpnd_1` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--l3proxy_arpnd_1))
+- `ipv4_addresses` (Attributes List) List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--ipv4_addresses))
+- `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--ipv4_parameters))
+- `ipv6_addresses` (Attributes List) List of IPv6 addresses in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--ipv6_addresses))
+- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--ipv6_router_advertisement))
+- `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `router` (String) Reference to a Router.
 - `unnumbered` (String) Enables the use of unnumbered interfaces on the IRBInterface.  If IPv6 is specified, no IP address are configured on the sub-interface and only the link local address will be used.  If any IP addresses are specified for either IPv4 or IPv6 that will take precedence and IPs will be assigned to the interfaces. (Deprecated, Use IPv6RouterAdvertisement)
 - `vlan_id` (String) Single value between 1-4094 support, ranges supported in the format x-y,x-y, or the special keyword null, any, untagged or pool for auto allocation.
 - `vlan_pool` (String) Reference to a VLAN pool to use for allocations.
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--bfd_3"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.bfd_3`
+<a id="nestedatt--items--spec--routed_interfaces--spec--bfd"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.bfd`
 
 Optional:
 
@@ -1037,8 +1037,8 @@ Optional:
 - `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--egress_3"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.egress_3`
+<a id="nestedatt--items--spec--routed_interfaces--spec--egress"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.egress`
 
 Optional:
 
@@ -1046,8 +1046,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--ingress_3"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.ingress_3`
+<a id="nestedatt--items--spec--routed_interfaces--spec--ingress"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.ingress`
 
 Optional:
 
@@ -1055,8 +1055,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--ipv4addresses"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.ipv4addresses`
+<a id="nestedatt--items--spec--routed_interfaces--spec--ipv4_addresses"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.ipv4_addresses`
 
 Optional:
 
@@ -1064,16 +1064,16 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--ipv4parameters_1"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.ipv4parameters_1`
+<a id="nestedatt--items--spec--routed_interfaces--spec--ipv4_parameters"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.ipv4_parameters`
 
 Optional:
 
 - `directed_broadcast` (Boolean) Allow receiving and forwarding of directed broadcast packets. Enabled when set to true.
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--ipv6addresses"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.ipv6addresses`
+<a id="nestedatt--items--spec--routed_interfaces--spec--ipv6_addresses"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.ipv6_addresses`
 
 Optional:
 
@@ -1081,8 +1081,8 @@ Optional:
 - `primary` (Boolean) Indicates which address to use as primary for broadcast
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--ipv6router_advertisement_1"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.ipv6router_advertisement_1`
+<a id="nestedatt--items--spec--routed_interfaces--spec--ipv6_router_advertisement"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.ipv6_router_advertisement`
 
 Optional:
 
@@ -1093,13 +1093,13 @@ Optional:
 - `max_advertisement_interval` (Number) Maximum time between router advertisements (in seconds).
 - `min_advertisement_interval` (Number) Minimum time between router advertisements (in seconds).
 - `other_configuration_flag` (Boolean) Enable DHCPv6 for other configuration (O-bit).
-- `prefixes_1` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec_9--ipv6router_advertisement_1--prefixes_1))
+- `prefixes` (Attributes List) IPv6 prefixes to advertise in router advertisements. (see [below for nested schema](#nestedatt--items--spec--routed_interfaces--spec--ipv6_router_advertisement--prefixes))
 - `reachable_time` (Number) Time in milliseconds for Neighbor Unreachability Detection.
 - `retransmit_time` (Number) Time in milliseconds between retransmitted NS messages.
 - `router_lifetime` (Number) Router lifetime in seconds for default gateway.
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--ipv6router_advertisement_1--prefixes_1"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.ipv6router_advertisement_1.prefixes_1`
+<a id="nestedatt--items--spec--routed_interfaces--spec--ipv6_router_advertisement--prefixes"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.ipv6_router_advertisement.prefixes`
 
 Optional:
 
@@ -1111,8 +1111,8 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--routed_interfaces--spec_9--l3proxy_arpnd_1"></a>
-### Nested Schema for `items.spec.routed_interfaces.spec_9.l3proxy_arpnd_1`
+<a id="nestedatt--items--spec--routed_interfaces--spec--l3proxy_arpnd"></a>
+### Nested Schema for `items.spec.routed_interfaces.spec.l3proxy_arpnd`
 
 Optional:
 
@@ -1128,30 +1128,30 @@ Optional:
 Optional:
 
 - `name` (String) The name of the Router.
-- `spec_10` (Attributes) Specification of the Router (see [below for nested schema](#nestedatt--items--spec--routers--spec_10))
+- `spec` (Attributes) Specification of the Router (see [below for nested schema](#nestedatt--items--spec--routers--spec))
 
-<a id="nestedatt--items--spec--routers--spec_10"></a>
-### Nested Schema for `items.spec.routers.spec_10`
+<a id="nestedatt--items--spec--routers--spec"></a>
+### Nested Schema for `items.spec.routers.spec`
 
 Optional:
 
-- `bgp_4` (Attributes) BGP configuration. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--bgp_4))
+- `bgp` (Attributes) BGP configuration. (see [below for nested schema](#nestedatt--items--spec--routers--spec--bgp))
 - `description` (String) The description of the Router.
 - `evi` (Number) EVI for the Router; leave blank for auto-allocation from EVI pool.
 - `evi_pool` (String) Reference to EVI pool for auto-allocation.
 - `export_target` (String) Export route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
 - `import_target` (String) Import route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
-- `ip_load_balancing` (Attributes) IPv4 or IPv6 prefix. Active routes in the FIB that exactly match this prefix or that are longer matches of this prefix are provided with resilient-hash programming. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--ip_load_balancing))
+- `ip_load_balancing` (Attributes) IPv4 or IPv6 prefix. Active routes in the FIB that exactly match this prefix or that are longer matches of this prefix are provided with resilient-hash programming. (see [below for nested schema](#nestedatt--items--spec--routers--spec--ip_load_balancing))
 - `node_selector` (List of String) Node selectors for deployment constraints.  If Nodes are selected, the Router will only be deployed on the Nodes selected, if left blank it will be deployed on all Nodes for which there are IRB or RoutedInterfaces referencing this Router.
-- `route_leaking` (Attributes) Route leaking controlled by routing policies in and out of the DefaultRouter. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--route_leaking))
+- `route_leaking` (Attributes) Route leaking controlled by routing policies in and out of the DefaultRouter. (see [below for nested schema](#nestedatt--items--spec--routers--spec--route_leaking))
 - `router_id` (String) Router ID.
 - `tunnel_index_pool` (String) Reference to tunnel index allocation pool.
 - `type` (String) Select the type of Router.  Simple doesn't include any overlay control plane or dataplane properties (EVPN/VXLAN). EVPNVXLAN includes the properties needed to provision this Router over an IP Fabric.
 - `vni` (Number) VNI for the Router; leave blank for auto-allocation from VNI pool.
 - `vni_pool` (String) Reference to VNI pool for auto-allocation.
 
-<a id="nestedatt--items--spec--routers--spec_10--bgp_4"></a>
-### Nested Schema for `items.spec.routers.spec_10.bgp_4`
+<a id="nestedatt--items--spec--routers--spec--bgp"></a>
+### Nested Schema for `items.spec.routers.spec.bgp`
 
 Optional:
 
@@ -1159,16 +1159,16 @@ Optional:
 - `ebgp_preference` (Number) Preference to be set for eBGP [default=170].
 - `enabled` (Boolean) Enable or disable BGP.
 - `ibgp_preference` (Number) Preference to be set for iBGP [default=170].
-- `ip_alias_nexthops` (Attributes List) IP aliasing configuration. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--bgp_4--ip_alias_nexthops))
-- `ipv4unicast_2` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--bgp_4--ipv4unicast_2))
-- `ipv6unicast_2` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--bgp_4--ipv6unicast_2))
+- `ip_alias_nexthops` (Attributes List) IP aliasing configuration. (see [below for nested schema](#nestedatt--items--spec--routers--spec--bgp--ip_alias_nexthops))
+- `ipv4_unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--routers--spec--bgp--ipv4_unicast))
+- `ipv6_unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--items--spec--routers--spec--bgp--ipv6_unicast))
 - `keychain` (String) Keychain to be used for authentication
 - `min_wait_to_advertise` (Number) Minimum wait time before advertising routes post BGP restart.
 - `rapid_withdrawl` (Boolean) Enable rapid withdrawal in BGP.
-- `wait_for_fibinstall` (Boolean) Wait for FIB installation before advertising routes.
+- `wait_for_fib_install` (Boolean) Wait for FIB installation before advertising routes.
 
-<a id="nestedatt--items--spec--routers--spec_10--bgp_4--ip_alias_nexthops"></a>
-### Nested Schema for `items.spec.routers.spec_10.bgp_4.ip_alias_nexthops`
+<a id="nestedatt--items--spec--routers--spec--bgp--ip_alias_nexthops"></a>
+### Nested Schema for `items.spec.routers.spec.bgp.ip_alias_nexthops`
 
 Optional:
 
@@ -1177,18 +1177,18 @@ Optional:
 - `preferred_active_node` (String) When not set the ES is used in an all active mode. This references the ToppNode object and when set, the DF algorithm is configured to type preference and the selected Node is set with a higher preference value. All other Nodes have a lower value configured.
 
 
-<a id="nestedatt--items--spec--routers--spec_10--bgp_4--ipv4unicast_2"></a>
-### Nested Schema for `items.spec.routers.spec_10.bgp_4.ipv4unicast_2`
+<a id="nestedatt--items--spec--routers--spec--bgp--ipv4_unicast"></a>
+### Nested Schema for `items.spec.routers.spec.bgp.ipv4_unicast`
 
 Optional:
 
-- `advertise_ipv6next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
+- `advertise_ipv6_next_hops` (Boolean) Enables advertisement of IPv4 Unicast routes with IPv6 next-hops to peers.
 - `enabled` (Boolean) Enables the IPv4 unicast AFISAFI.
-- `multipath` (Attributes) Enable multipath. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--bgp_4--ipv4unicast_2--multipath))
-- `receive_ipv6next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
+- `multipath` (Attributes) Enable multipath. (see [below for nested schema](#nestedatt--items--spec--routers--spec--bgp--ipv4_unicast--multipath))
+- `receive_ipv6_next_hops` (Boolean) Enables the advertisement of the RFC 5549 capability to receive IPv4 routes with IPv6 next-hops.
 
-<a id="nestedatt--items--spec--routers--spec_10--bgp_4--ipv4unicast_2--multipath"></a>
-### Nested Schema for `items.spec.routers.spec_10.bgp_4.ipv4unicast_2.multipath`
+<a id="nestedatt--items--spec--routers--spec--bgp--ipv4_unicast--multipath"></a>
+### Nested Schema for `items.spec.routers.spec.bgp.ipv4_unicast.multipath`
 
 Optional:
 
@@ -1197,16 +1197,16 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--routers--spec_10--bgp_4--ipv6unicast_2"></a>
-### Nested Schema for `items.spec.routers.spec_10.bgp_4.ipv6unicast_2`
+<a id="nestedatt--items--spec--routers--spec--bgp--ipv6_unicast"></a>
+### Nested Schema for `items.spec.routers.spec.bgp.ipv6_unicast`
 
 Optional:
 
 - `enabled` (Boolean) Enables the IPv6 unicast AFISAFI
-- `multipath_1` (Attributes) Enable multipath (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--bgp_4--ipv6unicast_2--multipath_1))
+- `multipath` (Attributes) Enable multipath (see [below for nested schema](#nestedatt--items--spec--routers--spec--bgp--ipv6_unicast--multipath))
 
-<a id="nestedatt--items--spec--routers--spec_10--bgp_4--ipv6unicast_2--multipath_1"></a>
-### Nested Schema for `items.spec.routers.spec_10.bgp_4.ipv6unicast_2.multipath_1`
+<a id="nestedatt--items--spec--routers--spec--bgp--ipv6_unicast--multipath"></a>
+### Nested Schema for `items.spec.routers.spec.bgp.ipv6_unicast.multipath`
 
 Optional:
 
@@ -1216,15 +1216,15 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--routers--spec_10--ip_load_balancing"></a>
-### Nested Schema for `items.spec.routers.spec_10.ip_load_balancing`
+<a id="nestedatt--items--spec--routers--spec--ip_load_balancing"></a>
+### Nested Schema for `items.spec.routers.spec.ip_load_balancing`
 
 Optional:
 
-- `prefix_1` (Attributes List) IPv4 or IPv6 prefix. Active routes in the FIB that exactly match this prefix or that are longer matches of this prefix are provided with resilient-hash programming. (see [below for nested schema](#nestedatt--items--spec--routers--spec_10--ip_load_balancing--prefix_1))
+- `prefix` (Attributes List) IPv4 or IPv6 prefix. Active routes in the FIB that exactly match this prefix or that are longer matches of this prefix are provided with resilient-hash programming. (see [below for nested schema](#nestedatt--items--spec--routers--spec--ip_load_balancing--prefix))
 
-<a id="nestedatt--items--spec--routers--spec_10--ip_load_balancing--prefix_1"></a>
-### Nested Schema for `items.spec.routers.spec_10.ip_load_balancing.prefix_1`
+<a id="nestedatt--items--spec--routers--spec--ip_load_balancing--prefix"></a>
+### Nested Schema for `items.spec.routers.spec.ip_load_balancing.prefix`
 
 Optional:
 
@@ -1234,8 +1234,8 @@ Optional:
 
 
 
-<a id="nestedatt--items--spec--routers--spec_10--route_leaking"></a>
-### Nested Schema for `items.spec.routers.spec_10.route_leaking`
+<a id="nestedatt--items--spec--routers--spec--route_leaking"></a>
+### Nested Schema for `items.spec.routers.spec.route_leaking`
 
 Optional:
 
@@ -1251,27 +1251,27 @@ Optional:
 Optional:
 
 - `name` (String) The name of the VLAN.
-- `spec_11` (Attributes) Specification of the Vlan (see [below for nested schema](#nestedatt--items--spec--vlans--spec_11))
+- `spec` (Attributes) Specification of the Vlan (see [below for nested schema](#nestedatt--items--spec--vlans--spec))
 
-<a id="nestedatt--items--spec--vlans--spec_11"></a>
-### Nested Schema for `items.spec.vlans.spec_11`
+<a id="nestedatt--items--spec--vlans--spec"></a>
+### Nested Schema for `items.spec.vlans.spec`
 
 Optional:
 
 - `bridge_domain` (String) Reference to a BridgeDomain or SimpleBridgeDomain.
 - `description` (String) The description of the VLAN.
-- `egress_4` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--vlans--spec_11--egress_4))
-- `ingress_4` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--vlans--spec_11--ingress_4))
+- `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--vlans--spec--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--vlans--spec--ingress))
 - `interface_selector` (List of String) Interfaces to use for attachment to this VLAN based on the label selector.  Selects Interfaces based on their associated labels.
-- `l2mtu` (Number) L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.
+- `l2_mtu` (Number) L2 MTU specifies the maximum sized Ethernet frame that can be transmitted on the subinterface. If a frame exceeds this size it is discarded. If the l2-mtu of the subinterface exceeds the port-mtu of the associated interface, the subinterface will remain operationally down.
 - `mac_duplication_detection_action` (String) If Mac Duplication Detection is enabled on the associated Bridge Domain, this property will override the MDD action set in the BridgeDomain.
 - `split_horizon_group` (String) Name of the Split Horizon Group to be used for this VLAN.  All subinterfaces within this VLAN will be members of this Split Horizon Group.
-- `uplink_1` (Attributes) The Uplink between your access breakout switch and your leaf switch. (see [below for nested schema](#nestedatt--items--spec--vlans--spec_11--uplink_1))
+- `uplink` (Attributes) The Uplink between your access breakout switch and your leaf switch. (see [below for nested schema](#nestedatt--items--spec--vlans--spec--uplink))
 - `vlan_id` (String) Single value between 1-4094 support, ranges supported in the format x-y,x-y, or the special keyword null, any, untagged or pool for auto allocation.
 - `vlan_pool` (String) Reference to a VLAN pool to use for allocations. [default="vlan-pool"]
 
-<a id="nestedatt--items--spec--vlans--spec_11--egress_4"></a>
-### Nested Schema for `items.spec.vlans.spec_11.egress_4`
+<a id="nestedatt--items--spec--vlans--spec--egress"></a>
+### Nested Schema for `items.spec.vlans.spec.egress`
 
 Optional:
 
@@ -1279,8 +1279,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--items--spec--vlans--spec_11--ingress_4"></a>
-### Nested Schema for `items.spec.vlans.spec_11.ingress_4`
+<a id="nestedatt--items--spec--vlans--spec--ingress"></a>
+### Nested Schema for `items.spec.vlans.spec.ingress`
 
 Optional:
 
@@ -1288,19 +1288,19 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
-<a id="nestedatt--items--spec--vlans--spec_11--uplink_1"></a>
-### Nested Schema for `items.spec.vlans.spec_11.uplink_1`
+<a id="nestedatt--items--spec--vlans--spec--uplink"></a>
+### Nested Schema for `items.spec.vlans.spec.uplink`
 
 Optional:
 
-- `egress_5` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--vlans--spec_11--uplink_1--egress_5))
-- `ingress_5` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--vlans--spec_11--uplink_1--ingress_5))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--vlans--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--vlans--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
-- `uplink_vlanid` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
-- `uplink_vlanpool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
+- `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
+- `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 
-<a id="nestedatt--items--spec--vlans--spec_11--uplink_1--egress_5"></a>
-### Nested Schema for `items.spec.vlans.spec_11.uplink_1.egress_5`
+<a id="nestedatt--items--spec--vlans--spec--uplink--egress"></a>
+### Nested Schema for `items.spec.vlans.spec.uplink.egress`
 
 Optional:
 
@@ -1308,8 +1308,8 @@ Optional:
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
 
 
-<a id="nestedatt--items--spec--vlans--spec_11--uplink_1--ingress_5"></a>
-### Nested Schema for `items.spec.vlans.spec_11.uplink_1.ingress_5`
+<a id="nestedatt--items--spec--vlans--spec--uplink--ingress"></a>
+### Nested Schema for `items.spec.vlans.spec.uplink.ingress`
 
 Optional:
 
@@ -1341,10 +1341,10 @@ Read-Only:
 - `health_score_reason` (String) Indicates the reason for the health score.
 - `last_change` (String) The time when the state of the resource last changed.
 - `nodes` (List of String) List of Nodes on which the Router is deployed.
-- `num_bgppeers` (Number) Total number of configured BGP Peers.
-- `num_bgppeers_oper_down` (Number) Total Number of BGP Peer operationally down.
-- `num_irbinterfaces` (Number) Total number of irb-interfaces configured by the VNET.
-- `num_irbinterfaces_oper_down` (Number) Total number of irb-interfaces configured by the VNET which are oper-down.
+- `num_bgp_peers` (Number) Total number of configured BGP Peers.
+- `num_bgp_peers_oper_down` (Number) Total Number of BGP Peer operationally down.
+- `num_irb_interfaces` (Number) Total number of irb-interfaces configured by the VNET.
+- `num_irb_interfaces_oper_down` (Number) Total number of irb-interfaces configured by the VNET which are oper-down.
 - `num_nodes` (Number) Total number of Nodes on which the VNET is configured.
 - `num_routed_interfaces` (Number) Total number of routed-interfaces configured by the VNET.
 - `num_routed_interfaces_oper_down` (Number) Total number of routed-interfaces configured by the VNET which are oper-down.
