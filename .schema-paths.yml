@@ -3,6 +3,58 @@ app_group:
       path: /apps/services.eda.nokia.com
       method: GET
 
+intent_targets:
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}/_targets
+      method: GET
+  - read:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_targets
+      method: GET
+
+k8_s_topology_request:
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}/_topology
+      method: POST
+  - create:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_topology
+      method: POST
+
 patch:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
@@ -359,49 +411,83 @@ com.nokia.eda.services.v1.virtual_network_deleted_resources:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/_deleted
       method: GET
 
-totalPaths: 58
-totalSchemas: 76
-usedSchemas: 35
-unusedSchemas: 41
+totalPaths: 67
+totalSchemas: 112
+usedSchemas: 37
+unusedSchemas: 75
 unusedSchemaList:
   - AppGroupVersion
   - ErrorIndex
   - ErrorItem
   - ErrorResponse
+  - IntentTarget
   - K8SPatchOp
   - OverlayState
   - Resource
   - ResourceHistoryEntry
   - StatusDetails
   - TopoAttrMetadata
+  - TopoAttribute
+  - TopoBoolExpression
+  - TopoBoolLiteral
   - TopoElemMetadata
-  - TopoLinkEndpoint
+  - TopoEndpointBoolExpression
+  - TopoField
+  - TopoFixedBoolExpression
+  - TopoLabelSelector
+  - TopoLiteralStatusOrBadge
+  - TopoLiteralValue
+  - TopoLogicalExpression
   - TopoNodeGrouping
   - TopoOverlayEndpoint
   - TopoOverlayEndpointState
   - TopoOverlayLink
+  - TopoOverlayLinkGroup
+  - TopoOverlayLinkGroupEndpoint
   - TopoOverlayLinkState
   - TopoOverlayNode
+  - TopoOverlayNodeOrGroup
   - TopoOverlayNodeState
+  - TopoOverlayValue
   - TopoSchema
+  - TopoStateFilter
+  - TopoValue
+  - TopoValueExpression
   - Topology
-  - WorkflowId
   - WorkflowIdentifier
   - WorkflowInputDataElem
   - com.nokia.eda.services.v1.BridgeDomain_DeletedResourceEntry
+  - com.nokia.eda.services.v1.BridgeDomain_alarms
+  - com.nokia.eda.services.v1.BridgeDomain_deviations
   - com.nokia.eda.services.v1.BridgeDomain_metadata
   - com.nokia.eda.services.v1.BridgeInterface_DeletedResourceEntry
+  - com.nokia.eda.services.v1.BridgeInterface_alarms
+  - com.nokia.eda.services.v1.BridgeInterface_deviations
   - com.nokia.eda.services.v1.BridgeInterface_metadata
   - com.nokia.eda.services.v1.DHCPRelay_DeletedResourceEntry
+  - com.nokia.eda.services.v1.DHCPRelay_alarms
+  - com.nokia.eda.services.v1.DHCPRelay_deviations
   - com.nokia.eda.services.v1.DHCPRelay_metadata
+  - com.nokia.eda.services.v1.EdgePing_alarms
+  - com.nokia.eda.services.v1.EdgePing_deviations
   - com.nokia.eda.services.v1.EdgePing_metadata
   - com.nokia.eda.services.v1.IRBInterface_DeletedResourceEntry
+  - com.nokia.eda.services.v1.IRBInterface_alarms
+  - com.nokia.eda.services.v1.IRBInterface_deviations
   - com.nokia.eda.services.v1.IRBInterface_metadata
   - com.nokia.eda.services.v1.RoutedInterface_DeletedResourceEntry
+  - com.nokia.eda.services.v1.RoutedInterface_alarms
+  - com.nokia.eda.services.v1.RoutedInterface_deviations
   - com.nokia.eda.services.v1.RoutedInterface_metadata
   - com.nokia.eda.services.v1.Router_DeletedResourceEntry
+  - com.nokia.eda.services.v1.Router_alarms
+  - com.nokia.eda.services.v1.Router_deviations
   - com.nokia.eda.services.v1.Router_metadata
   - com.nokia.eda.services.v1.VLAN_DeletedResourceEntry
+  - com.nokia.eda.services.v1.VLAN_alarms
+  - com.nokia.eda.services.v1.VLAN_deviations
   - com.nokia.eda.services.v1.VLAN_metadata
   - com.nokia.eda.services.v1.VirtualNetwork_DeletedResourceEntry
+  - com.nokia.eda.services.v1.VirtualNetwork_alarms
+  - com.nokia.eda.services.v1.VirtualNetwork_deviations
   - com.nokia.eda.services.v1.VirtualNetwork_metadata

@@ -24,6 +24,7 @@ description: |-
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
 - `label_selector` (String) a label selector string to filter the results based on CR labels
+- `labelselector` (String) Deprecated: a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -40,7 +41,9 @@ Optional:
 
 Read-Only:
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
 - `status` (Attributes) BridgeDomainStatus defines the observed state of BridgeDomain (see [below for nested schema](#nestedatt--items--status))
@@ -50,6 +53,7 @@ Read-Only:
 
 Optional:
 
+- `configured_name` (String) The name of the BridgeDomain to configure on the device.
 - `description` (String) The description of the BridgeDomain.
 - `evi` (Number) EVI to use for this BridgeDomain, can be optionally left blank to have it automatically allocated using the EVI Pool.
 - `evi_pool` (String) Reference to an EVI pool to use for allocations if EVI is left blank.
@@ -109,6 +113,25 @@ Optional:
 - `monitoring_window` (Number) Monitoring window in minutes for detecting duplication on a given mac address.
 - `num_moves` (Number) Number of moves a mac is allowed within the monitoring-window, before it is declared duplicate.
 
+
+
+<a id="nestedatt--items--alarms"></a>
+### Nested Schema for `items.alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--items--deviations"></a>
+### Nested Schema for `items.deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--items--metadata"></a>

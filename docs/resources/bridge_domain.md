@@ -22,7 +22,9 @@ description: |-
 
 ### Optional
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `name` (String) name of the BridgeDomain
 - `namespace` (String) the namespace scope in which to operate
@@ -47,6 +49,7 @@ Optional:
 
 Optional:
 
+- `configured_name` (String) The name of the BridgeDomain to configure on the device.
 - `description` (String) The description of the BridgeDomain.
 - `evi` (Number) EVI to use for this BridgeDomain, can be optionally left blank to have it automatically allocated using the EVI Pool.
 - `evi_pool` (String) Reference to an EVI pool to use for allocations if EVI is left blank.
@@ -106,6 +109,25 @@ Optional:
 - `monitoring_window` (Number) Monitoring window in minutes for detecting duplication on a given mac address.
 - `num_moves` (Number) Number of moves a mac is allowed within the monitoring-window, before it is declared duplicate.
 
+
+
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Optional:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Optional:
+
+- `count` (Number)
 
 
 <a id="nestedatt--status"></a>

@@ -22,7 +22,9 @@ description: |-
 
 ### Optional
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `name` (String) name of the DHCPRelay
 - `namespace` (String) the namespace scope in which to operate
@@ -56,6 +58,25 @@ Optional:
 - `routed_interface_selector` (List of String) Label selector to select the RoutedInterface on which to configure the DHCP relay.
 - `router` (String) Router to be used to reach the DHCP server, if not specified the Router under which the source IRBInterface or RoutedInterface resides will be used.
 - `sub_options` (List of String) DHCP Relay sub-options; available options are CircuitID, RemoteID, and ClientLinkLayerAddress.
+
+
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Optional:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Optional:
+
+- `count` (Number)
 
 
 <a id="nestedatt--status"></a>

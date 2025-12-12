@@ -36,7 +36,42 @@ func RoutedInterfaceListDataSourceSchema(ctx context.Context) schema.Schema {
 			"items": schema.ListNestedAttribute{
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
+						"alarms": schema.SingleNestedAttribute{
+							Attributes: map[string]schema.Attribute{
+								"critical": schema.Int64Attribute{
+									Computed: true,
+								},
+								"major": schema.Int64Attribute{
+									Computed: true,
+								},
+								"minor": schema.Int64Attribute{
+									Computed: true,
+								},
+								"warning": schema.Int64Attribute{
+									Computed: true,
+								},
+							},
+							CustomType: AlarmsType{
+								ObjectType: types.ObjectType{
+									AttrTypes: AlarmsValue{}.AttributeTypes(ctx),
+								},
+							},
+							Computed: true,
+						},
 						"api_version": schema.StringAttribute{
+							Computed: true,
+						},
+						"deviations": schema.SingleNestedAttribute{
+							Attributes: map[string]schema.Attribute{
+								"count": schema.Int64Attribute{
+									Computed: true,
+								},
+							},
+							CustomType: DeviationsType{
+								ObjectType: types.ObjectType{
+									AttrTypes: DeviationsValue{}.AttributeTypes(ctx),
+								},
+							},
 							Computed: true,
 						},
 						"kind": schema.StringAttribute{
@@ -102,8 +137,8 @@ func RoutedInterfaceListDataSourceSchema(ctx context.Context) schema.Schema {
 										},
 										"ttl": schema.Int64Attribute{
 											Optional:            true,
-											Description:         "Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.",
-											MarkdownDescription: "Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.",
+											Description:         "Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not applicable to single-hop BFD sessions.",
+											MarkdownDescription: "Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not applicable to single-hop BFD sessions.",
 										},
 									},
 									CustomType: BfdType{
@@ -143,6 +178,84 @@ func RoutedInterfaceListDataSourceSchema(ctx context.Context) schema.Schema {
 									Optional:            true,
 									Description:         "Manages actions on traffic at Egress.",
 									MarkdownDescription: "Manages actions on traffic at Egress.",
+								},
+								"host_route_populate": schema.SingleNestedAttribute{
+									Attributes: map[string]schema.Attribute{
+										"dynamic": schema.SingleNestedAttribute{
+											Attributes: map[string]schema.Attribute{
+												"datapath_programming": schema.BoolAttribute{
+													Optional:            true,
+													Description:         "Enable datapath programming for host routes.",
+													MarkdownDescription: "Enable datapath programming for host routes.",
+												},
+												"populate": schema.BoolAttribute{
+													Optional:            true,
+													Description:         "Enable population of host routes based on ARP/ND entries.",
+													MarkdownDescription: "Enable population of host routes based on ARP/ND entries.",
+												},
+											},
+											CustomType: DynamicType{
+												ObjectType: types.ObjectType{
+													AttrTypes: DynamicValue{}.AttributeTypes(ctx),
+												},
+											},
+											Optional:            true,
+											Description:         "Create host routes out of dynamic ARP/ND entries.",
+											MarkdownDescription: "Create host routes out of dynamic ARP/ND entries.",
+										},
+										"evpn": schema.SingleNestedAttribute{
+											Attributes: map[string]schema.Attribute{
+												"datapath_programming": schema.BoolAttribute{
+													Optional:            true,
+													Description:         "Enable datapath programming for host routes.",
+													MarkdownDescription: "Enable datapath programming for host routes.",
+												},
+												"populate": schema.BoolAttribute{
+													Optional:            true,
+													Description:         "Enable population of host routes based on ARP/ND entries.",
+													MarkdownDescription: "Enable population of host routes based on ARP/ND entries.",
+												},
+											},
+											CustomType: EvpnType{
+												ObjectType: types.ObjectType{
+													AttrTypes: EvpnValue{}.AttributeTypes(ctx),
+												},
+											},
+											Optional:            true,
+											Description:         "Create host routes out of EVPN learned ARP/ND entries.",
+											MarkdownDescription: "Create host routes out of EVPN learned ARP/ND entries.",
+										},
+										"static": schema.SingleNestedAttribute{
+											Attributes: map[string]schema.Attribute{
+												"datapath_programming": schema.BoolAttribute{
+													Optional:            true,
+													Description:         "Enable datapath programming for host routes.",
+													MarkdownDescription: "Enable datapath programming for host routes.",
+												},
+												"populate": schema.BoolAttribute{
+													Optional:            true,
+													Description:         "Enable population of host routes based on ARP/ND entries.",
+													MarkdownDescription: "Enable population of host routes based on ARP/ND entries.",
+												},
+											},
+											CustomType: StaticType{
+												ObjectType: types.ObjectType{
+													AttrTypes: StaticValue{}.AttributeTypes(ctx),
+												},
+											},
+											Optional:            true,
+											Description:         "Create host routes out of static ARP/ND entries.",
+											MarkdownDescription: "Create host routes out of static ARP/ND entries.",
+										},
+									},
+									CustomType: HostRoutePopulateType{
+										ObjectType: types.ObjectType{
+											AttrTypes: HostRoutePopulateValue{}.AttributeTypes(ctx),
+										},
+									},
+									Optional:            true,
+									Description:         "Configures host route population based on ARP/ND entries.",
+									MarkdownDescription: "Configures host route population based on ARP/ND entries.",
 								},
 								"ingress": schema.SingleNestedAttribute{
 									Attributes: map[string]schema.Attribute{
@@ -338,7 +451,9 @@ func RoutedInterfaceListDataSourceSchema(ctx context.Context) schema.Schema {
 											AttrTypes: Ipv6RouterAdvertisementValue{}.AttributeTypes(ctx),
 										},
 									},
-									Optional: true,
+									Optional:            true,
+									Description:         "Manages IPV6 Router Advertisement parameters.",
+									MarkdownDescription: "Manages IPV6 Router Advertisement parameters.",
 								},
 								"l3proxy_arpnd": schema.SingleNestedAttribute{
 									Attributes: map[string]schema.Attribute{
@@ -511,6 +626,12 @@ func RoutedInterfaceListDataSourceSchema(ctx context.Context) schema.Schema {
 				Description:         "a label selector string to filter the results based on CR labels",
 				MarkdownDescription: "a label selector string to filter the results based on CR labels",
 			},
+			"labelselector": schema.StringAttribute{
+				Optional:            true,
+				Computed:            true,
+				Description:         "Deprecated: a label selector string to filter the results based on CR labels",
+				MarkdownDescription: "Deprecated: a label selector string to filter the results based on CR labels",
+			},
 			"namespace": schema.StringAttribute{
 				Required:            true,
 				Description:         "the namespace scope in which to operate",
@@ -527,6 +648,7 @@ type RoutedInterfaceListModel struct {
 	Items         types.List   `tfsdk:"items"`
 	Kind          types.String `tfsdk:"kind"`
 	LabelSelector types.String `tfsdk:"label_selector"`
+	Labelselector types.String `tfsdk:"labelselector"`
 	Namespace     types.String `tfsdk:"namespace"`
 }
 
@@ -555,6 +677,24 @@ func (t ItemsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue
 
 	attributes := in.Attributes()
 
+	alarmsAttribute, ok := attributes["alarms"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`alarms is missing from object`)
+
+		return nil, diags
+	}
+
+	alarmsVal, ok := alarmsAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`alarms expected to be basetypes.ObjectValue, was: %T`, alarmsAttribute))
+	}
+
 	apiVersionAttribute, ok := attributes["api_version"]
 
 	if !ok {
@@ -571,6 +711,24 @@ func (t ItemsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue
 		diags.AddError(
 			"Attribute Wrong Type",
 			fmt.Sprintf(`api_version expected to be basetypes.StringValue, was: %T`, apiVersionAttribute))
+	}
+
+	deviationsAttribute, ok := attributes["deviations"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`deviations is missing from object`)
+
+		return nil, diags
+	}
+
+	deviationsVal, ok := deviationsAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`deviations expected to be basetypes.ObjectValue, was: %T`, deviationsAttribute))
 	}
 
 	kindAttribute, ok := attributes["kind"]
@@ -650,7 +808,9 @@ func (t ItemsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue
 	}
 
 	return ItemsValue{
+		Alarms:     alarmsVal,
 		ApiVersion: apiVersionVal,
+		Deviations: deviationsVal,
 		Kind:       kindVal,
 		Metadata:   metadataVal,
 		Spec:       specVal,
@@ -722,6 +882,24 @@ func NewItemsValue(attributeTypes map[string]attr.Type, attributes map[string]at
 		return NewItemsValueUnknown(), diags
 	}
 
+	alarmsAttribute, ok := attributes["alarms"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`alarms is missing from object`)
+
+		return NewItemsValueUnknown(), diags
+	}
+
+	alarmsVal, ok := alarmsAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`alarms expected to be basetypes.ObjectValue, was: %T`, alarmsAttribute))
+	}
+
 	apiVersionAttribute, ok := attributes["api_version"]
 
 	if !ok {
@@ -738,6 +916,24 @@ func NewItemsValue(attributeTypes map[string]attr.Type, attributes map[string]at
 		diags.AddError(
 			"Attribute Wrong Type",
 			fmt.Sprintf(`api_version expected to be basetypes.StringValue, was: %T`, apiVersionAttribute))
+	}
+
+	deviationsAttribute, ok := attributes["deviations"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`deviations is missing from object`)
+
+		return NewItemsValueUnknown(), diags
+	}
+
+	deviationsVal, ok := deviationsAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`deviations expected to be basetypes.ObjectValue, was: %T`, deviationsAttribute))
 	}
 
 	kindAttribute, ok := attributes["kind"]
@@ -817,7 +1013,9 @@ func NewItemsValue(attributeTypes map[string]attr.Type, attributes map[string]at
 	}
 
 	return ItemsValue{
+		Alarms:     alarmsVal,
 		ApiVersion: apiVersionVal,
+		Deviations: deviationsVal,
 		Kind:       kindVal,
 		Metadata:   metadataVal,
 		Spec:       specVal,
@@ -894,7 +1092,9 @@ func (t ItemsType) ValueType(ctx context.Context) attr.Value {
 var _ basetypes.ObjectValuable = ItemsValue{}
 
 type ItemsValue struct {
+	Alarms     basetypes.ObjectValue `tfsdk:"alarms"`
 	ApiVersion basetypes.StringValue `tfsdk:"api_version"`
+	Deviations basetypes.ObjectValue `tfsdk:"deviations"`
 	Kind       basetypes.StringValue `tfsdk:"kind"`
 	Metadata   basetypes.ObjectValue `tfsdk:"metadata"`
 	Spec       basetypes.ObjectValue `tfsdk:"spec"`
@@ -903,12 +1103,18 @@ type ItemsValue struct {
 }
 
 func (v ItemsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
-	attrTypes := make(map[string]tftypes.Type, 5)
+	attrTypes := make(map[string]tftypes.Type, 7)
 
 	var val tftypes.Value
 	var err error
 
+	attrTypes["alarms"] = basetypes.ObjectType{
+		AttrTypes: AlarmsValue{}.AttributeTypes(ctx),
+	}.TerraformType(ctx)
 	attrTypes["api_version"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["deviations"] = basetypes.ObjectType{
+		AttrTypes: DeviationsValue{}.AttributeTypes(ctx),
+	}.TerraformType(ctx)
 	attrTypes["kind"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["metadata"] = basetypes.ObjectType{
 		AttrTypes: MetadataValue{}.AttributeTypes(ctx),
@@ -924,7 +1130,15 @@ func (v ItemsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error)
 
 	switch v.state {
 	case attr.ValueStateKnown:
-		vals := make(map[string]tftypes.Value, 5)
+		vals := make(map[string]tftypes.Value, 7)
+
+		val, err = v.Alarms.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["alarms"] = val
 
 		val, err = v.ApiVersion.ToTerraformValue(ctx)
 
@@ -933,6 +1147,14 @@ func (v ItemsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error)
 		}
 
 		vals["api_version"] = val
+
+		val, err = v.Deviations.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["deviations"] = val
 
 		val, err = v.Kind.ToTerraformValue(ctx)
 
@@ -994,6 +1216,48 @@ func (v ItemsValue) String() string {
 
 func (v ItemsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
 	var diags diag.Diagnostics
+
+	var alarms basetypes.ObjectValue
+
+	if v.Alarms.IsNull() {
+		alarms = types.ObjectNull(
+			AlarmsValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if v.Alarms.IsUnknown() {
+		alarms = types.ObjectUnknown(
+			AlarmsValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if !v.Alarms.IsNull() && !v.Alarms.IsUnknown() {
+		alarms = types.ObjectValueMust(
+			AlarmsValue{}.AttributeTypes(ctx),
+			v.Alarms.Attributes(),
+		)
+	}
+
+	var deviations basetypes.ObjectValue
+
+	if v.Deviations.IsNull() {
+		deviations = types.ObjectNull(
+			DeviationsValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if v.Deviations.IsUnknown() {
+		deviations = types.ObjectUnknown(
+			DeviationsValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if !v.Deviations.IsNull() && !v.Deviations.IsUnknown() {
+		deviations = types.ObjectValueMust(
+			DeviationsValue{}.AttributeTypes(ctx),
+			v.Deviations.Attributes(),
+		)
+	}
 
 	var metadata basetypes.ObjectValue
 
@@ -1059,8 +1323,14 @@ func (v ItemsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, d
 	}
 
 	attributeTypes := map[string]attr.Type{
+		"alarms": basetypes.ObjectType{
+			AttrTypes: AlarmsValue{}.AttributeTypes(ctx),
+		},
 		"api_version": basetypes.StringType{},
-		"kind":        basetypes.StringType{},
+		"deviations": basetypes.ObjectType{
+			AttrTypes: DeviationsValue{}.AttributeTypes(ctx),
+		},
+		"kind": basetypes.StringType{},
 		"metadata": basetypes.ObjectType{
 			AttrTypes: MetadataValue{}.AttributeTypes(ctx),
 		},
@@ -1083,7 +1353,9 @@ func (v ItemsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, d
 	objVal, diags := types.ObjectValue(
 		attributeTypes,
 		map[string]attr.Value{
+			"alarms":      alarms,
 			"api_version": v.ApiVersion,
+			"deviations":  deviations,
 			"kind":        v.Kind,
 			"metadata":    metadata,
 			"spec":        spec,
@@ -1108,7 +1380,15 @@ func (v ItemsValue) Equal(o attr.Value) bool {
 		return true
 	}
 
+	if !v.Alarms.Equal(other.Alarms) {
+		return false
+	}
+
 	if !v.ApiVersion.Equal(other.ApiVersion) {
+		return false
+	}
+
+	if !v.Deviations.Equal(other.Deviations) {
 		return false
 	}
 
@@ -1141,8 +1421,14 @@ func (v ItemsValue) Type(ctx context.Context) attr.Type {
 
 func (v ItemsValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
+		"alarms": basetypes.ObjectType{
+			AttrTypes: AlarmsValue{}.AttributeTypes(ctx),
+		},
 		"api_version": basetypes.StringType{},
-		"kind":        basetypes.StringType{},
+		"deviations": basetypes.ObjectType{
+			AttrTypes: DeviationsValue{}.AttributeTypes(ctx),
+		},
+		"kind": basetypes.StringType{},
 		"metadata": basetypes.ObjectType{
 			AttrTypes: MetadataValue{}.AttributeTypes(ctx),
 		},
@@ -1152,6 +1438,819 @@ func (v ItemsValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"status": basetypes.ObjectType{
 			AttrTypes: StatusValue{}.AttributeTypes(ctx),
 		},
+	}
+}
+
+var _ basetypes.ObjectTypable = AlarmsType{}
+
+type AlarmsType struct {
+	basetypes.ObjectType
+}
+
+func (t AlarmsType) Equal(o attr.Type) bool {
+	other, ok := o.(AlarmsType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t AlarmsType) String() string {
+	return "AlarmsType"
+}
+
+func (t AlarmsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	criticalAttribute, ok := attributes["critical"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`critical is missing from object`)
+
+		return nil, diags
+	}
+
+	criticalVal, ok := criticalAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`critical expected to be basetypes.Int64Value, was: %T`, criticalAttribute))
+	}
+
+	majorAttribute, ok := attributes["major"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`major is missing from object`)
+
+		return nil, diags
+	}
+
+	majorVal, ok := majorAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`major expected to be basetypes.Int64Value, was: %T`, majorAttribute))
+	}
+
+	minorAttribute, ok := attributes["minor"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`minor is missing from object`)
+
+		return nil, diags
+	}
+
+	minorVal, ok := minorAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`minor expected to be basetypes.Int64Value, was: %T`, minorAttribute))
+	}
+
+	warningAttribute, ok := attributes["warning"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`warning is missing from object`)
+
+		return nil, diags
+	}
+
+	warningVal, ok := warningAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`warning expected to be basetypes.Int64Value, was: %T`, warningAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return AlarmsValue{
+		Critical: criticalVal,
+		Major:    majorVal,
+		Minor:    minorVal,
+		Warning:  warningVal,
+		state:    attr.ValueStateKnown,
+	}, diags
+}
+
+func NewAlarmsValueNull() AlarmsValue {
+	return AlarmsValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewAlarmsValueUnknown() AlarmsValue {
+	return AlarmsValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewAlarmsValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (AlarmsValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing AlarmsValue Attribute Value",
+				"While creating a AlarmsValue value, a missing attribute value was detected. "+
+					"A AlarmsValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("AlarmsValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid AlarmsValue Attribute Type",
+				"While creating a AlarmsValue value, an invalid attribute value was detected. "+
+					"A AlarmsValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("AlarmsValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("AlarmsValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra AlarmsValue Attribute Value",
+				"While creating a AlarmsValue value, an extra attribute value was detected. "+
+					"A AlarmsValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra AlarmsValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewAlarmsValueUnknown(), diags
+	}
+
+	criticalAttribute, ok := attributes["critical"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`critical is missing from object`)
+
+		return NewAlarmsValueUnknown(), diags
+	}
+
+	criticalVal, ok := criticalAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`critical expected to be basetypes.Int64Value, was: %T`, criticalAttribute))
+	}
+
+	majorAttribute, ok := attributes["major"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`major is missing from object`)
+
+		return NewAlarmsValueUnknown(), diags
+	}
+
+	majorVal, ok := majorAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`major expected to be basetypes.Int64Value, was: %T`, majorAttribute))
+	}
+
+	minorAttribute, ok := attributes["minor"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`minor is missing from object`)
+
+		return NewAlarmsValueUnknown(), diags
+	}
+
+	minorVal, ok := minorAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`minor expected to be basetypes.Int64Value, was: %T`, minorAttribute))
+	}
+
+	warningAttribute, ok := attributes["warning"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`warning is missing from object`)
+
+		return NewAlarmsValueUnknown(), diags
+	}
+
+	warningVal, ok := warningAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`warning expected to be basetypes.Int64Value, was: %T`, warningAttribute))
+	}
+
+	if diags.HasError() {
+		return NewAlarmsValueUnknown(), diags
+	}
+
+	return AlarmsValue{
+		Critical: criticalVal,
+		Major:    majorVal,
+		Minor:    minorVal,
+		Warning:  warningVal,
+		state:    attr.ValueStateKnown,
+	}, diags
+}
+
+func NewAlarmsValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) AlarmsValue {
+	object, diags := NewAlarmsValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewAlarmsValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t AlarmsType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewAlarmsValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewAlarmsValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewAlarmsValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewAlarmsValueMust(AlarmsValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t AlarmsType) ValueType(ctx context.Context) attr.Value {
+	return AlarmsValue{}
+}
+
+var _ basetypes.ObjectValuable = AlarmsValue{}
+
+type AlarmsValue struct {
+	Critical basetypes.Int64Value `tfsdk:"critical"`
+	Major    basetypes.Int64Value `tfsdk:"major"`
+	Minor    basetypes.Int64Value `tfsdk:"minor"`
+	Warning  basetypes.Int64Value `tfsdk:"warning"`
+	state    attr.ValueState
+}
+
+func (v AlarmsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 4)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["critical"] = basetypes.Int64Type{}.TerraformType(ctx)
+	attrTypes["major"] = basetypes.Int64Type{}.TerraformType(ctx)
+	attrTypes["minor"] = basetypes.Int64Type{}.TerraformType(ctx)
+	attrTypes["warning"] = basetypes.Int64Type{}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 4)
+
+		val, err = v.Critical.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["critical"] = val
+
+		val, err = v.Major.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["major"] = val
+
+		val, err = v.Minor.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["minor"] = val
+
+		val, err = v.Warning.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["warning"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v AlarmsValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v AlarmsValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v AlarmsValue) String() string {
+	return "AlarmsValue"
+}
+
+func (v AlarmsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributeTypes := map[string]attr.Type{
+		"critical": basetypes.Int64Type{},
+		"major":    basetypes.Int64Type{},
+		"minor":    basetypes.Int64Type{},
+		"warning":  basetypes.Int64Type{},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"critical": v.Critical,
+			"major":    v.Major,
+			"minor":    v.Minor,
+			"warning":  v.Warning,
+		})
+
+	return objVal, diags
+}
+
+func (v AlarmsValue) Equal(o attr.Value) bool {
+	other, ok := o.(AlarmsValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.Critical.Equal(other.Critical) {
+		return false
+	}
+
+	if !v.Major.Equal(other.Major) {
+		return false
+	}
+
+	if !v.Minor.Equal(other.Minor) {
+		return false
+	}
+
+	if !v.Warning.Equal(other.Warning) {
+		return false
+	}
+
+	return true
+}
+
+func (v AlarmsValue) Type(ctx context.Context) attr.Type {
+	return AlarmsType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v AlarmsValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"critical": basetypes.Int64Type{},
+		"major":    basetypes.Int64Type{},
+		"minor":    basetypes.Int64Type{},
+		"warning":  basetypes.Int64Type{},
+	}
+}
+
+var _ basetypes.ObjectTypable = DeviationsType{}
+
+type DeviationsType struct {
+	basetypes.ObjectType
+}
+
+func (t DeviationsType) Equal(o attr.Type) bool {
+	other, ok := o.(DeviationsType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t DeviationsType) String() string {
+	return "DeviationsType"
+}
+
+func (t DeviationsType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	countAttribute, ok := attributes["count"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`count is missing from object`)
+
+		return nil, diags
+	}
+
+	countVal, ok := countAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`count expected to be basetypes.Int64Value, was: %T`, countAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return DeviationsValue{
+		Count: countVal,
+		state: attr.ValueStateKnown,
+	}, diags
+}
+
+func NewDeviationsValueNull() DeviationsValue {
+	return DeviationsValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewDeviationsValueUnknown() DeviationsValue {
+	return DeviationsValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewDeviationsValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (DeviationsValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing DeviationsValue Attribute Value",
+				"While creating a DeviationsValue value, a missing attribute value was detected. "+
+					"A DeviationsValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("DeviationsValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid DeviationsValue Attribute Type",
+				"While creating a DeviationsValue value, an invalid attribute value was detected. "+
+					"A DeviationsValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("DeviationsValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("DeviationsValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra DeviationsValue Attribute Value",
+				"While creating a DeviationsValue value, an extra attribute value was detected. "+
+					"A DeviationsValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra DeviationsValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewDeviationsValueUnknown(), diags
+	}
+
+	countAttribute, ok := attributes["count"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`count is missing from object`)
+
+		return NewDeviationsValueUnknown(), diags
+	}
+
+	countVal, ok := countAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`count expected to be basetypes.Int64Value, was: %T`, countAttribute))
+	}
+
+	if diags.HasError() {
+		return NewDeviationsValueUnknown(), diags
+	}
+
+	return DeviationsValue{
+		Count: countVal,
+		state: attr.ValueStateKnown,
+	}, diags
+}
+
+func NewDeviationsValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) DeviationsValue {
+	object, diags := NewDeviationsValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewDeviationsValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t DeviationsType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewDeviationsValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewDeviationsValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewDeviationsValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewDeviationsValueMust(DeviationsValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t DeviationsType) ValueType(ctx context.Context) attr.Value {
+	return DeviationsValue{}
+}
+
+var _ basetypes.ObjectValuable = DeviationsValue{}
+
+type DeviationsValue struct {
+	Count basetypes.Int64Value `tfsdk:"count"`
+	state attr.ValueState
+}
+
+func (v DeviationsValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 1)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["count"] = basetypes.Int64Type{}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 1)
+
+		val, err = v.Count.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["count"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v DeviationsValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v DeviationsValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v DeviationsValue) String() string {
+	return "DeviationsValue"
+}
+
+func (v DeviationsValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributeTypes := map[string]attr.Type{
+		"count": basetypes.Int64Type{},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"count": v.Count,
+		})
+
+	return objVal, diags
+}
+
+func (v DeviationsValue) Equal(o attr.Value) bool {
+	other, ok := o.(DeviationsValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.Count.Equal(other.Count) {
+		return false
+	}
+
+	return true
+}
+
+func (v DeviationsValue) Type(ctx context.Context) attr.Type {
+	return DeviationsType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v DeviationsValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"count": basetypes.Int64Type{},
 	}
 }
 
@@ -1803,6 +2902,24 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 			fmt.Sprintf(`egress expected to be basetypes.ObjectValue, was: %T`, egressAttribute))
 	}
 
+	hostRoutePopulateAttribute, ok := attributes["host_route_populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`host_route_populate is missing from object`)
+
+		return nil, diags
+	}
+
+	hostRoutePopulateVal, ok := hostRoutePopulateAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`host_route_populate expected to be basetypes.ObjectValue, was: %T`, hostRoutePopulateAttribute))
+	}
+
 	ingressAttribute, ok := attributes["ingress"]
 
 	if !ok {
@@ -2046,6 +3163,7 @@ func (t SpecType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue)
 		Bfd:                     bfdVal,
 		Description:             descriptionVal,
 		Egress:                  egressVal,
+		HostRoutePopulate:       hostRoutePopulateVal,
 		Ingress:                 ingressVal,
 		Interface:               interfaceVal,
 		IpMtu:                   ipMtuVal,
@@ -2198,6 +3316,24 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 			fmt.Sprintf(`egress expected to be basetypes.ObjectValue, was: %T`, egressAttribute))
 	}
 
+	hostRoutePopulateAttribute, ok := attributes["host_route_populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`host_route_populate is missing from object`)
+
+		return NewSpecValueUnknown(), diags
+	}
+
+	hostRoutePopulateVal, ok := hostRoutePopulateAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`host_route_populate expected to be basetypes.ObjectValue, was: %T`, hostRoutePopulateAttribute))
+	}
+
 	ingressAttribute, ok := attributes["ingress"]
 
 	if !ok {
@@ -2441,6 +3577,7 @@ func NewSpecValue(attributeTypes map[string]attr.Type, attributes map[string]att
 		Bfd:                     bfdVal,
 		Description:             descriptionVal,
 		Egress:                  egressVal,
+		HostRoutePopulate:       hostRoutePopulateVal,
 		Ingress:                 ingressVal,
 		Interface:               interfaceVal,
 		IpMtu:                   ipMtuVal,
@@ -2530,6 +3667,7 @@ type SpecValue struct {
 	Bfd                     basetypes.ObjectValue `tfsdk:"bfd"`
 	Description             basetypes.StringValue `tfsdk:"description"`
 	Egress                  basetypes.ObjectValue `tfsdk:"egress"`
+	HostRoutePopulate       basetypes.ObjectValue `tfsdk:"host_route_populate"`
 	Ingress                 basetypes.ObjectValue `tfsdk:"ingress"`
 	Interface               basetypes.StringValue `tfsdk:"interface"`
 	IpMtu                   basetypes.Int64Value  `tfsdk:"ip_mtu"`
@@ -2547,7 +3685,7 @@ type SpecValue struct {
 }
 
 func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
-	attrTypes := make(map[string]tftypes.Type, 17)
+	attrTypes := make(map[string]tftypes.Type, 18)
 
 	var val tftypes.Value
 	var err error
@@ -2559,6 +3697,9 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 	attrTypes["description"] = basetypes.StringType{}.TerraformType(ctx)
 	attrTypes["egress"] = basetypes.ObjectType{
 		AttrTypes: EgressValue{}.AttributeTypes(ctx),
+	}.TerraformType(ctx)
+	attrTypes["host_route_populate"] = basetypes.ObjectType{
+		AttrTypes: HostRoutePopulateValue{}.AttributeTypes(ctx),
 	}.TerraformType(ctx)
 	attrTypes["ingress"] = basetypes.ObjectType{
 		AttrTypes: IngressValue{}.AttributeTypes(ctx),
@@ -2590,7 +3731,7 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 
 	switch v.state {
 	case attr.ValueStateKnown:
-		vals := make(map[string]tftypes.Value, 17)
+		vals := make(map[string]tftypes.Value, 18)
 
 		val, err = v.ArpTimeout.ToTerraformValue(ctx)
 
@@ -2623,6 +3764,14 @@ func (v SpecValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) 
 		}
 
 		vals["egress"] = val
+
+		val, err = v.HostRoutePopulate.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["host_route_populate"] = val
 
 		val, err = v.Ingress.ToTerraformValue(ctx)
 
@@ -2799,6 +3948,27 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		)
 	}
 
+	var hostRoutePopulate basetypes.ObjectValue
+
+	if v.HostRoutePopulate.IsNull() {
+		hostRoutePopulate = types.ObjectNull(
+			HostRoutePopulateValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if v.HostRoutePopulate.IsUnknown() {
+		hostRoutePopulate = types.ObjectUnknown(
+			HostRoutePopulateValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if !v.HostRoutePopulate.IsNull() && !v.HostRoutePopulate.IsUnknown() {
+		hostRoutePopulate = types.ObjectValueMust(
+			HostRoutePopulateValue{}.AttributeTypes(ctx),
+			v.HostRoutePopulate.Attributes(),
+		)
+	}
+
 	var ingress basetypes.ObjectValue
 
 	if v.Ingress.IsNull() {
@@ -2950,6 +4120,9 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 		"egress": basetypes.ObjectType{
 			AttrTypes: EgressValue{}.AttributeTypes(ctx),
 		},
+		"host_route_populate": basetypes.ObjectType{
+			AttrTypes: HostRoutePopulateValue{}.AttributeTypes(ctx),
+		},
 		"ingress": basetypes.ObjectType{
 			AttrTypes: IngressValue{}.AttributeTypes(ctx),
 		},
@@ -2992,6 +4165,7 @@ func (v SpecValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, di
 			"bfd":                       bfd,
 			"description":               v.Description,
 			"egress":                    egress,
+			"host_route_populate":       hostRoutePopulate,
 			"ingress":                   ingress,
 			"interface":                 v.Interface,
 			"ip_mtu":                    v.IpMtu,
@@ -3038,6 +4212,10 @@ func (v SpecValue) Equal(o attr.Value) bool {
 	}
 
 	if !v.Egress.Equal(other.Egress) {
+		return false
+	}
+
+	if !v.HostRoutePopulate.Equal(other.HostRoutePopulate) {
 		return false
 	}
 
@@ -3113,6 +4291,9 @@ func (v SpecValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"description": basetypes.StringType{},
 		"egress": basetypes.ObjectType{
 			AttrTypes: EgressValue{}.AttributeTypes(ctx),
+		},
+		"host_route_populate": basetypes.ObjectType{
+			AttrTypes: HostRoutePopulateValue{}.AttributeTypes(ctx),
 		},
 		"ingress": basetypes.ObjectType{
 			AttrTypes: IngressValue{}.AttributeTypes(ctx),
@@ -4175,6 +5356,1658 @@ func (v EgressValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"qos_policy": basetypes.ListType{
 			ElemType: types.StringType,
 		},
+	}
+}
+
+var _ basetypes.ObjectTypable = HostRoutePopulateType{}
+
+type HostRoutePopulateType struct {
+	basetypes.ObjectType
+}
+
+func (t HostRoutePopulateType) Equal(o attr.Type) bool {
+	other, ok := o.(HostRoutePopulateType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t HostRoutePopulateType) String() string {
+	return "HostRoutePopulateType"
+}
+
+func (t HostRoutePopulateType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	dynamicAttribute, ok := attributes["dynamic"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`dynamic is missing from object`)
+
+		return nil, diags
+	}
+
+	dynamicVal, ok := dynamicAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`dynamic expected to be basetypes.ObjectValue, was: %T`, dynamicAttribute))
+	}
+
+	evpnAttribute, ok := attributes["evpn"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`evpn is missing from object`)
+
+		return nil, diags
+	}
+
+	evpnVal, ok := evpnAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`evpn expected to be basetypes.ObjectValue, was: %T`, evpnAttribute))
+	}
+
+	staticAttribute, ok := attributes["static"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`static is missing from object`)
+
+		return nil, diags
+	}
+
+	staticVal, ok := staticAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`static expected to be basetypes.ObjectValue, was: %T`, staticAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return HostRoutePopulateValue{
+		Dynamic: dynamicVal,
+		Evpn:    evpnVal,
+		Static:  staticVal,
+		state:   attr.ValueStateKnown,
+	}, diags
+}
+
+func NewHostRoutePopulateValueNull() HostRoutePopulateValue {
+	return HostRoutePopulateValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewHostRoutePopulateValueUnknown() HostRoutePopulateValue {
+	return HostRoutePopulateValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewHostRoutePopulateValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (HostRoutePopulateValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing HostRoutePopulateValue Attribute Value",
+				"While creating a HostRoutePopulateValue value, a missing attribute value was detected. "+
+					"A HostRoutePopulateValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("HostRoutePopulateValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid HostRoutePopulateValue Attribute Type",
+				"While creating a HostRoutePopulateValue value, an invalid attribute value was detected. "+
+					"A HostRoutePopulateValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("HostRoutePopulateValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("HostRoutePopulateValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra HostRoutePopulateValue Attribute Value",
+				"While creating a HostRoutePopulateValue value, an extra attribute value was detected. "+
+					"A HostRoutePopulateValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra HostRoutePopulateValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewHostRoutePopulateValueUnknown(), diags
+	}
+
+	dynamicAttribute, ok := attributes["dynamic"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`dynamic is missing from object`)
+
+		return NewHostRoutePopulateValueUnknown(), diags
+	}
+
+	dynamicVal, ok := dynamicAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`dynamic expected to be basetypes.ObjectValue, was: %T`, dynamicAttribute))
+	}
+
+	evpnAttribute, ok := attributes["evpn"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`evpn is missing from object`)
+
+		return NewHostRoutePopulateValueUnknown(), diags
+	}
+
+	evpnVal, ok := evpnAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`evpn expected to be basetypes.ObjectValue, was: %T`, evpnAttribute))
+	}
+
+	staticAttribute, ok := attributes["static"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`static is missing from object`)
+
+		return NewHostRoutePopulateValueUnknown(), diags
+	}
+
+	staticVal, ok := staticAttribute.(basetypes.ObjectValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`static expected to be basetypes.ObjectValue, was: %T`, staticAttribute))
+	}
+
+	if diags.HasError() {
+		return NewHostRoutePopulateValueUnknown(), diags
+	}
+
+	return HostRoutePopulateValue{
+		Dynamic: dynamicVal,
+		Evpn:    evpnVal,
+		Static:  staticVal,
+		state:   attr.ValueStateKnown,
+	}, diags
+}
+
+func NewHostRoutePopulateValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) HostRoutePopulateValue {
+	object, diags := NewHostRoutePopulateValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewHostRoutePopulateValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t HostRoutePopulateType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewHostRoutePopulateValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewHostRoutePopulateValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewHostRoutePopulateValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewHostRoutePopulateValueMust(HostRoutePopulateValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t HostRoutePopulateType) ValueType(ctx context.Context) attr.Value {
+	return HostRoutePopulateValue{}
+}
+
+var _ basetypes.ObjectValuable = HostRoutePopulateValue{}
+
+type HostRoutePopulateValue struct {
+	Dynamic basetypes.ObjectValue `tfsdk:"dynamic"`
+	Evpn    basetypes.ObjectValue `tfsdk:"evpn"`
+	Static  basetypes.ObjectValue `tfsdk:"static"`
+	state   attr.ValueState
+}
+
+func (v HostRoutePopulateValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 3)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["dynamic"] = basetypes.ObjectType{
+		AttrTypes: DynamicValue{}.AttributeTypes(ctx),
+	}.TerraformType(ctx)
+	attrTypes["evpn"] = basetypes.ObjectType{
+		AttrTypes: EvpnValue{}.AttributeTypes(ctx),
+	}.TerraformType(ctx)
+	attrTypes["static"] = basetypes.ObjectType{
+		AttrTypes: StaticValue{}.AttributeTypes(ctx),
+	}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 3)
+
+		val, err = v.Dynamic.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["dynamic"] = val
+
+		val, err = v.Evpn.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["evpn"] = val
+
+		val, err = v.Static.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["static"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v HostRoutePopulateValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v HostRoutePopulateValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v HostRoutePopulateValue) String() string {
+	return "HostRoutePopulateValue"
+}
+
+func (v HostRoutePopulateValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var dynamic basetypes.ObjectValue
+
+	if v.Dynamic.IsNull() {
+		dynamic = types.ObjectNull(
+			DynamicValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if v.Dynamic.IsUnknown() {
+		dynamic = types.ObjectUnknown(
+			DynamicValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if !v.Dynamic.IsNull() && !v.Dynamic.IsUnknown() {
+		dynamic = types.ObjectValueMust(
+			DynamicValue{}.AttributeTypes(ctx),
+			v.Dynamic.Attributes(),
+		)
+	}
+
+	var evpn basetypes.ObjectValue
+
+	if v.Evpn.IsNull() {
+		evpn = types.ObjectNull(
+			EvpnValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if v.Evpn.IsUnknown() {
+		evpn = types.ObjectUnknown(
+			EvpnValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if !v.Evpn.IsNull() && !v.Evpn.IsUnknown() {
+		evpn = types.ObjectValueMust(
+			EvpnValue{}.AttributeTypes(ctx),
+			v.Evpn.Attributes(),
+		)
+	}
+
+	var static basetypes.ObjectValue
+
+	if v.Static.IsNull() {
+		static = types.ObjectNull(
+			StaticValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if v.Static.IsUnknown() {
+		static = types.ObjectUnknown(
+			StaticValue{}.AttributeTypes(ctx),
+		)
+	}
+
+	if !v.Static.IsNull() && !v.Static.IsUnknown() {
+		static = types.ObjectValueMust(
+			StaticValue{}.AttributeTypes(ctx),
+			v.Static.Attributes(),
+		)
+	}
+
+	attributeTypes := map[string]attr.Type{
+		"dynamic": basetypes.ObjectType{
+			AttrTypes: DynamicValue{}.AttributeTypes(ctx),
+		},
+		"evpn": basetypes.ObjectType{
+			AttrTypes: EvpnValue{}.AttributeTypes(ctx),
+		},
+		"static": basetypes.ObjectType{
+			AttrTypes: StaticValue{}.AttributeTypes(ctx),
+		},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"dynamic": dynamic,
+			"evpn":    evpn,
+			"static":  static,
+		})
+
+	return objVal, diags
+}
+
+func (v HostRoutePopulateValue) Equal(o attr.Value) bool {
+	other, ok := o.(HostRoutePopulateValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.Dynamic.Equal(other.Dynamic) {
+		return false
+	}
+
+	if !v.Evpn.Equal(other.Evpn) {
+		return false
+	}
+
+	if !v.Static.Equal(other.Static) {
+		return false
+	}
+
+	return true
+}
+
+func (v HostRoutePopulateValue) Type(ctx context.Context) attr.Type {
+	return HostRoutePopulateType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v HostRoutePopulateValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"dynamic": basetypes.ObjectType{
+			AttrTypes: DynamicValue{}.AttributeTypes(ctx),
+		},
+		"evpn": basetypes.ObjectType{
+			AttrTypes: EvpnValue{}.AttributeTypes(ctx),
+		},
+		"static": basetypes.ObjectType{
+			AttrTypes: StaticValue{}.AttributeTypes(ctx),
+		},
+	}
+}
+
+var _ basetypes.ObjectTypable = DynamicType{}
+
+type DynamicType struct {
+	basetypes.ObjectType
+}
+
+func (t DynamicType) Equal(o attr.Type) bool {
+	other, ok := o.(DynamicType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t DynamicType) String() string {
+	return "DynamicType"
+}
+
+func (t DynamicType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	datapathProgrammingAttribute, ok := attributes["datapath_programming"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`datapath_programming is missing from object`)
+
+		return nil, diags
+	}
+
+	datapathProgrammingVal, ok := datapathProgrammingAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`datapath_programming expected to be basetypes.BoolValue, was: %T`, datapathProgrammingAttribute))
+	}
+
+	populateAttribute, ok := attributes["populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`populate is missing from object`)
+
+		return nil, diags
+	}
+
+	populateVal, ok := populateAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`populate expected to be basetypes.BoolValue, was: %T`, populateAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return DynamicValue{
+		DatapathProgramming: datapathProgrammingVal,
+		Populate:            populateVal,
+		state:               attr.ValueStateKnown,
+	}, diags
+}
+
+func NewDynamicValueNull() DynamicValue {
+	return DynamicValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewDynamicValueUnknown() DynamicValue {
+	return DynamicValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewDynamicValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (DynamicValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing DynamicValue Attribute Value",
+				"While creating a DynamicValue value, a missing attribute value was detected. "+
+					"A DynamicValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("DynamicValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid DynamicValue Attribute Type",
+				"While creating a DynamicValue value, an invalid attribute value was detected. "+
+					"A DynamicValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("DynamicValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("DynamicValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra DynamicValue Attribute Value",
+				"While creating a DynamicValue value, an extra attribute value was detected. "+
+					"A DynamicValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra DynamicValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewDynamicValueUnknown(), diags
+	}
+
+	datapathProgrammingAttribute, ok := attributes["datapath_programming"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`datapath_programming is missing from object`)
+
+		return NewDynamicValueUnknown(), diags
+	}
+
+	datapathProgrammingVal, ok := datapathProgrammingAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`datapath_programming expected to be basetypes.BoolValue, was: %T`, datapathProgrammingAttribute))
+	}
+
+	populateAttribute, ok := attributes["populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`populate is missing from object`)
+
+		return NewDynamicValueUnknown(), diags
+	}
+
+	populateVal, ok := populateAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`populate expected to be basetypes.BoolValue, was: %T`, populateAttribute))
+	}
+
+	if diags.HasError() {
+		return NewDynamicValueUnknown(), diags
+	}
+
+	return DynamicValue{
+		DatapathProgramming: datapathProgrammingVal,
+		Populate:            populateVal,
+		state:               attr.ValueStateKnown,
+	}, diags
+}
+
+func NewDynamicValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) DynamicValue {
+	object, diags := NewDynamicValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewDynamicValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t DynamicType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewDynamicValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewDynamicValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewDynamicValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewDynamicValueMust(DynamicValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t DynamicType) ValueType(ctx context.Context) attr.Value {
+	return DynamicValue{}
+}
+
+var _ basetypes.ObjectValuable = DynamicValue{}
+
+type DynamicValue struct {
+	DatapathProgramming basetypes.BoolValue `tfsdk:"datapath_programming"`
+	Populate            basetypes.BoolValue `tfsdk:"populate"`
+	state               attr.ValueState
+}
+
+func (v DynamicValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 2)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["datapath_programming"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["populate"] = basetypes.BoolType{}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 2)
+
+		val, err = v.DatapathProgramming.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["datapath_programming"] = val
+
+		val, err = v.Populate.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["populate"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v DynamicValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v DynamicValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v DynamicValue) String() string {
+	return "DynamicValue"
+}
+
+func (v DynamicValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributeTypes := map[string]attr.Type{
+		"datapath_programming": basetypes.BoolType{},
+		"populate":             basetypes.BoolType{},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"datapath_programming": v.DatapathProgramming,
+			"populate":             v.Populate,
+		})
+
+	return objVal, diags
+}
+
+func (v DynamicValue) Equal(o attr.Value) bool {
+	other, ok := o.(DynamicValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.DatapathProgramming.Equal(other.DatapathProgramming) {
+		return false
+	}
+
+	if !v.Populate.Equal(other.Populate) {
+		return false
+	}
+
+	return true
+}
+
+func (v DynamicValue) Type(ctx context.Context) attr.Type {
+	return DynamicType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v DynamicValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"datapath_programming": basetypes.BoolType{},
+		"populate":             basetypes.BoolType{},
+	}
+}
+
+var _ basetypes.ObjectTypable = EvpnType{}
+
+type EvpnType struct {
+	basetypes.ObjectType
+}
+
+func (t EvpnType) Equal(o attr.Type) bool {
+	other, ok := o.(EvpnType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t EvpnType) String() string {
+	return "EvpnType"
+}
+
+func (t EvpnType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	datapathProgrammingAttribute, ok := attributes["datapath_programming"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`datapath_programming is missing from object`)
+
+		return nil, diags
+	}
+
+	datapathProgrammingVal, ok := datapathProgrammingAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`datapath_programming expected to be basetypes.BoolValue, was: %T`, datapathProgrammingAttribute))
+	}
+
+	populateAttribute, ok := attributes["populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`populate is missing from object`)
+
+		return nil, diags
+	}
+
+	populateVal, ok := populateAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`populate expected to be basetypes.BoolValue, was: %T`, populateAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return EvpnValue{
+		DatapathProgramming: datapathProgrammingVal,
+		Populate:            populateVal,
+		state:               attr.ValueStateKnown,
+	}, diags
+}
+
+func NewEvpnValueNull() EvpnValue {
+	return EvpnValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewEvpnValueUnknown() EvpnValue {
+	return EvpnValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewEvpnValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (EvpnValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing EvpnValue Attribute Value",
+				"While creating a EvpnValue value, a missing attribute value was detected. "+
+					"A EvpnValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("EvpnValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid EvpnValue Attribute Type",
+				"While creating a EvpnValue value, an invalid attribute value was detected. "+
+					"A EvpnValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("EvpnValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("EvpnValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra EvpnValue Attribute Value",
+				"While creating a EvpnValue value, an extra attribute value was detected. "+
+					"A EvpnValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra EvpnValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewEvpnValueUnknown(), diags
+	}
+
+	datapathProgrammingAttribute, ok := attributes["datapath_programming"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`datapath_programming is missing from object`)
+
+		return NewEvpnValueUnknown(), diags
+	}
+
+	datapathProgrammingVal, ok := datapathProgrammingAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`datapath_programming expected to be basetypes.BoolValue, was: %T`, datapathProgrammingAttribute))
+	}
+
+	populateAttribute, ok := attributes["populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`populate is missing from object`)
+
+		return NewEvpnValueUnknown(), diags
+	}
+
+	populateVal, ok := populateAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`populate expected to be basetypes.BoolValue, was: %T`, populateAttribute))
+	}
+
+	if diags.HasError() {
+		return NewEvpnValueUnknown(), diags
+	}
+
+	return EvpnValue{
+		DatapathProgramming: datapathProgrammingVal,
+		Populate:            populateVal,
+		state:               attr.ValueStateKnown,
+	}, diags
+}
+
+func NewEvpnValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) EvpnValue {
+	object, diags := NewEvpnValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewEvpnValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t EvpnType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewEvpnValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewEvpnValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewEvpnValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewEvpnValueMust(EvpnValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t EvpnType) ValueType(ctx context.Context) attr.Value {
+	return EvpnValue{}
+}
+
+var _ basetypes.ObjectValuable = EvpnValue{}
+
+type EvpnValue struct {
+	DatapathProgramming basetypes.BoolValue `tfsdk:"datapath_programming"`
+	Populate            basetypes.BoolValue `tfsdk:"populate"`
+	state               attr.ValueState
+}
+
+func (v EvpnValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 2)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["datapath_programming"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["populate"] = basetypes.BoolType{}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 2)
+
+		val, err = v.DatapathProgramming.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["datapath_programming"] = val
+
+		val, err = v.Populate.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["populate"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v EvpnValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v EvpnValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v EvpnValue) String() string {
+	return "EvpnValue"
+}
+
+func (v EvpnValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributeTypes := map[string]attr.Type{
+		"datapath_programming": basetypes.BoolType{},
+		"populate":             basetypes.BoolType{},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"datapath_programming": v.DatapathProgramming,
+			"populate":             v.Populate,
+		})
+
+	return objVal, diags
+}
+
+func (v EvpnValue) Equal(o attr.Value) bool {
+	other, ok := o.(EvpnValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.DatapathProgramming.Equal(other.DatapathProgramming) {
+		return false
+	}
+
+	if !v.Populate.Equal(other.Populate) {
+		return false
+	}
+
+	return true
+}
+
+func (v EvpnValue) Type(ctx context.Context) attr.Type {
+	return EvpnType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v EvpnValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"datapath_programming": basetypes.BoolType{},
+		"populate":             basetypes.BoolType{},
+	}
+}
+
+var _ basetypes.ObjectTypable = StaticType{}
+
+type StaticType struct {
+	basetypes.ObjectType
+}
+
+func (t StaticType) Equal(o attr.Type) bool {
+	other, ok := o.(StaticType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t StaticType) String() string {
+	return "StaticType"
+}
+
+func (t StaticType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	datapathProgrammingAttribute, ok := attributes["datapath_programming"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`datapath_programming is missing from object`)
+
+		return nil, diags
+	}
+
+	datapathProgrammingVal, ok := datapathProgrammingAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`datapath_programming expected to be basetypes.BoolValue, was: %T`, datapathProgrammingAttribute))
+	}
+
+	populateAttribute, ok := attributes["populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`populate is missing from object`)
+
+		return nil, diags
+	}
+
+	populateVal, ok := populateAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`populate expected to be basetypes.BoolValue, was: %T`, populateAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return StaticValue{
+		DatapathProgramming: datapathProgrammingVal,
+		Populate:            populateVal,
+		state:               attr.ValueStateKnown,
+	}, diags
+}
+
+func NewStaticValueNull() StaticValue {
+	return StaticValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewStaticValueUnknown() StaticValue {
+	return StaticValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewStaticValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (StaticValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing StaticValue Attribute Value",
+				"While creating a StaticValue value, a missing attribute value was detected. "+
+					"A StaticValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("StaticValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid StaticValue Attribute Type",
+				"While creating a StaticValue value, an invalid attribute value was detected. "+
+					"A StaticValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("StaticValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("StaticValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra StaticValue Attribute Value",
+				"While creating a StaticValue value, an extra attribute value was detected. "+
+					"A StaticValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra StaticValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewStaticValueUnknown(), diags
+	}
+
+	datapathProgrammingAttribute, ok := attributes["datapath_programming"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`datapath_programming is missing from object`)
+
+		return NewStaticValueUnknown(), diags
+	}
+
+	datapathProgrammingVal, ok := datapathProgrammingAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`datapath_programming expected to be basetypes.BoolValue, was: %T`, datapathProgrammingAttribute))
+	}
+
+	populateAttribute, ok := attributes["populate"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`populate is missing from object`)
+
+		return NewStaticValueUnknown(), diags
+	}
+
+	populateVal, ok := populateAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`populate expected to be basetypes.BoolValue, was: %T`, populateAttribute))
+	}
+
+	if diags.HasError() {
+		return NewStaticValueUnknown(), diags
+	}
+
+	return StaticValue{
+		DatapathProgramming: datapathProgrammingVal,
+		Populate:            populateVal,
+		state:               attr.ValueStateKnown,
+	}, diags
+}
+
+func NewStaticValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) StaticValue {
+	object, diags := NewStaticValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewStaticValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t StaticType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewStaticValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewStaticValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewStaticValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewStaticValueMust(StaticValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t StaticType) ValueType(ctx context.Context) attr.Value {
+	return StaticValue{}
+}
+
+var _ basetypes.ObjectValuable = StaticValue{}
+
+type StaticValue struct {
+	DatapathProgramming basetypes.BoolValue `tfsdk:"datapath_programming"`
+	Populate            basetypes.BoolValue `tfsdk:"populate"`
+	state               attr.ValueState
+}
+
+func (v StaticValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 2)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["datapath_programming"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["populate"] = basetypes.BoolType{}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 2)
+
+		val, err = v.DatapathProgramming.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["datapath_programming"] = val
+
+		val, err = v.Populate.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["populate"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v StaticValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v StaticValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v StaticValue) String() string {
+	return "StaticValue"
+}
+
+func (v StaticValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributeTypes := map[string]attr.Type{
+		"datapath_programming": basetypes.BoolType{},
+		"populate":             basetypes.BoolType{},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"datapath_programming": v.DatapathProgramming,
+			"populate":             v.Populate,
+		})
+
+	return objVal, diags
+}
+
+func (v StaticValue) Equal(o attr.Value) bool {
+	other, ok := o.(StaticValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.DatapathProgramming.Equal(other.DatapathProgramming) {
+		return false
+	}
+
+	if !v.Populate.Equal(other.Populate) {
+		return false
+	}
+
+	return true
+}
+
+func (v StaticValue) Type(ctx context.Context) attr.Type {
+	return StaticType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v StaticValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"datapath_programming": basetypes.BoolType{},
+		"populate":             basetypes.BoolType{},
 	}
 }
 

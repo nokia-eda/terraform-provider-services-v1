@@ -27,7 +27,9 @@ description: |-
 
 ### Read-Only
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--metadata))
 - `status` (Attributes) (see [below for nested schema](#nestedatt--status))
@@ -71,8 +73,8 @@ Optional:
 
 Optional:
 
-- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--egress))
-- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--ingress))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
 - `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 - `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
@@ -95,6 +97,25 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
+
+
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--metadata"></a>

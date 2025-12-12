@@ -27,7 +27,9 @@ description: |-
 
 ### Read-Only
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--metadata))
 - `status` (Attributes) RouterStatus defines the observed state of Router (see [below for nested schema](#nestedatt--status))
@@ -38,12 +40,14 @@ description: |-
 Optional:
 
 - `bgp` (Attributes) BGP configuration. (see [below for nested schema](#nestedatt--spec--bgp))
+- `configured_name` (String) The name of the Router to configure on the device.
 - `description` (String) The description of the Router.
+- `ecmp` (Number) Set the maximum number of ECMP paths for the Router. This is supported only by some platforms, and will be ignored for others.
 - `evi` (Number) EVI for the Router; leave blank for auto-allocation from EVI pool.
 - `evi_pool` (String) Reference to EVI pool for auto-allocation.
 - `export_target` (String) Export route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
 - `import_target` (String) Import route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
-- `ip_load_balancing` (Attributes) IPv4 or IPv6 prefix. Active routes in the FIB that exactly match this prefix or that are longer matches of this prefix are provided with resilient-hash programming. (see [below for nested schema](#nestedatt--spec--ip_load_balancing))
+- `ip_load_balancing` (Attributes) Resilient Hashing configuration. (see [below for nested schema](#nestedatt--spec--ip_load_balancing))
 - `node_selector` (List of String) Node selectors for deployment constraints.  If Nodes are selected, the Router will only be deployed on the Nodes selected, if left blank it will be deployed on all Nodes for which there are IRB or RoutedInterfaces referencing this Router.
 - `route_leaking` (Attributes) Route leaking controlled by routing policies in and out of the DefaultRouter. (see [below for nested schema](#nestedatt--spec--route_leaking))
 - `router_id` (String) Router ID.
@@ -60,7 +64,9 @@ Optional:
 - `autonomous_system` (Number) Autonomous System number for BGP.
 - `ebgp_preference` (Number) Preference to be set for eBGP [default=170].
 - `enabled` (Boolean) Enable or disable BGP.
+- `export_policy` (List of String) Reference to a Policy CR that will be used to filter routes advertised to peers.
 - `ibgp_preference` (Number) Preference to be set for iBGP [default=170].
+- `import_policy` (List of String) Reference to a Policy CR that will be used to filter routes received from peers.
 - `ip_alias_nexthops` (Attributes List) IP aliasing configuration. (see [below for nested schema](#nestedatt--spec--bgp--ip_alias_nexthops))
 - `ipv4_unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--bgp--ipv4_unicast))
 - `ipv6_unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--bgp--ipv6_unicast))
@@ -76,7 +82,7 @@ Optional:
 
 - `esi` (String) 10 byte Ethernet Segment Identifier, if not set a type 0 ESI is generated.
 - `next_hop` (String) The nexthop IP address to track for the IP alias.
-- `preferred_active_node` (String) When not set the ES is used in an all active mode. This references the ToppNode object and when set, the DF algorithm is configured to type preference and the selected Node is set with a higher preference value. All other Nodes have a lower value configured.
+- `preferred_active_node` (String) When not set the ES is used in an all active mode. This references the TopoNode object and when set, the DF algorithm is configured to type preference and the selected Node is set with a higher preference value. All other Nodes have a lower value configured.
 
 
 <a id="nestedatt--spec--bgp--ipv4_unicast"></a>
@@ -146,6 +152,25 @@ Optional:
 
 
 
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Read-Only:
+
+- `count` (Number)
+
+
 <a id="nestedatt--metadata"></a>
 ### Nested Schema for `metadata`
 
@@ -173,6 +198,24 @@ Read-Only:
 - `nodes` (List of String) List of nodes on which the Router is deployed.
 - `num_nodes` (Number) Number of nodes on which the Router is configured.
 - `operational_state` (String) Operational state of the Router.
+- `ospf_instances` (Attributes List) List of OSPFInstances configured on the router. (see [below for nested schema](#nestedatt--status--ospf_instances))
 - `routed_interfaces` (List of String) List of RoutedInterfaces attached to the router.
 - `tunnel_index` (Number) Vxlan tunnel index in use.
 - `vni` (Number) VNI in use for this Router.
+
+<a id="nestedatt--status--ospf_instances"></a>
+### Nested Schema for `status.ospf_instances`
+
+Read-Only:
+
+- `areas` (Attributes List) (see [below for nested schema](#nestedatt--status--ospf_instances--areas))
+- `name` (String)
+- `version` (String)
+
+<a id="nestedatt--status--ospf_instances--areas"></a>
+### Nested Schema for `status.ospf_instances.areas`
+
+Read-Only:
+
+- `id` (String)
+- `interfaces` (List of String)

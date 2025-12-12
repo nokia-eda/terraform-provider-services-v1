@@ -24,6 +24,7 @@ description: |-
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
 - `label_selector` (String) a label selector string to filter the results based on CR labels
+- `labelselector` (String) Deprecated: a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -40,7 +41,9 @@ Optional:
 
 Read-Only:
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
 - `status` (Attributes) RoutedInterfaceStatus defines the observed state of RoutedInterface (see [below for nested schema](#nestedatt--items--status))
@@ -54,13 +57,14 @@ Optional:
 - `bfd` (Attributes) Enables BFD on the RoutedInterface. (see [below for nested schema](#nestedatt--items--spec--bfd))
 - `description` (String) The description of the RoutedInterface.
 - `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--items--spec--egress))
+- `host_route_populate` (Attributes) Configures host route population based on ARP/ND entries. (see [below for nested schema](#nestedatt--items--spec--host_route_populate))
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--ingress))
 - `interface` (String) Reference to an Interface to use for attachment.
 - `ip_mtu` (Number) IP MTU for the RoutedInterface.
 - `ipv4_addresses` (Attributes List) List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--items--spec--ipv4_addresses))
 - `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv4_parameters))
 - `ipv6_addresses` (Attributes List) List of IPv6 addresses in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--items--spec--ipv6_addresses))
-- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv6_router_advertisement))
+- `ipv6_router_advertisement` (Attributes) Manages IPV6 Router Advertisement parameters. (see [below for nested schema](#nestedatt--items--spec--ipv6_router_advertisement))
 - `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `router` (String) Reference to a Router.
@@ -78,7 +82,7 @@ Optional:
 - `enabled` (Boolean) Enables Biforward Detection.
 - `min_echo_receive_interval` (Number) The minimum interval between echo packets the local node can receive.
 - `required_min_receive` (Number) The minimum interval in microseconds between received BFD control packets that this system should support.
-- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.
+- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not applicable to single-hop BFD sessions.
 
 
 <a id="nestedatt--items--spec--egress"></a>
@@ -88,6 +92,43 @@ Optional:
 
 - `filters` (List of String) List of Filter references to use at egress.
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
+
+
+<a id="nestedatt--items--spec--host_route_populate"></a>
+### Nested Schema for `items.spec.host_route_populate`
+
+Optional:
+
+- `dynamic` (Attributes) Create host routes out of dynamic ARP/ND entries. (see [below for nested schema](#nestedatt--items--spec--host_route_populate--dynamic))
+- `evpn` (Attributes) Create host routes out of EVPN learned ARP/ND entries. (see [below for nested schema](#nestedatt--items--spec--host_route_populate--evpn))
+- `static` (Attributes) Create host routes out of static ARP/ND entries. (see [below for nested schema](#nestedatt--items--spec--host_route_populate--static))
+
+<a id="nestedatt--items--spec--host_route_populate--dynamic"></a>
+### Nested Schema for `items.spec.host_route_populate.dynamic`
+
+Optional:
+
+- `datapath_programming` (Boolean) Enable datapath programming for host routes.
+- `populate` (Boolean) Enable population of host routes based on ARP/ND entries.
+
+
+<a id="nestedatt--items--spec--host_route_populate--evpn"></a>
+### Nested Schema for `items.spec.host_route_populate.evpn`
+
+Optional:
+
+- `datapath_programming` (Boolean) Enable datapath programming for host routes.
+- `populate` (Boolean) Enable population of host routes based on ARP/ND entries.
+
+
+<a id="nestedatt--items--spec--host_route_populate--static"></a>
+### Nested Schema for `items.spec.host_route_populate.static`
+
+Optional:
+
+- `datapath_programming` (Boolean) Enable datapath programming for host routes.
+- `populate` (Boolean) Enable population of host routes based on ARP/ND entries.
+
 
 
 <a id="nestedatt--items--spec--ingress"></a>
@@ -163,6 +204,25 @@ Optional:
 - `proxy_arp` (Boolean) Select whether Proxy ARP should be enabled.
 - `proxy_nd` (Boolean) Select whether Proxy ND should be enabled.
 
+
+
+<a id="nestedatt--items--alarms"></a>
+### Nested Schema for `items.alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--items--deviations"></a>
+### Nested Schema for `items.deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--items--metadata"></a>

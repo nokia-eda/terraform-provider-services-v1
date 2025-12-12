@@ -24,6 +24,7 @@ description: |-
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
 - `label_selector` (String) a label selector string to filter the results based on CR labels
+- `labelselector` (String) Deprecated: a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -40,7 +41,9 @@ Optional:
 
 Read-Only:
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
 - `status` (Attributes) IRBInterfaceStatus defines the observed state of IRBInterface (see [below for nested schema](#nestedatt--items--status))
@@ -61,8 +64,8 @@ Optional:
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--items--spec--ingress))
 - `ip_addresses` (Attributes List) (see [below for nested schema](#nestedatt--items--spec--ip_addresses))
 - `ip_mtu` (Number) IP MTU for the IRBInterface [default=1500].
-- `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv4_parameters))
-- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--items--spec--ipv6_router_advertisement))
+- `ipv4_parameters` (Attributes) Manages IPv4-specific additional parameters that are not applicable to IPv6. (see [below for nested schema](#nestedatt--items--spec--ipv4_parameters))
+- `ipv6_router_advertisement` (Attributes) Manages IPV6 Router Advertisement parameters. (see [below for nested schema](#nestedatt--items--spec--ipv6_router_advertisement))
 - `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--items--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `router` (String) Reference to a Router.
@@ -79,7 +82,7 @@ Optional:
 - `enabled` (Boolean) Enables Biforward Detection.
 - `min_echo_receive_interval` (Number) The minimum interval between echo packets the local node can receive.
 - `required_min_receive` (Number) The minimum interval in microseconds between received BFD control packets that this system should support.
-- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.
+- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not applicable to single-hop BFD sessions.
 
 
 <a id="nestedatt--items--spec--egress"></a>
@@ -100,6 +103,7 @@ Optional:
 - `arp_static` (Boolean) Advertise static ARP entries.
 - `nd_dynamic` (Boolean) Advertise dynamic ND entries.
 - `nd_static` (Boolean) Advertise static ND entries.
+- `rfc9135_symmetric_mode` (Boolean) Use RFC9135-based symmetric mode for ARP/ND host route advertisements.
 
 
 <a id="nestedatt--items--spec--host_route_populate"></a>
@@ -207,6 +211,25 @@ Optional:
 - `probe_interval` (Number) ARP probe interval in seconds.
 - `vlan_to_probe` (List of String) List of VLANs on the associated BridgeDomain to which the ARP probes are sent.  If left blank, the probes are sent on all VLANs associated with the BridgeDomain.
 
+
+
+<a id="nestedatt--items--alarms"></a>
+### Nested Schema for `items.alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--items--deviations"></a>
+### Nested Schema for `items.deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--items--metadata"></a>

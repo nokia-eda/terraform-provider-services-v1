@@ -22,7 +22,9 @@ description: |-
 
 ### Optional
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `name` (String) name of the VirtualNetwork
 - `namespace` (String) the namespace scope in which to operate
@@ -68,6 +70,7 @@ Required:
 
 Optional:
 
+- `configured_name` (String) The name of the BridgeDomain to configure on the device.
 - `description` (String) The description of the BridgeDomain.
 - `evi` (Number) EVI to use for this BridgeDomain, can be optionally left blank to have it automatically allocated using the EVI Pool.
 - `evi_pool` (String) Reference to an EVI pool to use for allocations if EVI is left blank.
@@ -180,8 +183,8 @@ Optional:
 
 Optional:
 
-- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--bridge_interfaces--spec--uplink--egress))
-- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--bridge_interfaces--spec--uplink--ingress))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--bridge_interfaces--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--bridge_interfaces--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
 - `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 - `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
@@ -235,8 +238,8 @@ Optional:
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--ingress))
 - `ip_addresses` (Attributes List) (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--ip_addresses))
 - `ip_mtu` (Number) IP MTU for the IRBInterface [default=1500].
-- `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--ipv4_parameters))
-- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--ipv6_router_advertisement))
+- `ipv4_parameters` (Attributes) Manages IPv4-specific additional parameters that are not applicable to IPv6. (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--ipv4_parameters))
+- `ipv6_router_advertisement` (Attributes) Manages IPV6 Router Advertisement parameters. (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--ipv6_router_advertisement))
 - `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--spec--irb_interfaces--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `unnumbered` (String) Enables the use of unnumbered interfaces on the IRBInterface.  If IPv6 is specified, no IP address are configured on the sub-interface and only the link local address will be used.  If any IP addresses are specified for either IPv4 or IPv6 that will take precedence and IPs will be assigned to the interfaces.(Deprecated, Use IPv6RouterAdvertisement)
@@ -252,7 +255,7 @@ Optional:
 - `enabled` (Boolean) Enables Biforward Detection.
 - `min_echo_receive_interval` (Number) The minimum interval between echo packets the local node can receive.
 - `required_min_receive` (Number) The minimum interval in microseconds between received BFD control packets that this system should support.
-- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.
+- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not applicable to single-hop BFD sessions.
 
 
 <a id="nestedatt--spec--irb_interfaces--spec--egress"></a>
@@ -273,6 +276,7 @@ Optional:
 - `arp_static` (Boolean) Advertise static ARP entries.
 - `nd_dynamic` (Boolean) Advertise dynamic ND entries.
 - `nd_static` (Boolean) Advertise static ND entries.
+- `rfc9135_symmetric_mode` (Boolean) Use RFC9135-based symmetric mode for ARP/ND host route advertisements.
 
 
 <a id="nestedatt--spec--irb_interfaces--spec--host_route_populate"></a>
@@ -401,6 +405,7 @@ Optional:
 Optional:
 
 - `bgp` (Attributes) BGP Protocol. (see [below for nested schema](#nestedatt--spec--protocols--bgp))
+- `ospf` (Attributes List) OSPF Protocol Instanes. (see [below for nested schema](#nestedatt--spec--protocols--ospf))
 - `routing_policies` (Attributes) Routing Policies. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies))
 - `static_routes` (Attributes List) List of Static Routes within this VirtualNetwork. [emits=StaticRoute] (see [below for nested schema](#nestedatt--spec--protocols--static_routes))
 
@@ -429,6 +434,7 @@ Optional:
 - `bfd` (Boolean) Enable or disable Bi-forward Forwarding Detection (BFD) with fast failover.
 - `client` (Boolean) When set to true, all configured and dynamic BGP peers are considered RR clients.
 - `cluster_id` (String) Enables route reflect client and sets the cluster ID.
+- `configured_name` (String) Configures the group name on the device.
 - `description` (String) Sets the description on the BGP group.
 - `export_policy` (List of String) Reference to a Policy CR that will be used to filter routes advertised to peers.
 - `gr_stale_route_time` (Number) Enables Graceful Restart on the peer and sets the stale route time.
@@ -777,6 +783,136 @@ Optional:
 
 
 
+<a id="nestedatt--spec--protocols--ospf"></a>
+### Nested Schema for `spec.protocols.ospf`
+
+Required:
+
+- `name` (String) The name of the OSPFInstance.
+- `spec` (Attributes) Specification of the OSPFInstance. (see [below for nested schema](#nestedatt--spec--protocols--ospf--spec))
+
+Optional:
+
+- `ospf_areas` (Attributes List) List of OSPFAreas. [emits=OSPFArea] (see [below for nested schema](#nestedatt--spec--protocols--ospf--ospf_areas))
+- `ospf_interfaces` (Attributes List) List of OSPFInterfaces. [emits=OSPFInterface] (see [below for nested schema](#nestedatt--spec--protocols--ospf--ospf_interfaces))
+
+<a id="nestedatt--spec--protocols--ospf--spec"></a>
+### Nested Schema for `spec.protocols.ospf.spec`
+
+Required:
+
+- `version` (String) OSPF version to use. OSPFv2 is supported over IPv4-enabled interfaces, OSPFv3 over IPv6-enabled interfaces.
+
+Optional:
+
+- `address_family` (String) Selects an address family for OSPFv3. It is mandatory to specify at least one address family when OSPFv3 is selected.
+- `enabled` (Boolean) Enables OSPF instance.
+- `max_ecmp` (Number) The maximum number of ECMP paths (next-hops).
+- `max_metric` (Attributes) Configuration related to OSPF Max Metric / Overload. (see [below for nested schema](#nestedatt--spec--protocols--ospf--spec--max_metric))
+- `ref_bw_gbps` (Number) Reference bandwidth (in Gbps) for automatic metric calculation.
+- `timers` (Attributes) Configures OSPF timers. (see [below for nested schema](#nestedatt--spec--protocols--ospf--spec--timers))
+
+<a id="nestedatt--spec--protocols--ospf--spec--max_metric"></a>
+### Nested Schema for `spec.protocols.ospf.spec.max_metric`
+
+Optional:
+
+- `on_boot` (Number) Set Max Metric on boot for the fixed period of time (in seconds).
+- `overload` (Boolean) Enable Max Link Metric on all interfaces.
+
+
+<a id="nestedatt--spec--protocols--ospf--spec--timers"></a>
+### Nested Schema for `spec.protocols.ospf.spec.timers`
+
+Optional:
+
+- `lsa_timers` (Attributes) (see [below for nested schema](#nestedatt--spec--protocols--ospf--spec--timers--lsa_timers))
+- `spf_timers` (Attributes) (see [below for nested schema](#nestedatt--spec--protocols--ospf--spec--timers--spf_timers))
+
+<a id="nestedatt--spec--protocols--ospf--spec--timers--lsa_timers"></a>
+### Nested Schema for `spec.protocols.ospf.spec.timers.lsa_timers`
+
+Optional:
+
+- `accumulate_ms` (Number) Delay (in milliseconds) to gather LSAs before advertising to neighbors
+- `arrival_ms` (Number) Minimum interval (in milliseconds) to accept an identical LSA.
+- `gen_hold_interval_ms` (Number) Hold interval (in milliseconds) for subsequent LSA regeneration.
+- `gen_initial_delay_ms` (Number) Initial delay (in milliseconds) to generate the first instance of LSAs.
+- `gen_max_delay_ms` (Number) Maximum interval (in milliseconds) between two consecutive regenerations (of the same LSA).
+
+
+<a id="nestedatt--spec--protocols--ospf--spec--timers--spf_timers"></a>
+### Nested Schema for `spec.protocols.ospf.spec.timers.spf_timers`
+
+Optional:
+
+- `hold_interval_ms` (Number) Hold interval for subsequent SPF calculations.
+- `incremental_spf_delay_ms` (Number) Delay (in milliseconds) before an incremental SPF calculation starts.
+- `initial_delay_ms` (Number) Initial SPF calculation delay (in milliseconds).
+- `max_delay_ms` (Number) Maximum interval (in milliseconds) between two consecutive SPF calculations.
+
+
+
+
+<a id="nestedatt--spec--protocols--ospf--ospf_areas"></a>
+### Nested Schema for `spec.protocols.ospf.ospf_areas`
+
+Required:
+
+- `name` (String) The name of the OSPFArea.
+- `spec` (Attributes) Specification of the OSPFArea. (see [below for nested schema](#nestedatt--spec--protocols--ospf--ospf_areas--spec))
+
+<a id="nestedatt--spec--protocols--ospf--ospf_areas--spec"></a>
+### Nested Schema for `spec.protocols.ospf.ospf_areas.spec`
+
+Optional:
+
+- `area_id` (String) Area ID. 32-bit in the dotted-quad notation (e.g., "0.0.0.0").
+- `area_type` (String) Area type. Normal is assumed if not specified.
+
+
+
+<a id="nestedatt--spec--protocols--ospf--ospf_interfaces"></a>
+### Nested Schema for `spec.protocols.ospf.ospf_interfaces`
+
+Required:
+
+- `name` (String) The name of the OSPFInterface.
+- `spec` (Attributes) Specification of the OSPFInterface. (see [below for nested schema](#nestedatt--spec--protocols--ospf--ospf_interfaces--spec))
+
+<a id="nestedatt--spec--protocols--ospf--ospf_interfaces--spec"></a>
+### Nested Schema for `spec.protocols.ospf.ospf_interfaces.spec`
+
+Required:
+
+- `interface` (String) Reference to a RoutedInterface.
+- `ospf_area` (String) Reference to a OSPFArea.
+- `ospf_instance` (String) Reference to a OSPF Instance on which the OSPF area is configured.
+
+Optional:
+
+- `dead_interval_sec` (Number) Dead Interval in seconds.
+- `hello_interval_sec` (Number) Hello Interval in seconds.
+- `interface_kind` (String) Reference to the Kind of interface to enable OSPF on.
+- `metric` (Number) Interface metric.
+- `mtu` (Number) OSPF interface MTU
+- `ospf_bfd` (Attributes) Configure BFD on the OSPF interface. (see [below for nested schema](#nestedatt--spec--protocols--ospf--ospf_interfaces--spec--ospf_bfd))
+- `passive` (Boolean) Configure the OSPF interface as passive.
+- `type` (String) OSPF interface type.
+
+<a id="nestedatt--spec--protocols--ospf--ospf_interfaces--spec--ospf_bfd"></a>
+### Nested Schema for `spec.protocols.ospf.ospf_interfaces.spec.ospf_bfd`
+
+Optional:
+
+- `enabled` (Boolean) Enables BFD on the OSPF interface.
+- `strict_mode` (Boolean) Enables BFD Strict Mode on the OSPF interface.
+- `strict_mode_hold_down_sec` (Number) Enables Hold Down Timer for BFD Strict Mode, in seconds.
+
+
+
+
+
 <a id="nestedatt--spec--protocols--routing_policies"></a>
 ### Nested Schema for `spec.protocols.routing_policies`
 
@@ -801,6 +937,7 @@ Optional:
 
 Optional:
 
+- `configured_name` (String) The name of the policy to configure on the device.
 - `default_action` (Attributes) The default action to apply if no other actions are defined. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--default_action))
 - `statement` (Attributes List) List of policy statements. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--statement))
 
@@ -811,6 +948,7 @@ Optional:
 
 - `bgp` (Attributes) Actions related to the BGP protocol. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--default_action--bgp))
 - `policy_result` (String) Final disposition for the route.
+- `tags` (Attributes) Manipulate internal route tags associated with the route. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--default_action--tags))
 
 <a id="nestedatt--spec--protocols--routing_policies--policies--spec--default_action--bgp"></a>
 ### Nested Schema for `spec.protocols.routing_policies.policies.spec.default_action.bgp`
@@ -846,6 +984,14 @@ Optional:
 
 
 
+<a id="nestedatt--spec--protocols--routing_policies--policies--spec--default_action--tags"></a>
+### Nested Schema for `spec.protocols.routing_policies.policies.spec.default_action.tags`
+
+Optional:
+
+- `tag_set` (String) Add tags to the route from the referenced Tag Set.
+
+
 
 <a id="nestedatt--spec--protocols--routing_policies--policies--spec--statement"></a>
 ### Nested Schema for `spec.protocols.routing_policies.policies.spec.statement`
@@ -866,6 +1012,7 @@ Optional:
 
 - `bgp` (Attributes) Actions related to the BGP protocol. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--statement--action--bgp))
 - `policy_result` (String) Final disposition for the route.
+- `tags` (Attributes) Manipulate internal route tags associated with the route. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--statement--action--tags))
 
 <a id="nestedatt--spec--protocols--routing_policies--policies--spec--statement--action--bgp"></a>
 ### Nested Schema for `spec.protocols.routing_policies.policies.spec.statement.action.bgp`
@@ -901,6 +1048,14 @@ Optional:
 
 
 
+<a id="nestedatt--spec--protocols--routing_policies--policies--spec--statement--action--tags"></a>
+### Nested Schema for `spec.protocols.routing_policies.policies.spec.statement.action.tags`
+
+Optional:
+
+- `tag_set` (String) Add tags to the route from the referenced Tag Set.
+
+
 
 <a id="nestedatt--spec--protocols--routing_policies--policies--spec--statement--match"></a>
 ### Nested Schema for `spec.protocols.routing_policies.policies.spec.statement.match`
@@ -911,6 +1066,7 @@ Optional:
 - `family` (List of String) Address families that the route belongs to.
 - `prefix_set` (String) Reference to a PrefixSet resource.
 - `protocol` (String) The route protocol type to match.
+- `tags` (Attributes) Match based on the internal route tags associated with the route. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--policies--spec--statement--match--tags))
 
 <a id="nestedatt--spec--protocols--routing_policies--policies--spec--statement--match--bgp"></a>
 ### Nested Schema for `spec.protocols.routing_policies.policies.spec.statement.match.bgp`
@@ -930,6 +1086,14 @@ Optional:
 - `as_path_set` (String) Reference to an ASPathSet resource. Mutually exclusive with the ASPathExpression.
 - `match_set_options` (String) The matching criteria that applies to the members in the referenced set.
 
+
+
+<a id="nestedatt--spec--protocols--routing_policies--policies--spec--statement--match--tags"></a>
+### Nested Schema for `spec.protocols.routing_policies.policies.spec.statement.match.tags`
+
+Optional:
+
+- `tag_set` (String) Reference to a TagSet resource.
 
 
 
@@ -953,6 +1117,10 @@ Optional:
 Required:
 
 - `prefix` (Attributes List) List of IPv4 or IPv6 prefixes in CIDR notation. (see [below for nested schema](#nestedatt--spec--protocols--routing_policies--prefix_sets--spec--prefix))
+
+Optional:
+
+- `configured_name` (String) The name of the prefixset to configure on the device.
 
 <a id="nestedatt--spec--protocols--routing_policies--prefix_sets--spec--prefix"></a>
 ### Nested Schema for `spec.protocols.routing_policies.prefix_sets.spec.prefix`
@@ -993,6 +1161,7 @@ Required:
 
 Optional:
 
+- `configured_name` (String) The name of the static route to configure on the device.
 - `nodes` (List of String) List of nodes on which to configure the static routes. An AND operation is executed against the nodes in this list and the nodes on which the Router is configured to determine the Nodes on which to configure the static routes.
 - `preference` (Number) Defines the route preference.
 
@@ -1066,12 +1235,13 @@ Optional:
 - `bfd` (Attributes) Enables BFD on the RoutedInterface. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--bfd))
 - `description` (String) The description of the RoutedInterface.
 - `egress` (Attributes) Manages actions on traffic at Egress. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--egress))
+- `host_route_populate` (Attributes) Configures host route population based on ARP/ND entries. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--host_route_populate))
 - `ingress` (Attributes) Manages actions on traffic at Ingress. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--ingress))
 - `ip_mtu` (Number) IP MTU for the RoutedInterface.
 - `ipv4_addresses` (Attributes List) List of IPv4 addresses in IP/mask form, e.g., 192.168.0.1/24. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--ipv4_addresses))
 - `ipv4_parameters` (Attributes) (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--ipv4_parameters))
 - `ipv6_addresses` (Attributes List) List of IPv6 addresses in IP/mask form, e.g., fc00::1/120. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--ipv6_addresses))
-- `ipv6_router_advertisement` (Attributes) (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--ipv6_router_advertisement))
+- `ipv6_router_advertisement` (Attributes) Manages IPV6 Router Advertisement parameters. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--ipv6_router_advertisement))
 - `l3proxy_arpnd` (Attributes) L3 Proxy ARP and ND configuration. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--l3proxy_arpnd))
 - `learn_unsolicited` (String) Enable or disable learning of unsolicited ARPs.
 - `unnumbered` (String) Enables the use of unnumbered interfaces on the IRBInterface.  If IPv6 is specified, no IP address are configured on the sub-interface and only the link local address will be used.  If any IP addresses are specified for either IPv4 or IPv6 that will take precedence and IPs will be assigned to the interfaces. (Deprecated, Use IPv6RouterAdvertisement)
@@ -1088,7 +1258,7 @@ Optional:
 - `enabled` (Boolean) Enables Biforward Detection.
 - `min_echo_receive_interval` (Number) The minimum interval between echo packets the local node can receive.
 - `required_min_receive` (Number) The minimum interval in microseconds between received BFD control packets that this system should support.
-- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not appllicable to single-hop BFD sessions.
+- `ttl` (Number) Sets custom IP TTL or Hop Limit for multi-hop BFD sessions packets. Not applicable to single-hop BFD sessions.
 
 
 <a id="nestedatt--spec--routed_interfaces--spec--egress"></a>
@@ -1098,6 +1268,43 @@ Optional:
 
 - `filters` (List of String) List of Filter references to use at egress.
 - `qos_policy` (List of String) List of QoS Egress policy references to use at egress.
+
+
+<a id="nestedatt--spec--routed_interfaces--spec--host_route_populate"></a>
+### Nested Schema for `spec.routed_interfaces.spec.host_route_populate`
+
+Optional:
+
+- `dynamic` (Attributes) Create host routes out of dynamic ARP/ND entries. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--host_route_populate--dynamic))
+- `evpn` (Attributes) Create host routes out of EVPN learned ARP/ND entries. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--host_route_populate--evpn))
+- `static` (Attributes) Create host routes out of static ARP/ND entries. (see [below for nested schema](#nestedatt--spec--routed_interfaces--spec--host_route_populate--static))
+
+<a id="nestedatt--spec--routed_interfaces--spec--host_route_populate--dynamic"></a>
+### Nested Schema for `spec.routed_interfaces.spec.host_route_populate.dynamic`
+
+Optional:
+
+- `datapath_programming` (Boolean) Enable datapath programming for host routes.
+- `populate` (Boolean) Enable population of host routes based on ARP/ND entries.
+
+
+<a id="nestedatt--spec--routed_interfaces--spec--host_route_populate--evpn"></a>
+### Nested Schema for `spec.routed_interfaces.spec.host_route_populate.evpn`
+
+Optional:
+
+- `datapath_programming` (Boolean) Enable datapath programming for host routes.
+- `populate` (Boolean) Enable population of host routes based on ARP/ND entries.
+
+
+<a id="nestedatt--spec--routed_interfaces--spec--host_route_populate--static"></a>
+### Nested Schema for `spec.routed_interfaces.spec.host_route_populate.static`
+
+Optional:
+
+- `datapath_programming` (Boolean) Enable datapath programming for host routes.
+- `populate` (Boolean) Enable population of host routes based on ARP/ND entries.
+
 
 
 <a id="nestedatt--spec--routed_interfaces--spec--ingress"></a>
@@ -1199,12 +1406,14 @@ Required:
 Optional:
 
 - `bgp` (Attributes) BGP configuration. (see [below for nested schema](#nestedatt--spec--routers--spec--bgp))
+- `configured_name` (String) The name of the Router to configure on the device.
 - `description` (String) The description of the Router.
+- `ecmp` (Number) Set the maximum number of ECMP paths for the Router. This is supported only by some platforms, and will be ignored for others.
 - `evi` (Number) EVI for the Router; leave blank for auto-allocation from EVI pool.
 - `evi_pool` (String) Reference to EVI pool for auto-allocation.
 - `export_target` (String) Export route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
 - `import_target` (String) Import route target in 'target:N:N' format, if not specified, the default value taken as "target:1:<evi>".
-- `ip_load_balancing` (Attributes) IPv4 or IPv6 prefix. Active routes in the FIB that exactly match this prefix or that are longer matches of this prefix are provided with resilient-hash programming. (see [below for nested schema](#nestedatt--spec--routers--spec--ip_load_balancing))
+- `ip_load_balancing` (Attributes) Resilient Hashing configuration. (see [below for nested schema](#nestedatt--spec--routers--spec--ip_load_balancing))
 - `node_selector` (List of String) Node selectors for deployment constraints.  If Nodes are selected, the Router will only be deployed on the Nodes selected, if left blank it will be deployed on all Nodes for which there are IRB or RoutedInterfaces referencing this Router.
 - `route_leaking` (Attributes) Route leaking controlled by routing policies in and out of the DefaultRouter. (see [below for nested schema](#nestedatt--spec--routers--spec--route_leaking))
 - `router_id` (String) Router ID.
@@ -1221,7 +1430,9 @@ Optional:
 - `autonomous_system` (Number) Autonomous System number for BGP.
 - `ebgp_preference` (Number) Preference to be set for eBGP [default=170].
 - `enabled` (Boolean) Enable or disable BGP.
+- `export_policy` (List of String) Reference to a Policy CR that will be used to filter routes advertised to peers.
 - `ibgp_preference` (Number) Preference to be set for iBGP [default=170].
+- `import_policy` (List of String) Reference to a Policy CR that will be used to filter routes received from peers.
 - `ip_alias_nexthops` (Attributes List) IP aliasing configuration. (see [below for nested schema](#nestedatt--spec--routers--spec--bgp--ip_alias_nexthops))
 - `ipv4_unicast` (Attributes) Parameters relating to the IPv4 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--routers--spec--bgp--ipv4_unicast))
 - `ipv6_unicast` (Attributes) Parameters relating to the IPv6 unicast AFI/SAFI. (see [below for nested schema](#nestedatt--spec--routers--spec--bgp--ipv6_unicast))
@@ -1240,7 +1451,7 @@ Required:
 Optional:
 
 - `esi` (String) 10 byte Ethernet Segment Identifier, if not set a type 0 ESI is generated.
-- `preferred_active_node` (String) When not set the ES is used in an all active mode. This references the ToppNode object and when set, the DF algorithm is configured to type preference and the selected Node is set with a higher preference value. All other Nodes have a lower value configured.
+- `preferred_active_node` (String) When not set the ES is used in an all active mode. This references the TopoNode object and when set, the DF algorithm is configured to type preference and the selected Node is set with a higher preference value. All other Nodes have a lower value configured.
 
 
 <a id="nestedatt--spec--routers--spec--bgp--ipv4_unicast"></a>
@@ -1371,8 +1582,8 @@ Optional:
 
 Optional:
 
-- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--vlans--spec--uplink--egress))
-- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--vlans--spec--uplink--ingress))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--vlans--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--spec--vlans--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
 - `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 - `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
@@ -1399,6 +1610,25 @@ Optional:
 
 
 
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Optional:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Optional:
+
+- `count` (Number)
+
+
 <a id="nestedatt--status"></a>
 ### Nested Schema for `status`
 
@@ -1407,12 +1637,14 @@ Optional:
 - `health` (Number) Indicates the health score of the VNET.
 - `health_score_reason` (String) Indicates the reason for the health score.
 - `last_change` (String) The time when the state of the resource last changed.
-- `nodes` (List of String) List of Nodes on which the Router is deployed.
+- `nodes` (List of String) List of Nodes on which the VNET is configured.
 - `num_bgp_peers` (Number) Total number of configured BGP Peers.
 - `num_bgp_peers_oper_down` (Number) Total Number of BGP Peer operationally down.
 - `num_irb_interfaces` (Number) Total number of irb-interfaces configured by the VNET.
 - `num_irb_interfaces_oper_down` (Number) Total number of irb-interfaces configured by the VNET which are oper-down.
 - `num_nodes` (Number) Total number of Nodes on which the VNET is configured.
+- `num_ospf_interfaces` (Number) Total number of configured OSPF Interfaces.
+- `num_ospf_interfaces_oper_down` (Number) Total Number of OSPF Interface operationally down.
 - `num_routed_interfaces` (Number) Total number of routed-interfaces configured by the VNET.
 - `num_routed_interfaces_oper_down` (Number) Total number of routed-interfaces configured by the VNET which are oper-down.
 - `num_sub_interfaces` (Number) Total number of sub-interfaces configured by the VNET.

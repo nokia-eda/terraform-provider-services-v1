@@ -27,7 +27,9 @@ description: |-
 
 ### Read-Only
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--metadata))
 - `status` (Attributes) DHCPRelayStatus defines the observed state of DHCPRelay (see [below for nested schema](#nestedatt--status))
@@ -43,6 +45,25 @@ Optional:
 - `router` (String) Router to be used to reach the DHCP server, if not specified the Router under which the source IRBInterface or RoutedInterface resides will be used.
 - `servers` (List of String) List of servers to send the DHCP relayed packet to. These can be IP addresses or FQDN.
 - `sub_options` (List of String) DHCP Relay sub-options; available options are CircuitID, RemoteID, and ClientLinkLayerAddress.
+
+
+<a id="nestedatt--alarms"></a>
+### Nested Schema for `alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--deviations"></a>
+### Nested Schema for `deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--metadata"></a>

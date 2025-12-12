@@ -150,6 +150,17 @@ resources:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
       method: DELETE
 
+  edge_ping:
+    create:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings
+      method: POST
+    read:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}
+      method: GET
+    delete:
+      path: /workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}
+      method: DELETE
+
   irb_interface:
     create:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces

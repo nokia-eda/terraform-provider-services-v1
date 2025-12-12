@@ -24,6 +24,7 @@ description: |-
 - `fields` (String) a comma-separated list of resource fields to fetch/return.  If unspecified, all fields are fetched.  If empty, only key-fields are fetched.
 - `filter` (String) an EQL "where" expression that will be used to filter the set of resources returned.
 - `label_selector` (String) a label selector string to filter the results based on CR labels
+- `labelselector` (String) Deprecated: a label selector string to filter the results based on CR labels
 
 ### Read-Only
 
@@ -40,7 +41,9 @@ Optional:
 
 Read-Only:
 
+- `alarms` (Attributes) (see [below for nested schema](#nestedatt--items--alarms))
 - `api_version` (String)
+- `deviations` (Attributes) (see [below for nested schema](#nestedatt--items--deviations))
 - `kind` (String)
 - `metadata` (Attributes) (see [below for nested schema](#nestedatt--items--metadata))
 - `status` (Attributes) (see [below for nested schema](#nestedatt--items--status))
@@ -85,8 +88,8 @@ Optional:
 
 Optional:
 
-- `egress` (Attributes) Manages actions on traffic at Egress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--uplink--egress))
-- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local enpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--uplink--ingress))
+- `egress` (Attributes) Manages actions on traffic at Egress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--uplink--egress))
+- `ingress` (Attributes) Manages actions on traffic at Ingress of the Local endpoint of the Uplink. (see [below for nested schema](#nestedatt--items--spec--uplink--ingress))
 - `uplink_selector` (List of String) Selects TopoLinks which connect a leaf switch to a breakout switch. This is the uplink between your access breakout switch and your leaf switch.  There can only be a single TopoLink between the access breakout switch and the leaf switch, if more than one TopoLink is present between two devices the transaction will fail.
 - `uplink_vlan_id` (String) The VLAN ID to be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
 - `uplink_vlan_pool` (String) A VLAN from this pool will be utilized to isolate traffic from the VLAN on the access breakout switch to the leaf switch on the selected uplink TopoLink.
@@ -109,6 +112,25 @@ Optional:
 - `qos_policy` (List of String) List of QoS Ingress policy references to use at ingress.
 
 
+
+
+<a id="nestedatt--items--alarms"></a>
+### Nested Schema for `items.alarms`
+
+Read-Only:
+
+- `critical` (Number)
+- `major` (Number)
+- `minor` (Number)
+- `warning` (Number)
+
+
+<a id="nestedatt--items--deviations"></a>
+### Nested Schema for `items.deviations`
+
+Read-Only:
+
+- `count` (Number)
 
 
 <a id="nestedatt--items--metadata"></a>

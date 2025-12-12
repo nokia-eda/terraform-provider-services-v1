@@ -11,41 +11,40 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/nokia/eda/apps/terraform-provider-services/internal/eda/apiclient"
-	"github.com/nokia/eda/apps/terraform-provider-services/internal/resource_router"
+	"github.com/nokia/eda/apps/terraform-provider-services/internal/resource_edge_ping"
 	"github.com/nokia/eda/apps/terraform-provider-services/internal/tfutils"
 )
 
 const (
-	create_rs_router = "/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers"
-	read_rs_router   = "/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}"
-	update_rs_router = "/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}"
-	delete_rs_router = "/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}"
+	create_rs_edgePing = "/workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings"
+	read_rs_edgePing   = "/workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}"
+	delete_rs_edgePing = "/workflows/v1/services.eda.nokia.com/v1/namespaces/{namespace}/edgepings/{name}"
 )
 
 var (
-	_ resource.Resource                = (*routerResource)(nil)
-	_ resource.ResourceWithConfigure   = (*routerResource)(nil)
-	_ resource.ResourceWithImportState = (*routerResource)(nil)
+	_ resource.Resource                = (*edgePingResource)(nil)
+	_ resource.ResourceWithConfigure   = (*edgePingResource)(nil)
+	_ resource.ResourceWithImportState = (*edgePingResource)(nil)
 )
 
-func NewRouterResource() resource.Resource {
-	return &routerResource{}
+func NewEdgePingResource() resource.Resource {
+	return &edgePingResource{}
 }
 
-type routerResource struct {
+type edgePingResource struct {
 	client *apiclient.EdaApiClient
 }
 
-func (r *routerResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_router"
+func (r *edgePingResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_edge_ping"
 }
 
-func (r *routerResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
-	resp.Schema = resource_router.RouterResourceSchema(ctx)
+func (r *edgePingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+	resp.Schema = resource_edge_ping.EdgePingResourceSchema(ctx)
 }
 
-func (r *routerResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data resource_router.RouterModel
+func (r *edgePingResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data resource_edge_ping.EdgePingModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -70,19 +69,19 @@ func (r *routerResource) Create(ctx context.Context, req resource.CreateRequest,
 
 	// Create API call logic
 	tflog.Info(ctx, "Create()::API request", map[string]any{
-		"path": create_rs_router,
+		"path": create_rs_edgePing,
 		"body": spew.Sdump(reqBody),
 	})
 
 	t0 := time.Now()
 	result := map[string]any{}
 
-	err = r.client.Create(ctx, create_rs_router, map[string]string{
+	err = r.client.Create(ctx, create_rs_edgePing, map[string]string{
 		"namespace": tfutils.StringValue(data.Metadata.Namespace),
 	}, reqBody, &result)
 
 	tflog.Info(ctx, "Create()::API returned", map[string]any{
-		"path":      create_rs_router,
+		"path":      create_rs_edgePing,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -95,13 +94,13 @@ func (r *routerResource) Create(ctx context.Context, req resource.CreateRequest,
 	// Read the resource again to populate any values not available in the response from Create()
 	t0 = time.Now()
 
-	err = r.client.Get(ctx, read_rs_router, map[string]string{
+	err = r.client.Get(ctx, read_rs_edgePing, map[string]string{
 		"namespace": tfutils.StringValue(data.Metadata.Namespace),
 		"name":      tfutils.StringValue(data.Metadata.Name),
 	}, &result)
 
 	tflog.Info(ctx, "Read()::API returned", map[string]any{
-		"path":      read_rs_router,
+		"path":      read_rs_edgePing,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -121,8 +120,8 @@ func (r *routerResource) Create(ctx context.Context, req resource.CreateRequest,
 	resp.Diagnostics.Append(resp.State.Set(ctx, data)...)
 }
 
-func (r *routerResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data resource_router.RouterModel
+func (r *edgePingResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data resource_edge_ping.EdgePingModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -133,20 +132,20 @@ func (r *routerResource) Read(ctx context.Context, req resource.ReadRequest, res
 
 	// Read API call logic
 	tflog.Info(ctx, "Read()::API request", map[string]any{
-		"path": read_rs_router,
+		"path": read_rs_edgePing,
 		"data": spew.Sdump(data),
 	})
 
 	t0 := time.Now()
 	result := map[string]any{}
 
-	err := r.client.Get(ctx, read_rs_router, map[string]string{
+	err := r.client.Get(ctx, read_rs_edgePing, map[string]string{
 		"namespace": tfutils.StringValue(data.Metadata.Namespace),
 		"name":      tfutils.StringValue(data.Metadata.Name),
 	}, &result)
 
 	tflog.Info(ctx, "Read()::API returned", map[string]any{
-		"path":      read_rs_router,
+		"path":      read_rs_edgePing,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -167,85 +166,13 @@ func (r *routerResource) Read(ctx context.Context, req resource.ReadRequest, res
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *routerResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data resource_router.RouterModel
-
-	// Read Terraform plan data into the model
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	err := tfutils.FillMissingValues(ctx, &data)
-	if err != nil {
-		resp.Diagnostics.AddError("Error filling missing values", err.Error())
-		return
-	}
-
-	reqBody, err := tfutils.ModelToAnyMap(ctx, &data)
-	if err != nil {
-		resp.Diagnostics.AddError("Error building request", err.Error())
-		return
-	}
-
-	// Update API call logic
-	tflog.Info(ctx, "Update()::API request", map[string]any{
-		"path": update_rs_router,
-		"body": spew.Sdump(reqBody),
-	})
-
-	t0 := time.Now()
-	result := map[string]any{}
-
-	err = r.client.Update(ctx, update_rs_router, map[string]string{
-		"namespace": tfutils.StringValue(data.Metadata.Namespace),
-		"name":      tfutils.StringValue(data.Metadata.Name),
-	}, reqBody, &result)
-
-	tflog.Info(ctx, "Update()::API returned", map[string]any{
-		"path":      update_rs_router,
-		"result":    spew.Sdump(result),
-		"timeTaken": time.Since(t0).String(),
-	})
-
-	if err != nil {
-		resp.Diagnostics.AddError("Error updating resource", err.Error())
-		return
-	}
-
-	// Read the resource again to populate any values not available in the response from Update()
-	t0 = time.Now()
-
-	err = r.client.Get(ctx, read_rs_router, map[string]string{
-		"namespace": tfutils.StringValue(data.Metadata.Namespace),
-		"name":      tfutils.StringValue(data.Metadata.Name),
-	}, &result)
-
-	tflog.Info(ctx, "Read()::API returned", map[string]any{
-		"path":      read_rs_router,
-		"result":    spew.Sdump(result),
-		"timeTaken": time.Since(t0).String(),
-	})
-
-	if err != nil {
-		resp.Diagnostics.AddError("Error reading resource", err.Error())
-		return
-	}
-
-	// Convert API response to Terraform model
-	err = tfutils.AnyMapToModel(ctx, result, &data)
-	if err != nil {
-		resp.Diagnostics.AddError("Failed to build response from API result", err.Error())
-		return
-	}
-
-	// Save updated data into Terraform state
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+func (r *edgePingResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	// Update not supported for this resource
+	resp.Diagnostics.AddError("Update not supported", "This resource does not support update operation.")
 }
 
-func (r *routerResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data resource_router.RouterModel
+func (r *edgePingResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data resource_edge_ping.EdgePingModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -256,20 +183,20 @@ func (r *routerResource) Delete(ctx context.Context, req resource.DeleteRequest,
 
 	// Delete API call logic
 	tflog.Info(ctx, "Delete()::API request", map[string]any{
-		"path": delete_rs_router,
+		"path": delete_rs_edgePing,
 		"data": spew.Sdump(data),
 	})
 
 	t0 := time.Now()
 	result := map[string]any{}
 
-	err := r.client.Delete(ctx, delete_rs_router, map[string]string{
+	err := r.client.Delete(ctx, delete_rs_edgePing, map[string]string{
 		"namespace": tfutils.StringValue(data.Metadata.Namespace),
 		"name":      tfutils.StringValue(data.Metadata.Name),
 	}, &result)
 
 	tflog.Info(ctx, "Delete()::API returned", map[string]any{
-		"path":      delete_rs_router,
+		"path":      delete_rs_edgePing,
 		"result":    spew.Sdump(result),
 		"timeTaken": time.Since(t0).String(),
 	})
@@ -281,7 +208,7 @@ func (r *routerResource) Delete(ctx context.Context, req resource.DeleteRequest,
 }
 
 // Configure adds the provider configured client to the resource.
-func (r *routerResource) Configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *edgePingResource) Configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	// Add a nil check when handling ProviderData because Terraform
 	// sets that data after it calls the ConfigureProvider RPC.
 	if req.ProviderData == nil {
@@ -301,7 +228,7 @@ func (r *routerResource) Configure(_ context.Context, req resource.ConfigureRequ
 }
 
 // ImportState implements resource.ResourceWithImportState.
-func (r *routerResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *edgePingResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	parts := strings.Split(req.ID, "/")
 	if len(parts) < 2 {
 		resp.Diagnostics.AddError("Invalid ID", fmt.Sprintf("Expected format: id = <namespace/name>, got: id = %s", req.ID))
