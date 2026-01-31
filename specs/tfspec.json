@@ -1476,6 +1476,87 @@
                                         },
                                         "description": "Sub-interfaces status within the BridgeInterface."
                                     }
+                                },
+                                {
+                                    "name": "uplinks",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "enabled",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "The administrative status of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Normalized interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface_resource",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Eda interface resource."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "last_change",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Indicates when this SubInterface last changed state."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Reference to Node object."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node_interface",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Node specific interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operating_system",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Operating System of the Node."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operational_state",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Indicates the current operational state of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sub_interface_index",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Index allocated to the subinterface on the associated interface for the given VLAN."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "vlan_id",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "vlan assigned to this subinterface."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "Uplinks status within the BridgeInterface."
+                                    }
                                 }
                             ]
                         }
@@ -1949,6 +2030,87 @@
                                                             ]
                                                         },
                                                         "description": "Sub-interfaces status within the BridgeInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "uplinks",
+                                                    "list_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "nested_object": {
+                                                            "attributes": [
+                                                                {
+                                                                    "name": "enabled",
+                                                                    "bool": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "The administrative status of the SubInterface."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "interface",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Normalized interface name."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "interface_resource",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Eda interface resource."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "last_change",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Indicates when this SubInterface last changed state."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "node",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Reference to Node object."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "node_interface",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Node specific interface name."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "operating_system",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Operating System of the Node."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "operational_state",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Indicates the current operational state of the SubInterface."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "sub_interface_index",
+                                                                    "int64": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Index allocated to the subinterface on the associated interface for the given VLAN."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "vlan_id",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "vlan assigned to this subinterface."
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "description": "Uplinks status within the BridgeInterface."
                                                     }
                                                 }
                                             ]
@@ -16718,6 +16880,87 @@
                                         },
                                         "description": "List of members in this Interface."
                                     }
+                                },
+                                {
+                                    "name": "uplinks",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "enabled",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "The administrative status of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Normalized interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface_resource",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Eda interface resource."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "last_change",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Indicates when this SubInterface last changed state."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Reference to Node object."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node_interface",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Node specific interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operating_system",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Operating System of the Node."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operational_state",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Indicates the current operational state of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sub_interface_index",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "Index allocated to the subinterface on the associated interface for the given VLAN."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "vlan_id",
+                                                    "string": {
+                                                        "computed_optional_required": "computed",
+                                                        "description": "vlan assigned to this subinterface."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "List of uplinks in this Interface."
+                                    }
                                 }
                             ]
                         }
@@ -17215,6 +17458,87 @@
                                                             ]
                                                         },
                                                         "description": "List of members in this Interface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "uplinks",
+                                                    "list_nested": {
+                                                        "computed_optional_required": "computed",
+                                                        "nested_object": {
+                                                            "attributes": [
+                                                                {
+                                                                    "name": "enabled",
+                                                                    "bool": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "The administrative status of the SubInterface."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "interface",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Normalized interface name."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "interface_resource",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Eda interface resource."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "last_change",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Indicates when this SubInterface last changed state."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "node",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Reference to Node object."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "node_interface",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Node specific interface name."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "operating_system",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Operating System of the Node."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "operational_state",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Indicates the current operational state of the SubInterface."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "sub_interface_index",
+                                                                    "int64": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "Index allocated to the subinterface on the associated interface for the given VLAN."
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "name": "vlan_id",
+                                                                    "string": {
+                                                                        "computed_optional_required": "computed",
+                                                                        "description": "vlan assigned to this subinterface."
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        "description": "List of uplinks in this Interface."
                                                     }
                                                 }
                                             ]
@@ -18605,6 +18929,87 @@
                                             ]
                                         },
                                         "description": "Sub-interfaces status within the BridgeInterface."
+                                    }
+                                },
+                                {
+                                    "name": "uplinks",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "enabled",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "The administrative status of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Normalized interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface_resource",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Eda interface resource."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "last_change",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Indicates when this SubInterface last changed state."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Reference to Node object."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node_interface",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Node specific interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operating_system",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Operating System of the Node."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operational_state",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Indicates the current operational state of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sub_interface_index",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Index allocated to the subinterface on the associated interface for the given VLAN."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "vlan_id",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "vlan assigned to this subinterface."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "Uplinks status within the BridgeInterface."
                                     }
                                 }
                             ]
@@ -29925,6 +30330,87 @@
                                             ]
                                         },
                                         "description": "List of members in this Interface."
+                                    }
+                                },
+                                {
+                                    "name": "uplinks",
+                                    "list_nested": {
+                                        "computed_optional_required": "computed_optional",
+                                        "nested_object": {
+                                            "attributes": [
+                                                {
+                                                    "name": "enabled",
+                                                    "bool": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "The administrative status of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Normalized interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "interface_resource",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Eda interface resource."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "last_change",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Indicates when this SubInterface last changed state."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Reference to Node object."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "node_interface",
+                                                    "string": {
+                                                        "computed_optional_required": "required",
+                                                        "description": "Node specific interface name."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operating_system",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Operating System of the Node."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "operational_state",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Indicates the current operational state of the SubInterface."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "sub_interface_index",
+                                                    "int64": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "Index allocated to the subinterface on the associated interface for the given VLAN."
+                                                    }
+                                                },
+                                                {
+                                                    "name": "vlan_id",
+                                                    "string": {
+                                                        "computed_optional_required": "computed_optional",
+                                                        "description": "vlan assigned to this subinterface."
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "description": "List of uplinks in this Interface."
                                     }
                                 }
                             ]

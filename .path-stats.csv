@@ -12,7 +12,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/_deleted,GET,com.nokia.eda.services.v1.BridgeDomain_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name},DELETE,Status,bridge_domain,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name},GET,com.nokia.eda.services.v1.BridgeDomain,bridge_domain,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name},PATCH,com.nokia.eda.services.v1.BridgeDomain,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name},PUT,com.nokia.eda.services.v1.BridgeDomain,bridge_domain,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -24,7 +24,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/_deleted,GET,com.nokia.eda.services.v1.BridgeInterface_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name},DELETE,Status,bridge_interface,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name},GET,com.nokia.eda.services.v1.BridgeInterface,bridge_interface,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name},PATCH,com.nokia.eda.services.v1.BridgeInterface,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name},PUT,com.nokia.eda.services.v1.BridgeInterface,bridge_interface,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -36,7 +36,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/_deleted,GET,com.nokia.eda.services.v1.DHCPRelay_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name},DELETE,Status,dhcp_relay,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name},GET,com.nokia.eda.services.v1.DHCPRelay,dhcp_relay,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name},PATCH,com.nokia.eda.services.v1.DHCPRelay,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name},PUT,com.nokia.eda.services.v1.DHCPRelay,dhcp_relay,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -48,7 +48,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/_deleted,GET,com.nokia.eda.services.v1.IRBInterface_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name},DELETE,Status,irb_interface,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name},GET,com.nokia.eda.services.v1.IRBInterface,irb_interface,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name},PATCH,com.nokia.eda.services.v1.IRBInterface,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name},PUT,com.nokia.eda.services.v1.IRBInterface,irb_interface,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -60,7 +60,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/_deleted,GET,com.nokia.eda.services.v1.RoutedInterface_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name},DELETE,Status,routed_interface,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name},GET,com.nokia.eda.services.v1.RoutedInterface,routed_interface,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name},PATCH,com.nokia.eda.services.v1.RoutedInterface,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name},PUT,com.nokia.eda.services.v1.RoutedInterface,routed_interface,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -72,7 +72,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/_deleted,GET,com.nokia.eda.services.v1.Router_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name},DELETE,Status,router,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name},GET,com.nokia.eda.services.v1.Router,router,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name},PATCH,com.nokia.eda.services.v1.Router,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name},PUT,com.nokia.eda.services.v1.Router,router,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -84,7 +84,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/_deleted,GET,com.nokia.eda.services.v1.VirtualNetwork_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name},DELETE,Status,virtual_network,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name},GET,com.nokia.eda.services.v1.VirtualNetwork,virtual_network,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name},PATCH,com.nokia.eda.services.v1.VirtualNetwork,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name},PUT,com.nokia.eda.services.v1.VirtualNetwork,virtual_network,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}/_targets,GET,IntentTargets,,false,false,false
@@ -96,7 +96,7 @@ Path,Method,Schema,Model Name,Supported,Datasource,Resource
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/_deleted,GET,com.nokia.eda.services.v1.VLAN_DeletedResources,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name},DELETE,Status,vlan,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name},GET,com.nokia.eda.services.v1.VLAN,vlan,true,true,true
-/apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name},PATCH,Patch,,false,false,false
+/apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name},PATCH,com.nokia.eda.services.v1.VLAN,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name},PUT,com.nokia.eda.services.v1.VLAN,vlan,true,false,true
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_revs,GET,ResourceHistory,,false,false,false
 /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_targets,GET,IntentTargets,,false,false,false

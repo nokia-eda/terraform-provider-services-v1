@@ -167,20 +167,56 @@
         "type": "array"
       },
       "K8SPatchOp": {
+        "description": "The definition for a JSON patch for a resource, as in RFC 6902",
         "properties": {
           "from": {
+            "description": "Only applies to a \"move\" operation, and is the path to the field/value within\nthe target JSON object that should be moved to the location specified by the \"path\"\nfield.",
+            "example": "/a/b/c",
             "type": "string"
           },
           "op": {
+            "description": "The type of operation this patch should perform.",
+            "enum": [
+              "add",
+              "remove",
+              "replace",
+              "move",
+              "copy",
+              "test"
+            ],
+            "example": "replace",
             "type": "string"
           },
           "path": {
+            "description": "The path to the field within the target JSON object\nthat should be patched according to the \"op\" field.",
+            "example": "/a/b/d",
             "type": "string"
           },
           "value": {
+            "description": "This field would be set to the value which the user intends to put in the\nfield referenced by the \"path\" field.  The type of the value should match\nthe type of the field as indicated by the schema of the resource being\npatched.",
+            "example": "example for a string field",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "type": "object"
           },
           "x-permissive": {
+            "description": "For an \"add\" operation, an already-present field referenced by the \"path\" will\nresult in an error unless this field is true.  Similarly for a non-existent\ntarget field of a \"remove\" operation.",
             "type": "boolean"
           }
         },
@@ -2329,6 +2365,72 @@
                   "type": "object"
                 },
                 "title": "Sub-Interfaces Status",
+                "type": "array"
+              },
+              "uplinks": {
+                "description": "Uplinks status within the BridgeInterface.",
+                "items": {
+                  "properties": {
+                    "enabled": {
+                      "description": "The administrative status of the SubInterface.",
+                      "title": "Enabled",
+                      "type": "boolean"
+                    },
+                    "interface": {
+                      "description": "Normalized interface name.",
+                      "title": "Interface",
+                      "type": "string"
+                    },
+                    "interfaceResource": {
+                      "description": "Eda interface resource.",
+                      "title": "Interface Resource",
+                      "type": "string"
+                    },
+                    "lastChange": {
+                      "description": "Indicates when this SubInterface last changed state.",
+                      "title": "Last Change",
+                      "type": "string"
+                    },
+                    "node": {
+                      "description": "Reference to Node object.",
+                      "title": "Node",
+                      "type": "string"
+                    },
+                    "nodeInterface": {
+                      "description": "Node specific interface name.",
+                      "title": "Node Interface",
+                      "type": "string"
+                    },
+                    "operatingSystem": {
+                      "description": "Operating System of the Node.",
+                      "title": "Operating System",
+                      "type": "string"
+                    },
+                    "operationalState": {
+                      "description": "Indicates the current operational state of the SubInterface.",
+                      "title": "Operational State",
+                      "type": "string"
+                    },
+                    "subInterfaceIndex": {
+                      "description": "Index allocated to the subinterface on the associated interface for the given VLAN.",
+                      "title": "Sub Interface Index",
+                      "type": "integer"
+                    },
+                    "vlanID": {
+                      "description": "vlan assigned to this subinterface.",
+                      "title": "VLAN ID",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "interface",
+                    "interfaceResource",
+                    "node",
+                    "nodeInterface"
+                  ],
+                  "type": "object"
+                },
+                "title": "Uplinks Status",
                 "type": "array"
               }
             },
@@ -7147,6 +7249,75 @@
                 "type": "array",
                 "x-eda-nokia-com": {
                   "ui-order-priority": 700
+                }
+              },
+              "uplinks": {
+                "description": "List of uplinks in this Interface.",
+                "items": {
+                  "properties": {
+                    "enabled": {
+                      "description": "The administrative status of the SubInterface.",
+                      "title": "Enabled",
+                      "type": "boolean"
+                    },
+                    "interface": {
+                      "description": "Normalized interface name.",
+                      "title": "Interface",
+                      "type": "string"
+                    },
+                    "interfaceResource": {
+                      "description": "Eda interface resource.",
+                      "title": "Interface Resource",
+                      "type": "string"
+                    },
+                    "lastChange": {
+                      "description": "Indicates when this SubInterface last changed state.",
+                      "title": "Last Change",
+                      "type": "string"
+                    },
+                    "node": {
+                      "description": "Reference to Node object.",
+                      "title": "Node",
+                      "type": "string"
+                    },
+                    "nodeInterface": {
+                      "description": "Node specific interface name.",
+                      "title": "Node Interface",
+                      "type": "string"
+                    },
+                    "operatingSystem": {
+                      "description": "Operating System of the Node.",
+                      "title": "Operating System",
+                      "type": "string"
+                    },
+                    "operationalState": {
+                      "description": "Indicates the current operational state of the SubInterface.",
+                      "title": "Operational State",
+                      "type": "string"
+                    },
+                    "subInterfaceIndex": {
+                      "description": "Index allocated to the subinterface on the associated interface for the given VLAN.",
+                      "title": "Sub Interface Index",
+                      "type": "integer"
+                    },
+                    "vlanID": {
+                      "description": "vlan assigned to this subinterface.",
+                      "title": "VLAN ID",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "interface",
+                    "interfaceResource",
+                    "node",
+                    "nodeInterface"
+                  ],
+                  "type": "object"
+                },
+                "title": "Uplinks",
+                "type": "array",
+                "x-eda-nokia-com": {
+                  "ui-order-priority": 800
                 }
               }
             },
@@ -15664,7 +15835,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -15686,7 +15857,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -16640,7 +16811,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -16662,7 +16833,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -17616,7 +17787,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -17638,7 +17809,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -18592,7 +18763,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -18614,7 +18785,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -19568,7 +19739,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -19590,7 +19761,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -20544,7 +20715,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -20566,7 +20737,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -21520,7 +21691,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -21542,7 +21713,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {
@@ -22496,7 +22667,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "application/json-patch+json": {
               "schema": {
                 "$ref": "#/components/schemas/Patch"
               }
@@ -22518,7 +22689,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "The response for a successful EDA resource patch operation."
           },
           "default": {
             "content": {

@@ -156,9 +156,27 @@ Read-Only:
 - `num_sub_interfaces_oper_down` (Number) Total number of sub-interfaces configured by the VNET which are oper-down.
 - `operational_state` (String) Operational state of the VNET.
 - `sub_interfaces` (Attributes List) List of members in this Interface. (see [below for nested schema](#nestedatt--items--status--sub_interfaces))
+- `uplinks` (Attributes List) List of uplinks in this Interface. (see [below for nested schema](#nestedatt--items--status--uplinks))
 
 <a id="nestedatt--items--status--sub_interfaces"></a>
 ### Nested Schema for `items.status.sub_interfaces`
+
+Read-Only:
+
+- `enabled` (Boolean) The administrative status of the SubInterface.
+- `interface` (String) Normalized interface name.
+- `interface_resource` (String) Eda interface resource.
+- `last_change` (String) Indicates when this SubInterface last changed state.
+- `node` (String) Reference to Node object.
+- `node_interface` (String) Node specific interface name.
+- `operating_system` (String) Operating System of the Node.
+- `operational_state` (String) Indicates the current operational state of the SubInterface.
+- `sub_interface_index` (Number) Index allocated to the subinterface on the associated interface for the given VLAN.
+- `vlan_id` (String) vlan assigned to this subinterface.
+
+
+<a id="nestedatt--items--status--uplinks"></a>
+### Nested Schema for `items.status.uplinks`
 
 Read-Only:
 

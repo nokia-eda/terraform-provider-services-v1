@@ -424,6 +424,77 @@ func VlanResourceSchema(ctx context.Context) schema.Schema {
 						Description:         "List of members in this Interface.",
 						MarkdownDescription: "List of members in this Interface.",
 					},
+					"uplinks": schema.ListNestedAttribute{
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"enabled": schema.BoolAttribute{
+									Optional:            true,
+									Computed:            true,
+									Description:         "The administrative status of the SubInterface.",
+									MarkdownDescription: "The administrative status of the SubInterface.",
+								},
+								"interface": schema.StringAttribute{
+									Required:            true,
+									Description:         "Normalized interface name.",
+									MarkdownDescription: "Normalized interface name.",
+								},
+								"interface_resource": schema.StringAttribute{
+									Required:            true,
+									Description:         "Eda interface resource.",
+									MarkdownDescription: "Eda interface resource.",
+								},
+								"last_change": schema.StringAttribute{
+									Optional:            true,
+									Computed:            true,
+									Description:         "Indicates when this SubInterface last changed state.",
+									MarkdownDescription: "Indicates when this SubInterface last changed state.",
+								},
+								"node": schema.StringAttribute{
+									Required:            true,
+									Description:         "Reference to Node object.",
+									MarkdownDescription: "Reference to Node object.",
+								},
+								"node_interface": schema.StringAttribute{
+									Required:            true,
+									Description:         "Node specific interface name.",
+									MarkdownDescription: "Node specific interface name.",
+								},
+								"operating_system": schema.StringAttribute{
+									Optional:            true,
+									Computed:            true,
+									Description:         "Operating System of the Node.",
+									MarkdownDescription: "Operating System of the Node.",
+								},
+								"operational_state": schema.StringAttribute{
+									Optional:            true,
+									Computed:            true,
+									Description:         "Indicates the current operational state of the SubInterface.",
+									MarkdownDescription: "Indicates the current operational state of the SubInterface.",
+								},
+								"sub_interface_index": schema.Int64Attribute{
+									Optional:            true,
+									Computed:            true,
+									Description:         "Index allocated to the subinterface on the associated interface for the given VLAN.",
+									MarkdownDescription: "Index allocated to the subinterface on the associated interface for the given VLAN.",
+								},
+								"vlan_id": schema.StringAttribute{
+									Optional:            true,
+									Computed:            true,
+									Description:         "vlan assigned to this subinterface.",
+									MarkdownDescription: "vlan assigned to this subinterface.",
+								},
+							},
+							CustomType: UplinksType{
+								ObjectType: types.ObjectType{
+									AttrTypes: UplinksValue{}.AttributeTypes(ctx),
+								},
+							},
+						},
+						Optional:            true,
+						Computed:            true,
+						Description:         "List of uplinks in this Interface.",
+						MarkdownDescription: "List of uplinks in this Interface.",
+					},
 				},
 				CustomType: StatusType{
 					ObjectType: types.ObjectType{
@@ -5341,6 +5412,24 @@ func (t StatusType) ValueFromObject(ctx context.Context, in basetypes.ObjectValu
 			fmt.Sprintf(`sub_interfaces expected to be basetypes.ListValue, was: %T`, subInterfacesAttribute))
 	}
 
+	uplinksAttribute, ok := attributes["uplinks"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`uplinks is missing from object`)
+
+		return nil, diags
+	}
+
+	uplinksVal, ok := uplinksAttribute.(basetypes.ListValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`uplinks expected to be basetypes.ListValue, was: %T`, uplinksAttribute))
+	}
+
 	if diags.HasError() {
 		return nil, diags
 	}
@@ -5353,6 +5442,7 @@ func (t StatusType) ValueFromObject(ctx context.Context, in basetypes.ObjectValu
 		NumSubInterfacesOperDown: numSubInterfacesOperDownVal,
 		OperationalState:         operationalStateVal,
 		SubInterfaces:            subInterfacesVal,
+		Uplinks:                  uplinksVal,
 		state:                    attr.ValueStateKnown,
 	}, diags
 }
@@ -5546,6 +5636,24 @@ func NewStatusValue(attributeTypes map[string]attr.Type, attributes map[string]a
 			fmt.Sprintf(`sub_interfaces expected to be basetypes.ListValue, was: %T`, subInterfacesAttribute))
 	}
 
+	uplinksAttribute, ok := attributes["uplinks"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`uplinks is missing from object`)
+
+		return NewStatusValueUnknown(), diags
+	}
+
+	uplinksVal, ok := uplinksAttribute.(basetypes.ListValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`uplinks expected to be basetypes.ListValue, was: %T`, uplinksAttribute))
+	}
+
 	if diags.HasError() {
 		return NewStatusValueUnknown(), diags
 	}
@@ -5558,6 +5666,7 @@ func NewStatusValue(attributeTypes map[string]attr.Type, attributes map[string]a
 		NumSubInterfacesOperDown: numSubInterfacesOperDownVal,
 		OperationalState:         operationalStateVal,
 		SubInterfaces:            subInterfacesVal,
+		Uplinks:                  uplinksVal,
 		state:                    attr.ValueStateKnown,
 	}, diags
 }
@@ -5637,11 +5746,12 @@ type StatusValue struct {
 	NumSubInterfacesOperDown basetypes.Int64Value  `tfsdk:"num_sub_interfaces_oper_down"`
 	OperationalState         basetypes.StringValue `tfsdk:"operational_state"`
 	SubInterfaces            basetypes.ListValue   `tfsdk:"sub_interfaces"`
+	Uplinks                  basetypes.ListValue   `tfsdk:"uplinks"`
 	state                    attr.ValueState
 }
 
 func (v StatusValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
-	attrTypes := make(map[string]tftypes.Type, 7)
+	attrTypes := make(map[string]tftypes.Type, 8)
 
 	var val tftypes.Value
 	var err error
@@ -5655,12 +5765,15 @@ func (v StatusValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error
 	attrTypes["sub_interfaces"] = basetypes.ListType{
 		ElemType: SubInterfacesValue{}.Type(ctx),
 	}.TerraformType(ctx)
+	attrTypes["uplinks"] = basetypes.ListType{
+		ElemType: UplinksValue{}.Type(ctx),
+	}.TerraformType(ctx)
 
 	objectType := tftypes.Object{AttributeTypes: attrTypes}
 
 	switch v.state {
 	case attr.ValueStateKnown:
-		vals := make(map[string]tftypes.Value, 7)
+		vals := make(map[string]tftypes.Value, 8)
 
 		val, err = v.Health.ToTerraformValue(ctx)
 
@@ -5717,6 +5830,14 @@ func (v StatusValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error
 		}
 
 		vals["sub_interfaces"] = val
+
+		val, err = v.Uplinks.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["uplinks"] = val
 
 		if err := tftypes.ValidateValue(objectType, vals); err != nil {
 			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
@@ -5776,6 +5897,35 @@ func (v StatusValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, 
 		)
 	}
 
+	uplinks := types.ListValueMust(
+		UplinksType{
+			basetypes.ObjectType{
+				AttrTypes: UplinksValue{}.AttributeTypes(ctx),
+			},
+		},
+		v.Uplinks.Elements(),
+	)
+
+	if v.Uplinks.IsNull() {
+		uplinks = types.ListNull(
+			UplinksType{
+				basetypes.ObjectType{
+					AttrTypes: UplinksValue{}.AttributeTypes(ctx),
+				},
+			},
+		)
+	}
+
+	if v.Uplinks.IsUnknown() {
+		uplinks = types.ListUnknown(
+			UplinksType{
+				basetypes.ObjectType{
+					AttrTypes: UplinksValue{}.AttributeTypes(ctx),
+				},
+			},
+		)
+	}
+
 	attributeTypes := map[string]attr.Type{
 		"health":                       basetypes.Int64Type{},
 		"health_score_reason":          basetypes.StringType{},
@@ -5785,6 +5935,9 @@ func (v StatusValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, 
 		"operational_state":            basetypes.StringType{},
 		"sub_interfaces": basetypes.ListType{
 			ElemType: SubInterfacesValue{}.Type(ctx),
+		},
+		"uplinks": basetypes.ListType{
+			ElemType: UplinksValue{}.Type(ctx),
 		},
 	}
 
@@ -5806,6 +5959,7 @@ func (v StatusValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, 
 			"num_sub_interfaces_oper_down": v.NumSubInterfacesOperDown,
 			"operational_state":            v.OperationalState,
 			"sub_interfaces":               subInterfaces,
+			"uplinks":                      uplinks,
 		})
 
 	return objVal, diags
@@ -5854,6 +6008,10 @@ func (v StatusValue) Equal(o attr.Value) bool {
 		return false
 	}
 
+	if !v.Uplinks.Equal(other.Uplinks) {
+		return false
+	}
+
 	return true
 }
 
@@ -5875,6 +6033,9 @@ func (v StatusValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 		"operational_state":            basetypes.StringType{},
 		"sub_interfaces": basetypes.ListType{
 			ElemType: SubInterfacesValue{}.Type(ctx),
+		},
+		"uplinks": basetypes.ListType{
+			ElemType: UplinksValue{}.Type(ctx),
 		},
 	}
 }
@@ -6684,6 +6845,825 @@ func (v SubInterfacesValue) Type(ctx context.Context) attr.Type {
 }
 
 func (v SubInterfacesValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
+	return map[string]attr.Type{
+		"enabled":             basetypes.BoolType{},
+		"interface":           basetypes.StringType{},
+		"interface_resource":  basetypes.StringType{},
+		"last_change":         basetypes.StringType{},
+		"node":                basetypes.StringType{},
+		"node_interface":      basetypes.StringType{},
+		"operating_system":    basetypes.StringType{},
+		"operational_state":   basetypes.StringType{},
+		"sub_interface_index": basetypes.Int64Type{},
+		"vlan_id":             basetypes.StringType{},
+	}
+}
+
+var _ basetypes.ObjectTypable = UplinksType{}
+
+type UplinksType struct {
+	basetypes.ObjectType
+}
+
+func (t UplinksType) Equal(o attr.Type) bool {
+	other, ok := o.(UplinksType)
+
+	if !ok {
+		return false
+	}
+
+	return t.ObjectType.Equal(other.ObjectType)
+}
+
+func (t UplinksType) String() string {
+	return "UplinksType"
+}
+
+func (t UplinksType) ValueFromObject(ctx context.Context, in basetypes.ObjectValue) (basetypes.ObjectValuable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributes := in.Attributes()
+
+	enabledAttribute, ok := attributes["enabled"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`enabled is missing from object`)
+
+		return nil, diags
+	}
+
+	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`enabled expected to be basetypes.BoolValue, was: %T`, enabledAttribute))
+	}
+
+	interfaceAttribute, ok := attributes["interface"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`interface is missing from object`)
+
+		return nil, diags
+	}
+
+	interfaceVal, ok := interfaceAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`interface expected to be basetypes.StringValue, was: %T`, interfaceAttribute))
+	}
+
+	interfaceResourceAttribute, ok := attributes["interface_resource"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`interface_resource is missing from object`)
+
+		return nil, diags
+	}
+
+	interfaceResourceVal, ok := interfaceResourceAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`interface_resource expected to be basetypes.StringValue, was: %T`, interfaceResourceAttribute))
+	}
+
+	lastChangeAttribute, ok := attributes["last_change"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`last_change is missing from object`)
+
+		return nil, diags
+	}
+
+	lastChangeVal, ok := lastChangeAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`last_change expected to be basetypes.StringValue, was: %T`, lastChangeAttribute))
+	}
+
+	nodeAttribute, ok := attributes["node"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`node is missing from object`)
+
+		return nil, diags
+	}
+
+	nodeVal, ok := nodeAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`node expected to be basetypes.StringValue, was: %T`, nodeAttribute))
+	}
+
+	nodeInterfaceAttribute, ok := attributes["node_interface"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`node_interface is missing from object`)
+
+		return nil, diags
+	}
+
+	nodeInterfaceVal, ok := nodeInterfaceAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`node_interface expected to be basetypes.StringValue, was: %T`, nodeInterfaceAttribute))
+	}
+
+	operatingSystemAttribute, ok := attributes["operating_system"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`operating_system is missing from object`)
+
+		return nil, diags
+	}
+
+	operatingSystemVal, ok := operatingSystemAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`operating_system expected to be basetypes.StringValue, was: %T`, operatingSystemAttribute))
+	}
+
+	operationalStateAttribute, ok := attributes["operational_state"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`operational_state is missing from object`)
+
+		return nil, diags
+	}
+
+	operationalStateVal, ok := operationalStateAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`operational_state expected to be basetypes.StringValue, was: %T`, operationalStateAttribute))
+	}
+
+	subInterfaceIndexAttribute, ok := attributes["sub_interface_index"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`sub_interface_index is missing from object`)
+
+		return nil, diags
+	}
+
+	subInterfaceIndexVal, ok := subInterfaceIndexAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`sub_interface_index expected to be basetypes.Int64Value, was: %T`, subInterfaceIndexAttribute))
+	}
+
+	vlanIdAttribute, ok := attributes["vlan_id"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`vlan_id is missing from object`)
+
+		return nil, diags
+	}
+
+	vlanIdVal, ok := vlanIdAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`vlan_id expected to be basetypes.StringValue, was: %T`, vlanIdAttribute))
+	}
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	return UplinksValue{
+		Enabled:           enabledVal,
+		Interface:         interfaceVal,
+		InterfaceResource: interfaceResourceVal,
+		LastChange:        lastChangeVal,
+		Node:              nodeVal,
+		NodeInterface:     nodeInterfaceVal,
+		OperatingSystem:   operatingSystemVal,
+		OperationalState:  operationalStateVal,
+		SubInterfaceIndex: subInterfaceIndexVal,
+		VlanId:            vlanIdVal,
+		state:             attr.ValueStateKnown,
+	}, diags
+}
+
+func NewUplinksValueNull() UplinksValue {
+	return UplinksValue{
+		state: attr.ValueStateNull,
+	}
+}
+
+func NewUplinksValueUnknown() UplinksValue {
+	return UplinksValue{
+		state: attr.ValueStateUnknown,
+	}
+}
+
+func NewUplinksValue(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) (UplinksValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	// Reference: https://github.com/hashicorp/terraform-plugin-framework/issues/521
+	ctx := context.Background()
+
+	for name, attributeType := range attributeTypes {
+		attribute, ok := attributes[name]
+
+		if !ok {
+			diags.AddError(
+				"Missing UplinksValue Attribute Value",
+				"While creating a UplinksValue value, a missing attribute value was detected. "+
+					"A UplinksValue must contain values for all attributes, even if null or unknown. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("UplinksValue Attribute Name (%s) Expected Type: %s", name, attributeType.String()),
+			)
+
+			continue
+		}
+
+		if !attributeType.Equal(attribute.Type(ctx)) {
+			diags.AddError(
+				"Invalid UplinksValue Attribute Type",
+				"While creating a UplinksValue value, an invalid attribute value was detected. "+
+					"A UplinksValue must use a matching attribute type for the value. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("UplinksValue Attribute Name (%s) Expected Type: %s\n", name, attributeType.String())+
+					fmt.Sprintf("UplinksValue Attribute Name (%s) Given Type: %s", name, attribute.Type(ctx)),
+			)
+		}
+	}
+
+	for name := range attributes {
+		_, ok := attributeTypes[name]
+
+		if !ok {
+			diags.AddError(
+				"Extra UplinksValue Attribute Value",
+				"While creating a UplinksValue value, an extra attribute value was detected. "+
+					"A UplinksValue must not contain values beyond the expected attribute types. "+
+					"This is always an issue with the provider and should be reported to the provider developers.\n\n"+
+					fmt.Sprintf("Extra UplinksValue Attribute Name: %s", name),
+			)
+		}
+	}
+
+	if diags.HasError() {
+		return NewUplinksValueUnknown(), diags
+	}
+
+	enabledAttribute, ok := attributes["enabled"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`enabled is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	enabledVal, ok := enabledAttribute.(basetypes.BoolValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`enabled expected to be basetypes.BoolValue, was: %T`, enabledAttribute))
+	}
+
+	interfaceAttribute, ok := attributes["interface"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`interface is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	interfaceVal, ok := interfaceAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`interface expected to be basetypes.StringValue, was: %T`, interfaceAttribute))
+	}
+
+	interfaceResourceAttribute, ok := attributes["interface_resource"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`interface_resource is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	interfaceResourceVal, ok := interfaceResourceAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`interface_resource expected to be basetypes.StringValue, was: %T`, interfaceResourceAttribute))
+	}
+
+	lastChangeAttribute, ok := attributes["last_change"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`last_change is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	lastChangeVal, ok := lastChangeAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`last_change expected to be basetypes.StringValue, was: %T`, lastChangeAttribute))
+	}
+
+	nodeAttribute, ok := attributes["node"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`node is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	nodeVal, ok := nodeAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`node expected to be basetypes.StringValue, was: %T`, nodeAttribute))
+	}
+
+	nodeInterfaceAttribute, ok := attributes["node_interface"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`node_interface is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	nodeInterfaceVal, ok := nodeInterfaceAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`node_interface expected to be basetypes.StringValue, was: %T`, nodeInterfaceAttribute))
+	}
+
+	operatingSystemAttribute, ok := attributes["operating_system"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`operating_system is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	operatingSystemVal, ok := operatingSystemAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`operating_system expected to be basetypes.StringValue, was: %T`, operatingSystemAttribute))
+	}
+
+	operationalStateAttribute, ok := attributes["operational_state"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`operational_state is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	operationalStateVal, ok := operationalStateAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`operational_state expected to be basetypes.StringValue, was: %T`, operationalStateAttribute))
+	}
+
+	subInterfaceIndexAttribute, ok := attributes["sub_interface_index"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`sub_interface_index is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	subInterfaceIndexVal, ok := subInterfaceIndexAttribute.(basetypes.Int64Value)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`sub_interface_index expected to be basetypes.Int64Value, was: %T`, subInterfaceIndexAttribute))
+	}
+
+	vlanIdAttribute, ok := attributes["vlan_id"]
+
+	if !ok {
+		diags.AddError(
+			"Attribute Missing",
+			`vlan_id is missing from object`)
+
+		return NewUplinksValueUnknown(), diags
+	}
+
+	vlanIdVal, ok := vlanIdAttribute.(basetypes.StringValue)
+
+	if !ok {
+		diags.AddError(
+			"Attribute Wrong Type",
+			fmt.Sprintf(`vlan_id expected to be basetypes.StringValue, was: %T`, vlanIdAttribute))
+	}
+
+	if diags.HasError() {
+		return NewUplinksValueUnknown(), diags
+	}
+
+	return UplinksValue{
+		Enabled:           enabledVal,
+		Interface:         interfaceVal,
+		InterfaceResource: interfaceResourceVal,
+		LastChange:        lastChangeVal,
+		Node:              nodeVal,
+		NodeInterface:     nodeInterfaceVal,
+		OperatingSystem:   operatingSystemVal,
+		OperationalState:  operationalStateVal,
+		SubInterfaceIndex: subInterfaceIndexVal,
+		VlanId:            vlanIdVal,
+		state:             attr.ValueStateKnown,
+	}, diags
+}
+
+func NewUplinksValueMust(attributeTypes map[string]attr.Type, attributes map[string]attr.Value) UplinksValue {
+	object, diags := NewUplinksValue(attributeTypes, attributes)
+
+	if diags.HasError() {
+		// This could potentially be added to the diag package.
+		diagsStrings := make([]string, 0, len(diags))
+
+		for _, diagnostic := range diags {
+			diagsStrings = append(diagsStrings, fmt.Sprintf(
+				"%s | %s | %s",
+				diagnostic.Severity(),
+				diagnostic.Summary(),
+				diagnostic.Detail()))
+		}
+
+		panic("NewUplinksValueMust received error(s): " + strings.Join(diagsStrings, "\n"))
+	}
+
+	return object
+}
+
+func (t UplinksType) ValueFromTerraform(ctx context.Context, in tftypes.Value) (attr.Value, error) {
+	if in.Type() == nil {
+		return NewUplinksValueNull(), nil
+	}
+
+	if !in.Type().Equal(t.TerraformType(ctx)) {
+		return nil, fmt.Errorf("expected %s, got %s", t.TerraformType(ctx), in.Type())
+	}
+
+	if !in.IsKnown() {
+		return NewUplinksValueUnknown(), nil
+	}
+
+	if in.IsNull() {
+		return NewUplinksValueNull(), nil
+	}
+
+	attributes := map[string]attr.Value{}
+
+	val := map[string]tftypes.Value{}
+
+	err := in.As(&val)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for k, v := range val {
+		a, err := t.AttrTypes[k].ValueFromTerraform(ctx, v)
+
+		if err != nil {
+			return nil, err
+		}
+
+		attributes[k] = a
+	}
+
+	return NewUplinksValueMust(UplinksValue{}.AttributeTypes(ctx), attributes), nil
+}
+
+func (t UplinksType) ValueType(ctx context.Context) attr.Value {
+	return UplinksValue{}
+}
+
+var _ basetypes.ObjectValuable = UplinksValue{}
+
+type UplinksValue struct {
+	Enabled           basetypes.BoolValue   `tfsdk:"enabled"`
+	Interface         basetypes.StringValue `tfsdk:"interface"`
+	InterfaceResource basetypes.StringValue `tfsdk:"interface_resource"`
+	LastChange        basetypes.StringValue `tfsdk:"last_change"`
+	Node              basetypes.StringValue `tfsdk:"node"`
+	NodeInterface     basetypes.StringValue `tfsdk:"node_interface"`
+	OperatingSystem   basetypes.StringValue `tfsdk:"operating_system"`
+	OperationalState  basetypes.StringValue `tfsdk:"operational_state"`
+	SubInterfaceIndex basetypes.Int64Value  `tfsdk:"sub_interface_index"`
+	VlanId            basetypes.StringValue `tfsdk:"vlan_id"`
+	state             attr.ValueState
+}
+
+func (v UplinksValue) ToTerraformValue(ctx context.Context) (tftypes.Value, error) {
+	attrTypes := make(map[string]tftypes.Type, 10)
+
+	var val tftypes.Value
+	var err error
+
+	attrTypes["enabled"] = basetypes.BoolType{}.TerraformType(ctx)
+	attrTypes["interface"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["interface_resource"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["last_change"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["node"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["node_interface"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["operating_system"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["operational_state"] = basetypes.StringType{}.TerraformType(ctx)
+	attrTypes["sub_interface_index"] = basetypes.Int64Type{}.TerraformType(ctx)
+	attrTypes["vlan_id"] = basetypes.StringType{}.TerraformType(ctx)
+
+	objectType := tftypes.Object{AttributeTypes: attrTypes}
+
+	switch v.state {
+	case attr.ValueStateKnown:
+		vals := make(map[string]tftypes.Value, 10)
+
+		val, err = v.Enabled.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["enabled"] = val
+
+		val, err = v.Interface.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["interface"] = val
+
+		val, err = v.InterfaceResource.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["interface_resource"] = val
+
+		val, err = v.LastChange.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["last_change"] = val
+
+		val, err = v.Node.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["node"] = val
+
+		val, err = v.NodeInterface.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["node_interface"] = val
+
+		val, err = v.OperatingSystem.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["operating_system"] = val
+
+		val, err = v.OperationalState.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["operational_state"] = val
+
+		val, err = v.SubInterfaceIndex.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["sub_interface_index"] = val
+
+		val, err = v.VlanId.ToTerraformValue(ctx)
+
+		if err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		vals["vlan_id"] = val
+
+		if err := tftypes.ValidateValue(objectType, vals); err != nil {
+			return tftypes.NewValue(objectType, tftypes.UnknownValue), err
+		}
+
+		return tftypes.NewValue(objectType, vals), nil
+	case attr.ValueStateNull:
+		return tftypes.NewValue(objectType, nil), nil
+	case attr.ValueStateUnknown:
+		return tftypes.NewValue(objectType, tftypes.UnknownValue), nil
+	default:
+		panic(fmt.Sprintf("unhandled Object state in ToTerraformValue: %s", v.state))
+	}
+}
+
+func (v UplinksValue) IsNull() bool {
+	return v.state == attr.ValueStateNull
+}
+
+func (v UplinksValue) IsUnknown() bool {
+	return v.state == attr.ValueStateUnknown
+}
+
+func (v UplinksValue) String() string {
+	return "UplinksValue"
+}
+
+func (v UplinksValue) ToObjectValue(ctx context.Context) (basetypes.ObjectValue, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	attributeTypes := map[string]attr.Type{
+		"enabled":             basetypes.BoolType{},
+		"interface":           basetypes.StringType{},
+		"interface_resource":  basetypes.StringType{},
+		"last_change":         basetypes.StringType{},
+		"node":                basetypes.StringType{},
+		"node_interface":      basetypes.StringType{},
+		"operating_system":    basetypes.StringType{},
+		"operational_state":   basetypes.StringType{},
+		"sub_interface_index": basetypes.Int64Type{},
+		"vlan_id":             basetypes.StringType{},
+	}
+
+	if v.IsNull() {
+		return types.ObjectNull(attributeTypes), diags
+	}
+
+	if v.IsUnknown() {
+		return types.ObjectUnknown(attributeTypes), diags
+	}
+
+	objVal, diags := types.ObjectValue(
+		attributeTypes,
+		map[string]attr.Value{
+			"enabled":             v.Enabled,
+			"interface":           v.Interface,
+			"interface_resource":  v.InterfaceResource,
+			"last_change":         v.LastChange,
+			"node":                v.Node,
+			"node_interface":      v.NodeInterface,
+			"operating_system":    v.OperatingSystem,
+			"operational_state":   v.OperationalState,
+			"sub_interface_index": v.SubInterfaceIndex,
+			"vlan_id":             v.VlanId,
+		})
+
+	return objVal, diags
+}
+
+func (v UplinksValue) Equal(o attr.Value) bool {
+	other, ok := o.(UplinksValue)
+
+	if !ok {
+		return false
+	}
+
+	if v.state != other.state {
+		return false
+	}
+
+	if v.state != attr.ValueStateKnown {
+		return true
+	}
+
+	if !v.Enabled.Equal(other.Enabled) {
+		return false
+	}
+
+	if !v.Interface.Equal(other.Interface) {
+		return false
+	}
+
+	if !v.InterfaceResource.Equal(other.InterfaceResource) {
+		return false
+	}
+
+	if !v.LastChange.Equal(other.LastChange) {
+		return false
+	}
+
+	if !v.Node.Equal(other.Node) {
+		return false
+	}
+
+	if !v.NodeInterface.Equal(other.NodeInterface) {
+		return false
+	}
+
+	if !v.OperatingSystem.Equal(other.OperatingSystem) {
+		return false
+	}
+
+	if !v.OperationalState.Equal(other.OperationalState) {
+		return false
+	}
+
+	if !v.SubInterfaceIndex.Equal(other.SubInterfaceIndex) {
+		return false
+	}
+
+	if !v.VlanId.Equal(other.VlanId) {
+		return false
+	}
+
+	return true
+}
+
+func (v UplinksValue) Type(ctx context.Context) attr.Type {
+	return UplinksType{
+		basetypes.ObjectType{
+			AttrTypes: v.AttributeTypes(ctx),
+		},
+	}
+}
+
+func (v UplinksValue) AttributeTypes(ctx context.Context) map[string]attr.Type {
 	return map[string]attr.Type{
 		"enabled":             basetypes.BoolType{},
 		"interface":           basetypes.StringType{},

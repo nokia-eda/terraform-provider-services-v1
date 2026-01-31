@@ -55,32 +55,6 @@ k8_s_topology_request:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}/_topology
       method: POST
 
-patch:
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
-      method: PATCH
-  - update:
-      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
-      method: PATCH
-
 resource_history:
   - read:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}/_revs
@@ -189,6 +163,9 @@ com.nokia.eda.services.v1.bridge_domain:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgedomains/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.bridge_domain_list:
   - read:
@@ -216,6 +193,9 @@ com.nokia.eda.services.v1.bridge_interface:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/bridgeinterfaces/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.bridge_interface_list:
   - read:
@@ -243,6 +223,9 @@ com.nokia.eda.services.v1.dhcp_relay:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/dhcprelays/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.dhcp_relay_list:
   - read:
@@ -286,6 +269,9 @@ com.nokia.eda.services.v1.irb_interface:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/irbinterfaces/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.irb_interface_list:
   - read:
@@ -313,6 +299,9 @@ com.nokia.eda.services.v1.routed_interface:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routedinterfaces/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.routed_interface_list:
   - read:
@@ -340,6 +329,9 @@ com.nokia.eda.services.v1.router:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/routers/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.router_list:
   - read:
@@ -367,6 +359,9 @@ com.nokia.eda.services.v1.vlan:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/vlans/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.vlan_list:
   - read:
@@ -394,6 +389,9 @@ com.nokia.eda.services.v1.virtual_network:
   - update:
       path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
       method: PUT
+  - update:
+      path: /apps/services.eda.nokia.com/v1/namespaces/{namespace}/virtualnetworks/{name}
+      method: PATCH
 
 com.nokia.eda.services.v1.virtual_network_list:
   - read:
@@ -413,8 +411,8 @@ com.nokia.eda.services.v1.virtual_network_deleted_resources:
 
 totalPaths: 67
 totalSchemas: 112
-usedSchemas: 37
-unusedSchemas: 75
+usedSchemas: 36
+unusedSchemas: 76
 unusedSchemaList:
   - AppGroupVersion
   - ErrorIndex
@@ -423,6 +421,7 @@ unusedSchemaList:
   - IntentTarget
   - K8SPatchOp
   - OverlayState
+  - Patch
   - Resource
   - ResourceHistoryEntry
   - StatusDetails
